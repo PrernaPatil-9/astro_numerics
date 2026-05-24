@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astro Numerics — Clarity · Direction · Transformation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+ <!-- Replace this line -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+
+<!-- With this -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" /> 
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            midnight: { DEFAULT: '#0f0c29', 800: '#1a1548', 700: '#231d5e', 600: '#2d2475' },
+            violet: { DEFAULT: '#4338ca', light: '#6366f1', pale: '#eef2ff', xpale: '#f5f3ff' },
+            amber: { DEFAULT: '#b45309', light: '#d97706', xlight: '#fef3c7', pale: '#fffbeb' },
+            jade: { DEFAULT: '#059669', light: '#10b981', pale: '#ecfdf5' },
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.7s ease forwards',
+            'marquee': 'marquee 30s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 20s linear infinite',
+            'blink': 'blink 2.2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'none' } },
+            marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            blink: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.25 } },
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Outfit', sans-serif; }
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .hero-grid { background-image: radial-gradient(rgba(99,102,241,0.12) 1px, transparent 1px); background-size: 30px 30px; }
+    .text-grad { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gold-grad { background: linear-gradient(135deg, #b45309 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .card-shine { position: relative; overflow: hidden; }
+    .card-shine::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%); transition: transform 0.6s; transform: translateX(-100%) rotate(45deg); }
+    .card-shine:hover::before { transform: translateX(100%) rotate(45deg); }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; } .reveal.d2 { transition-delay: 0.2s; } .reveal.d3 { transition-delay: 0.3s; } .reveal.d4 { transition-delay: 0.4s; }
+    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.92); }
+    .dark-glass { backdrop-filter: blur(20px); background: rgba(15,12,41,0.85); }
+    .blink-dot { animation: blink 2.2s ease-in-out infinite; }
+    .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .marquee-inner { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+    .hero-img-overlay { background: linear-gradient(to right, #0f0c29 40%, rgba(15,12,41,0.3) 100%); }
+    @media (max-width: 768px) { .hero-img-overlay { background: linear-gradient(to bottom, rgba(15,12,41,0.7) 0%, #0f0c29 70%); } }
+    .star-banner { background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%); }
+    .service-tag { writing-mode: horizontal-tb; }
+    .testi-carousel { transition: transform 0.5s ease; }
+    .fade-in-1 { animation: fadeUp 0.8s ease 0.1s both; }
+    .fade-in-2 { animation: fadeUp 0.8s ease 0.3s both; }
+    .fade-in-3 { animation: fadeUp 0.8s ease 0.5s both; }
+    .fade-in-4 { animation: fadeUp 0.8s ease 0.7s both; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+  
+
+    /* Marquee */
+
+      .star-banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-inner {
+    display: flex;
+    width: max-content;
+    animation: marqueeMove 28s linear infinite;
+  }
+
+  @keyframes marqueeMove {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  
+    /* why seek us */
+
+  @keyframes orbit-cw  { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+  @keyframes orbit-ccw { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
+  @keyframes pulse-glow {
+    0%,100% { box-shadow: 0 0 30px rgba(99,102,241,0.2), 0 0 0 8px rgba(99,102,241,0.04); }
+    50%      { box-shadow: 0 0 50px rgba(99,102,241,0.35), 0 0 0 12px rgba(99,102,241,0.07); }
+  }
+  
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-700 overflow-x-hidden">
+
+<!-- ═══════════════════════════════════════════════ NAV -->
+<nav class="sticky top-0 z-50 glass border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-500 flex items-center justify-center shadow-lg shadow-violet-200">
+        <i class="fas fa-moon text-white text-sm"></i>
+      </div>
+      <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">Astro Numerics</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-6 text-sm font-body font-medium text-slate-600">
+      <li><a href="index.html" class="hover:text-violet transition-colors">Home</a></li>
+      <li><a href="about.html" class="hover:text-violet transition-colors">About</a></li>
+      <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
+      <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
+      <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
+    </ul>
+    <div class="hidden md:flex items-center">
+      <a href="https://wa.me/919657313963" target="_blank"
+        class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-jade-light transition-all hover:-translate-y-0.5 shadow-md shadow-jade/20">
+        <i class="fab fa-whatsapp"></i> Consult Now
+      </a>
+    </div>
+    <button id="hambBtn" class="md:hidden p-2 text-violet-700 text-xl"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
+<div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
+  <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
+  <div class="flex flex-col gap-1">
+    <a href="index.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Home</a>
+    <a href="about.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">About</a>
+    <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
+    <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
+    <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
+    <a href="https://wa.me/919657313963" target="_blank"
+      class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
+      <i class="fab fa-whatsapp"></i> Consult Now
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ HERO -->
+<section class="relative min-h-[80vh] flex items-center overflow-hidden bg-midnight">
+  <!-- Astro / Cosmic Background Image -->
+  <div class="absolute inset-0">
+    <img src="/assets/images/hero_b_1.avif" 
+      alt="Starry cosmos galaxy" class="w-full h-full object-cover opacity-40"/>
+  </div>
+  <!-- Overlay gradient for text readability -->
+  <div class="absolute inset-0 bg-gradient-to-r from-midnight via-midnight/20 to-transparent"></div>
+  
+  <!-- Soft floating orbs -->
+  <div class="orb w-64 h-64 bg-violet-600/20 top-10 left-0"></div>
+  <div class="orb w-48 h-48 bg-amber-500/10 bottom-10 right-0"></div>
+  
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 w-full">
+    <!-- Slider Container -->
+    <div class="relative overflow-hidden">
+      <div id="compactHeroTrack" class="flex transition-transform duration-700 ease-out">
+        
+        <!-- SLIDE 1 :: Clarity & Direction -->
+        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+          <div class="flex-1 text-left">
+            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+              <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
+              Trusted Guidance · Since 2012
+            </div>
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+              Clarity.<br/>Direction.<br/><span class="text-violet-light font-medium">Positive Transformation.</span>
+            </h1>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+              Connect with experienced spiritual guides for personalised insights on love, career, and life's path — right from your phone.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank"
+                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light hover:-translate-y-0.5 transition-all">
+                <i class="fab fa-whatsapp text-sm"></i> Consult on WhatsApp
+              </a>
+              <a href="#services" class="inline-flex items-center gap-2 border border-white/30 text-white/80 px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-white/10 transition-all">
+                Explore Services
+              </a>
+            </div>
+          </div>
+          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-star-of-david text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Tarot Reading</div><div class="text-white/40 text-xs">Illuminates the path ahead.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-infinity text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Numerology</div><div class="text-white/40 text-xs">Decode life path & destiny.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-gem text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Crystal Healing</div><div class="text-white/40 text-xs">Restore energetic balance.</div></div>
+            </div>
+            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
+              <i class="fas fa-shield-alt text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">100% Confidential</span>
+              <span class="text-white/20 text-xs">·</span>
+              <i class="fas fa-clock text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">24/7 Available</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SLIDE 2 :: Wealth & Abundance - NOW USING SAME VIOLET/WHITE COLORS AS SLIDE 1 -->
+        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+          <div class="flex-1 text-left">
+            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+              <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
+              Wealth · Prosperity · Abundance
+            </div>
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+              Unlock<br/>Financial Flow.<br/><span class="text-violet-light font-medium">Attract Abundance Naturally.</span>
+            </h1>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+              Vedic remedies, wealth numerology and prosperity rituals to clear blocks and welcome limitless opportunities.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20wealth%20guidance." target="_blank"
+                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light transition-all">
+                <i class="fab fa-whatsapp text-sm"></i> Abundance Reading
+              </a>
+            </div>
+          </div>
+          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-coins text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Wealth Numerology</div><div class="text-white/40 text-xs">Money attracting numbers & business names.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-chart-line text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Career & Business</div><div class="text-white/40 text-xs">Align with cosmic timing and life number.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-fire text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Remedial Rituals</div><div class="text-white/40 text-xs">Simple vedic remedies to remove blocks.</div></div>
+            </div>
+            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
+              <i class="fas fa-chart-line text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">Proven Results</span>
+              <span class="text-white/20 text-xs">·</span>
+              <i class="fas fa-rupee-sign text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">Wealth Focus</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SLIDE 3 :: Love & Relationships - NOW USING SAME VIOLET/WHITE COLORS AS SLIDE 1 -->
+        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+          <div class="flex-1 text-left">
+            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+              <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
+              Love · Harmony · Soul Connection
+            </div>
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+              Navigate<br/>Relationships.<br/><span class="text-violet-light font-medium">Find & Keep True Love.</span>
+            </h1>
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+              Understand compatibility, heal past patterns and attract a soul-aligned partnership through astrological wisdom.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20need%20love%20guidance." target="_blank"
+                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light transition-all">
+                <i class="fab fa-whatsapp text-sm"></i> Love Compatibility
+              </a>
+            </div>
+          </div>
+          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-heart text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Compatibility Reading</div><div class="text-white/40 text-xs">Soulmate indicators & karmic bonds.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-clock text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Timing of Love</div><div class="text-white/40 text-xs">Planetary periods for meeting your partner.</div></div>
+            </div>
+            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-hand-sparkles text-sm"></i></div>
+              <div><div class="font-display text-white font-medium text-base">Healing Heartblocks</div><div class="text-white/40 text-xs">Release past trauma & open to love.</div></div>
+            </div>
+            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
+              <i class="fas fa-heart text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">100% Private</span>
+              <span class="text-white/20 text-xs">·</span>
+              <i class="fas fa-hand-holding-heart text-amber text-xs"></i>
+              <span class="text-amber text-xs font-medium">Non-Judgmental</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Slider Dots -->
+    <div class="flex justify-center gap-2 mt-8" id="compactHeroDots"></div>
+  </div>
+  
+  <!-- Scroll hint -->
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/20 text-[10px] tracking-widest flex flex-col items-center gap-1">
+    <span>SCROLL</span>
+    <div class="w-px h-5 bg-white/20"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ MARQUEE TRUST BANNER -->
+<div class="star-banner py-3 overflow-hidden border-y border-violet/20">
+  <div class="marquee-inner gap-12 items-center">
+    <div class="flex gap-12 items-center shrink-0 px-6">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-light text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-light text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-light text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-light text-xs"></i> Reply in Minutes</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-light text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-light text-xs"></i> Trusted Since 2012</span>
+      <span class="text-white/20">✦</span>
+    </div>
+    <!-- duplicate for seamless loop -->
+    <div class="flex gap-12 items-center shrink-0 px-6" aria-hidden="true">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-light text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-light text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-light text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-light text-xs"></i> Reply in Minutes</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-light text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-light text-xs"></i> Trusted Since 2012</span>
+      <span class="text-white/20">✦</span>
+    </div>
+  </div>
+</div>
+
+<!-- Why seek us -->
+<section class="relative overflow-hidden bg-white py-10 px-4 sm:px-6">
+
+  <!-- Subtle grid background -->
+  <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(99,102,241,0.06) 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+  <!-- Ambient blobs -->
+  <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div class="absolute -bottom-32 -right-32 w-96 h-96 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(180,83,9,0.07) 0%, transparent 70%); filter: blur(40px);"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none" style="background: radial-gradient(ellipse, rgba(167,139,250,0.05) 0%, transparent 65%); filter: blur(60px);"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto">
+
+    <!-- Header row + Stats -->
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-8">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <div style="width:28px; height:1px; background:#6366f1;"></div>
+          <span style="font-family:'Outfit',sans-serif; font-size:0.65rem; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:#6366f1;">Why Seekers Trust Us</span>
+        </div>
+        <h2 style="font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:300; color:#0f0c29; line-height:1.08; letter-spacing:-0.01em;">
+          Guidance you can <em style="color:#6366f1; font-style:italic;">feel</em>
+        </h2>
+      </div>
+      <!-- Stats -->
+      <div class="flex items-end gap-4 pb-1 shrink-0">
+        <div class="text-center">
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">12<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Years</div>
+        </div>
+        <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
+        <div class="text-center">
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5K<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Seekers</div>
+        </div>
+        <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
+        <div class="text-center">
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">9</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Services</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main layout: Orbital (left) + Cards (right) -->
+    <div class="grid lg:grid-cols-[1fr_1.15fr] gap-6 xl:gap-10 items-center">
+
+      <!-- LEFT: Orbital diagram (BIGGER SIZE) -->
+      <div class="flex items-center justify-center">
+        <div class="relative w-80 h-80 md:w-[400px] md:h-[400px]">
+
+          <!-- Glow halo behind everything -->
+          <div class="absolute inset-0 rounded-full" style="background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 65%); filter: blur(30px); transform: scale(1.3);"></div>
+
+          <!-- Outer dashed ring -->
+          <div class="absolute inset-0" style="animation: orbit-cw 40s linear infinite; transform-origin: center;">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 400" fill="none">
+              <circle cx="200" cy="200" r="188" stroke="rgba(99,102,241,0.12)" stroke-width="1" stroke-dasharray="5 9"/>
+            </svg>
+            <div class="absolute top-[6px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full" style="background:#b45309; box-shadow:0 0 10px rgba(180,83,9,0.7);"></div>
+            <div class="absolute bottom-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-indigo-300" style="box-shadow:0 0 6px rgba(99,102,241,0.5);"></div>
+          </div>
+
+          <!-- Mid ring -->
+          <div class="absolute inset-[44px]" style="animation: orbit-ccw 24s linear infinite; transform-origin: center;">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 312 312" fill="none">
+              <circle cx="156" cy="156" r="144" stroke="rgba(99,102,241,0.2)" stroke-width="1"/>
+            </svg>
+            <div class="absolute top-[4px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full" style="background:#6366f1; box-shadow:0 0 14px rgba(99,102,241,0.9);"></div>
+            <div class="absolute right-[4px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-violet-400" style="box-shadow:0 0 8px rgba(167,139,250,0.7);"></div>
+            <div class="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+          </div>
+
+          <!-- Inner ring -->
+          <div class="absolute inset-[96px]" style="animation: orbit-cw 16s linear infinite; transform-origin: center;">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 208 208" fill="none">
+              <circle cx="104" cy="104" r="96" stroke="rgba(167,139,250,0.35)" stroke-width="1.5"/>
+            </svg>
+            <div class="absolute top-[2px] left-1/2 -translate-x-1/2 w-3 h-3 rounded-full" style="background:#818cf8; box-shadow:0 0 16px rgba(99,102,241,1);"></div>
+            <div class="absolute bottom-[2px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-violet-300"></div>
+          </div>
+
+          <!-- Center image circle (BIGGER) -->
+          <div class="absolute rounded-full overflow-hidden" style="inset:120px; border:2px solid rgba(99,102,241,0.25); box-shadow:0 0 40px rgba(99,102,241,0.25), 0 0 0 8px rgba(99,102,241,0.04); animation: pulse-glow 3s ease-in-out infinite;">
+            <img src="/assets/images/orbit.jpg" alt="Cosmic guidance" style="width:100%; height:100%; object-fit:cover;"/>
+            <div class="absolute inset-0" style="background:linear-gradient(135deg, rgba(99,102,241,0.2), transparent);"></div>
+          </div>
+
+          <!-- Floating label pills -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full border" style="background:rgba(99,102,241,0.06); border-color:rgba(99,102,241,0.18); backdrop-filter:blur(8px);">
+            <span style="font-family:'Outfit',sans-serif; font-size:0.65rem; color:#4338ca; letter-spacing:0.05em;">✦ &nbsp;Ancient Vedic Wisdom</span>
+          </div>
+          <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full border" style="background:rgba(99,102,241,0.06); border-color:rgba(99,102,241,0.18); backdrop-filter:blur(8px);">
+            <span style="font-family:'Outfit',sans-serif; font-size:0.65rem; color:#4338ca; letter-spacing:0.05em;">✦ &nbsp;100% Confidential</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: 4 Cards -->
+      <div class="grid sm:grid-cols-2 gap-3">
+
+        <!-- Card 1: Authentic Guidance -->
+        <div class="group relative rounded-2xl p-3 overflow-hidden border transition-all duration-400 cursor-default"
+          style="background:linear-gradient(145deg,#fafbff,#f0f1ff); border-color:rgba(99,102,241,0.15); transition:all 0.35s cubic-bezier(0.23,1,0.32,1);"
+          onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(99,102,241,0.12)';this.style.borderColor='rgba(99,102,241,0.35)';"
+          onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(99,102,241,0.15)';">
+          <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(99,102,241,0.5),transparent);"></div>
+          <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.5) 50%,transparent 60%); transform:translateX(-100%); transition:transform 0.6s ease;" onmouseenter="this.style.transform='translateX(200%)'"></div>
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center mb-2" style="width:36px;height:36px;background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(99,102,241,0.04));border:1px solid rgba(99,102,241,0.2);">
+            <i class="fas fa-user-check" style="color:#4338ca;font-size:0.9rem;transition:transform 0.35s ease;"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:#0f0c29;margin-bottom:4px;line-height:1.25;">Authentic<br/>Guidance</h3>
+          <p style="font-family:'Outfit',sans-serif;font-size:0.7rem;color:#6b7280;line-height:1.5;">Rooted in Vedic wisdom and spiritual integrity, not generic predictions.</p>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+            <div style="width:14px;height:1px;background:rgba(99,102,241,0.4);"></div>
+            <span style="font-family:'Outfit',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(99,102,241,0.6);">Since 2012</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Instant Connection -->
+        <div class="group relative rounded-2xl p-3 overflow-hidden border transition-all duration-400 cursor-default"
+          style="background:linear-gradient(145deg,#fdfaff,#f5f0ff); border-color:rgba(139,92,246,0.15); transition:all 0.35s cubic-bezier(0.23,1,0.32,1);"
+          onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(139,92,246,0.12)';this.style.borderColor='rgba(139,92,246,0.35)';"
+          onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(139,92,246,0.15)';">
+          <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(139,92,246,0.5),transparent);"></div>
+          <div class="mb-2" style="width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.04));border:1px solid rgba(139,92,246,0.2);">
+            <i class="fas fa-comment-dots" style="color:#7c3aed;font-size:0.9rem;"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:#0f0c29;margin-bottom:4px;line-height:1.25;">Instant<br/>Connection</h3>
+          <p style="font-family:'Outfit',sans-serif;font-size:0.7rem;color:#6b7280;line-height:1.5;">Reach a guide within minutes — no appointments, no waiting rooms.</p>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+            <div style="width:14px;height:1px;background:rgba(139,92,246,0.4);"></div>
+            <span style="font-family:'Outfit',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(139,92,246,0.6);">WhatsApp Direct</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Personalised Sessions -->
+        <div class="group relative rounded-2xl p-3 overflow-hidden border transition-all duration-400 cursor-default"
+          style="background:linear-gradient(145deg,#fffdf7,#fef8e8); border-color:rgba(180,83,9,0.15); transition:all 0.35s cubic-bezier(0.23,1,0.32,1);"
+          onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(180,83,9,0.1)';this.style.borderColor='rgba(180,83,9,0.35)';"
+          onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(180,83,9,0.15)';">
+          <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(217,119,6,0.5),transparent);"></div>
+          <div class="mb-2" style="width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(217,119,6,0.15),rgba(217,119,6,0.04));border:1px solid rgba(217,119,6,0.2);">
+            <i class="fas fa-hand-holding-heart" style="color:#b45309;font-size:0.9rem;"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:#0f0c29;margin-bottom:4px;line-height:1.25;">Personalised<br/>Sessions</h3>
+          <p style="font-family:'Outfit',sans-serif;font-size:0.7rem;color:#6b7280;line-height:1.5;">Every reading uniquely crafted from your birth chart and life questions.</p>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+            <div style="width:14px;height:1px;background:rgba(180,83,9,0.4);"></div>
+            <span style="font-family:'Outfit',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(180,83,9,0.6);">Tailored for You</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Privacy Assured -->
+        <div class="group relative rounded-2xl p-3 overflow-hidden border transition-all duration-400 cursor-default"
+          style="background:linear-gradient(145deg,#f7fffe,#ecfdf9); border-color:rgba(5,150,105,0.15); transition:all 0.35s cubic-bezier(0.23,1,0.32,1);"
+          onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 20px 40px rgba(5,150,105,0.1)';this.style.borderColor='rgba(5,150,105,0.35)';"
+          onmouseleave="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(5,150,105,0.15)';">
+          <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,rgba(16,185,129,0.5),transparent);"></div>
+          <div class="mb-2" style="width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(16,185,129,0.04));border:1px solid rgba(16,185,129,0.2);">
+            <i class="fas fa-shield-alt" style="color:#059669;font-size:0.9rem;"></i>
+          </div>
+          <h3 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:#0f0c29;margin-bottom:4px;line-height:1.25;">Privacy<br/>Assured</h3>
+          <p style="font-family:'Outfit',sans-serif;font-size:0.7rem;color:#6b7280;line-height:1.5;">Fully confidential — your story stays between you and your guide.</p>
+          <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+            <div style="width:14px;height:1px;background:rgba(5,150,105,0.4);"></div>
+            <span style="font-family:'Outfit',sans-serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(5,150,105,0.6);">100% Secure</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ IMAGE BANNER -->
+<div class="relative h-64 md:h-80 overflow-hidden">
+  <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?w=1600&q=80&auto=format&fit=crop" alt="Cosmos" class="w-full h-full object-cover"/>
+  <div class="absolute inset-0 bg-gradient-to-b from-midnight/60 to-midnight/80 flex items-center justify-center">
+    <div class="text-center reveal">
+      <p class="text-white/50 text-xs tracking-[0.3em] uppercase mb-3">Sacred Ancient Wisdom</p>
+      <h2 class="font-display text-3xl md:text-5xl text-white font-light">The cosmos holds your answers</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ SERVICES CAROUSEL -->
+<section id="services" class="py-8 md:py-10 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div class="reveal">
+        <div class="flex items-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3">
+          <div class="w-6 h-px bg-violet"></div> Sacred Offerings
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900">Services to illuminate<br/>your path</h2>
+      </div>
+      <div class="reveal flex items-center gap-3">
+        <button id="svc-prev" class="w-11 h-11 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet hover:bg-violet-pale transition-all">
+          <i class="fas fa-arrow-left text-sm"></i>
+        </button>
+        <button id="svc-next" class="w-11 h-11 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet hover:bg-violet-pale transition-all">
+          <i class="fas fa-arrow-right text-sm"></i>
+        </button>
+        <a href="services.html" class="ml-2 text-sm font-medium text-violet border-b border-violet/40 hover:border-violet pb-px transition-colors">View all 9 →</a>
+      </div>
+    </div>
+    <!-- Carousel -->
+    <div class="overflow-hidden">
+      <div class="carousel-track gap-5" id="svcTrack" style="width:calc(100% + 20px)">
+        <!-- Service 1 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_1.avif" alt="Tarot Reading" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4">
+              <span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Divination</span>
+            </div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-star-of-david text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Tarot Reading</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">Gain insight into present energies and future possibilities through the sacred language of the cards.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20to%20book%20a%20Tarot%20Reading." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_2.avif" alt="Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Numbers</span></div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-infinity text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Numerology Consultation</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">Life path, destiny and name vibrations decoded through the ancient science of numbers.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20a%20Numerology%20Consultation." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_3.jpg" alt="Crystal Healing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Energy</span></div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-gem text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Crystal Healing</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">Harmonise your energies with sacred stones and deep chakra balancing work.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20Crystal%20Healing%20guidance." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+        <!-- Service 4 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_4.webp" alt="Birth Chart" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Cosmos</span></div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-sun text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Birth Chart Analysis</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">A complete astrological reading of your natal chart — your cosmic blueprint decoded.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20a%20Birth%20Chart%20Analysis." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+        <!-- Service 5 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_5.webp" alt="Vastu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Space</span></div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-home text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Vastu Consultation</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">Align the energy of your home or workspace with Vedic spatial principles for harmony.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20a%20Vastu%20Consultation." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+        <!-- Service 6 -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
+          <div class="relative h-44 overflow-hidden">
+            <img src="/assets/images/carousel_6.avif" alt="Past Life" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
+            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Soul</span></div>
+            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-yin-yang text-sm"></i></div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Past Life Reading</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5">Explore karmic patterns and soul contracts that shape your present circumstances.</p>
+            <a href="https://wa.me/919657313963?text=I%20want%20a%20Past%20Life%20Reading." target="_blank"
+              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
+              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Dots -->
+    <div class="flex gap-2 justify-center mt-8" id="svcDots"></div>
+  </div>
+</section>
+
+<!-- The process -->
+<section 
+  class="py-12 md:py-16 bg-cover bg-center bg-no-repeat relative overflow-hidden"
+  style="background-image: url('/assets/images/bg.jpg');"
+>
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black/60"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Two column layout -->
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      
+      <!-- LEFT SIDE -->
+      <div>
+        
+        <!-- Heading -->
+        <div class="reveal mb-10">
+          <div class="flex items-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3">
+            <div class="w-6 h-px bg-violet"></div>
+            The Process
+          </div>
+
+          <h2 class="font-display text-4xl md:text-5xl font-light text-white leading-tight">
+            Three steps to <em>clarity</em>
+          </h2>
+        </div>
+
+        <!-- Steps -->
+        <div class="space-y-8">
+          
+          <!-- Step 1 -->
+          <div class="reveal d1 flex gap-5 group">
+            <div class="relative shrink-0">
+              
+              <div class="w-12 h-12 rounded-full border-2 border-violet bg-violet/20 backdrop-blur-sm flex items-center justify-center font-display text-xl font-bold text-white group-hover:bg-violet transition-all duration-300">
+                1
+              </div>
+
+              <div class="absolute top-12 left-1/2 w-px h-12 bg-white/20 group-last:hidden md:hidden lg:block"></div>
+            </div>
+
+            <div>
+              <h3 class="font-display text-xl font-semibold text-white mb-2">
+                Share your details
+              </h3>
+
+              <p class="text-sm text-white/80 leading-relaxed">
+                Birth date, time, and the questions that keep you searching for answers.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="reveal d2 flex gap-5 group">
+            <div class="relative shrink-0">
+              
+              <div class="w-12 h-12 rounded-full border-2 border-violet bg-violet/20 backdrop-blur-sm flex items-center justify-center font-display text-xl font-bold text-white group-hover:bg-violet transition-all duration-300">
+                2
+              </div>
+
+              <div class="absolute top-12 left-1/2 w-px h-12 bg-white/20 group-last:hidden md:hidden lg:block"></div>
+            </div>
+
+            <div>
+              <h3 class="font-display text-xl font-semibold text-white mb-2">
+                Connect instantly
+              </h3>
+
+              <p class="text-sm text-white/80 leading-relaxed">
+                Chat via WhatsApp — no appointments, no waiting, no friction.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="reveal d3 flex gap-5 group">
+            <div class="relative shrink-0">
+              
+              <div class="w-12 h-12 rounded-full border-2 border-violet bg-violet/20 backdrop-blur-sm flex items-center justify-center font-display text-xl font-bold text-white group-hover:bg-violet transition-all duration-300">
+                3
+              </div>
+            </div>
+
+            <div>
+              <h3 class="font-display text-xl font-semibold text-white mb-2">
+                Receive guidance
+              </h3>
+
+              <p class="text-sm text-white/80 leading-relaxed">
+                Personalised insights, remedies and clarity that genuinely resonate.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Badge -->
+        <div class="reveal mt-10">
+          <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2">
+            
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+
+            <span class="text-xs text-white/90">
+              Connect with a guide in under 2 minutes
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="reveal flex justify-center lg:justify-end">
+        
+        <div class="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden shadow-2xl shadow-violet/30 border-4 border-white/20 animate-spin-slow">
+          
+          <img 
+            src="/assets/images/1.jpg" 
+            alt="Spiritual guidance process" 
+            class="w-full h-full object-cover scale-110"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animation -->
+  <style>
+    @keyframes slowSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin-slow {
+      animation: slowSpin 30s linear infinite;
+    }
+  </style>
+</section>
+
+<!-- ═══════════════════════════════════════════════ PRODUCTS & COURSES -->
+<section class="py-14 md:py-20 bg-[#f6f0e8] relative overflow-hidden">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+
+      <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-[0.25em] uppercase mb-4">
+        <div class="w-8 h-px bg-violet"></div>
+        Products & Learning
+        <div class="w-8 h-px bg-violet"></div>
+      </div>
+
+      <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900">
+        Carry the wisdom forward
+      </h2>
+
+      <p class="text-slate-500 text-sm mt-4 max-w-2xl mx-auto">
+        Explore sacred tools and guided learning designed to transform your journey.
+      </p>
+    </div>
+
+    <!-- NEW LAYOUT: Split Vertical Story Sections -->
+    <div class="space-y-10">
+
+      <!-- PRODUCT SECTION -->
+      <div class="reveal grid lg:grid-cols-2 gap-10 items-center">
+
+        <!-- IMAGE -->
+        <div class="relative rounded-[28px] overflow-hidden h-[380px]">
+          <img 
+            src="/assets/images/carousel_3.jpg"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- CONTENT -->
+        <div>
+          <span class="text-xs tracking-[0.25em] uppercase text-amber font-semibold">
+            Sacred Products
+          </span>
+
+          <h3 class="font-display text-3xl md:text-4xl text-slate-900 mt-3 mb-4">
+            Healing Crystals & Bracelets
+          </h3>
+
+          <p class="text-slate-600 text-sm leading-relaxed mb-6">
+            Hand-selected and energetically cleansed crystals designed to support emotional balance, protection, and clarity in daily life.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="bg-white/70 px-4 py-2 rounded-full text-sm text-slate-700">Amethyst</span>
+            <span class="bg-white/70 px-4 py-2 rounded-full text-sm text-slate-700">Rose Quartz</span>
+            <span class="bg-white/70 px-4 py-2 rounded-full text-sm text-slate-700">Citrine</span>
+          </div>
+
+          <a href="products.html" class="inline-flex items-center gap-3 text-amber font-semibold text-sm">
+            Explore Collection
+            <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="w-full h-px bg-slate-200"></div>
+
+      <!-- COURSE SECTION -->
+      <div class="reveal grid lg:grid-cols-2 gap-10 items-center">
+
+        <!-- CONTENT FIRST -->
+        <div class="lg:order-1">
+
+          <span class="text-xs tracking-[0.25em] uppercase text-violet font-semibold">
+            Learn & Grow
+          </span>
+
+          <h3 class="font-display text-3xl md:text-4xl text-slate-900 mt-3 mb-4">
+            Numerology Courses
+          </h3>
+
+          <p class="text-slate-600 text-sm leading-relaxed mb-6">
+            Structured spiritual education designed to help you understand numbers as a language of destiny and life path guidance.
+          </p>
+
+          <div class="space-y-3 mb-6">
+
+            <div class="bg-white/70 px-4 py-3 rounded-xl text-sm text-slate-700">
+              Basic Numerology Course
+            </div>
+
+            <div class="bg-white/70 px-4 py-3 rounded-xl text-sm text-slate-700">
+              Professional Numerology Mastery
+            </div>
+
+            <div class="bg-white/70 px-4 py-3 rounded-xl text-sm text-slate-700">
+              Mobile Numerology Program
+            </div>
+
+          </div>
+
+          <a href="courses.html" class="inline-flex items-center gap-3 text-violet font-semibold text-sm">
+            View Courses →
+          </a>
+
+        </div>
+
+        <!-- IMAGE -->
+        <div class="relative rounded-[28px] overflow-hidden h-[380px] lg:order-2">
+          <img 
+            src="/assets/images/carousel_2.avif"
+            class="w-full h-full object-cover"
+          >
+          <div class="absolute inset-0 bg-gradient-to-l from-black/40 via-transparent to-transparent"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CTA BANNER -->
+<section class="relative py-28 overflow-hidden">
+  <!-- Background Image -->
+  <img src="/assets/images/cta.avif" 
+       alt="Spiritual journey" 
+       class="absolute inset-0 w-full h-full object-cover">
+  
+  <!-- Gradient Overlay -->
+ <div class="absolute inset-0 bg-gradient-to-br from-slate-900/35 via-violet-900/25 to-slate-900/35"></div> 
+  <!-- Soft floating orbs -->
+  <div class="absolute top-10 left-10 w-72 h-72 bg-violet-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-10 right-10 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 text-center">
+    <div class="reveal">
+      <!-- Icon -->
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+        <i class="fab fa-whatsapp text-4xl text-white"></i>
+      </div>
+      
+      <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight tracking-tight mb-5">
+        Ready to begin your<br>spiritual journey?
+      </h2>
+      
+      <p class="text-white/70 text-lg max-w-md mx-auto mb-10">
+        One simple message can bring you clarity, guidance, and positive transformation.
+      </p>
+      
+      <!-- CTA Button -->
+      <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." 
+         target="_blank"
+         class="group inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-2xl font-medium text-base shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+        <i class="fab fa-whatsapp text-xl text-green-600"></i>
+        <span>Message us on WhatsApp</span>
+        <span class="text-xl group-hover:translate-x-1 transition-transform">→</span>
+      </a>
+      
+      <p class="text-white/50 text-sm mt-6">Reply usually within minutes • 100% Confidential</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER -->
+<footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
+  <!-- Decorative Elements -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
+    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
+  </div>
+  
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
+    <!-- Main Footer Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
+      
+      <!-- Brand Column -->
+      <div class="space-y-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+            <span class="material-symbols-outlined text-2xl text-white">auto_awesome</span>
+          </div>
+          <span class="font-display text-xl font-semibold tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Astro Numerics</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
+        <div class="flex gap-3 pt-2">
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
+            <i class="fab fa-instagram text-sm"></i>
+          </a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
+            <i class="fab fa-facebook-f text-sm"></i>
+          </a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
+            <i class="fab fa-youtube text-sm"></i>
+          </a>
+          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300">
+            <i class="fab fa-whatsapp text-sm"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Navigate Column with Icons -->
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-violet-400">explore</span>
+          <span>Navigate</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Home</span></a></li>
+          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">About</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Services</span></a></li>
+          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Products</span></a></li>
+          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Courses</span></a></li>
+          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Contact</span></a></li>
+        </ul>
+      </div>
+      
+      <!-- Offerings Column with Icons -->
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-amber-400">spa</span>
+          <span>Offerings</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">123</span><span class="text-sm">Numerology</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">stars</span><span class="text-sm">Birth Chart</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">home</span><span class="text-sm">Vastu</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">history</span><span class="text-sm">Past Life</span></a></li>
+        </ul>
+      </div>
+      
+      <!-- Contact Column with Enhanced Icons -->
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-emerald-400">call</span>
+          <span>Get in Touch</span>
+        </h4>
+        <div class="space-y-4">
+          <a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-violet-400 group-hover:scale-110 transition-transform">phone_in_talk</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-emerald-400 group-hover:scale-110 transition-transform">chat</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-amber-400 group-hover:scale-110 transition-transform">mail</span>
+            <span class="text-sm">connect@astronumerics.com</span>
+          </a>
+          <div class="pt-3 flex items-start gap-3 text-white/40 text-xs">
+            <span class="material-symbols-outlined text-base">schedule</span>
+            <span>Mon - Sat: 10:00 AM - 7:00 PM IST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8">
+      <div class="flex items-center gap-2 text-white/30 text-xs">
+        <span class="material-symbols-outlined text-sm">copyright</span>
+        <span>2025 Astro Numerics. All rights reserved.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5 text-amber-400/60 text-xs">
+          <span class="material-symbols-outlined text-sm">stars</span>
+          <span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span>
+        </div>
+        <a href="#" class="text-white/30 hover:text-white/60 transition-colors">
+          <span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── Mobile nav ──
+  const hamb = document.getElementById('hambBtn');
+  const drawer = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
+  const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
+  hamb.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  overlay.addEventListener('click', shut);
+
+  // ── Generic Carousel factory ──
+  function makeCarousel(trackId, prevId, nextId, dotsId, visibleCount) {
+    const track = document.getElementById(trackId);
+    const items = track.children;
+    const total = items.length;
+    let current = 0;
+
+    // responsive visible count
+    const getVisible = () => window.innerWidth < 768 ? 1 : visibleCount;
+
+    const dotsEl = document.getElementById(dotsId);
+    const dotCount = () => Math.ceil(total / getVisible());
+
+    function renderDots() {
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < dotCount(); i++) {
+        const d = document.createElement('button');
+        d.className = `w-2 h-2 rounded-full transition-all ${i === current ? 'bg-violet w-6' : 'bg-slate-300'}`;
+        d.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(d);
+      }
+    }
+
+    function goTo(idx) {
+      const vis = getVisible();
+      const max = Math.max(0, total - vis);
+      current = Math.min(Math.max(idx, 0), Math.ceil(max / 1));
+      const itemWidth = items[0].offsetWidth + 20;
+      track.style.transform = `translateX(-${current * itemWidth}px)`;
+      renderDots();
+    }
+
+    document.getElementById(prevId).addEventListener('click', () => goTo(current - 1));
+    document.getElementById(nextId).addEventListener('click', () => goTo(current + 1));
+    window.addEventListener('resize', () => goTo(current));
+    renderDots();
+  }
+
+  makeCarousel('svcTrack', 'svc-prev', 'svc-next', 'svcDots', 3);
+  makeCarousel('tesTrack', 'tes-prev', 'tes-next', 'tesDots', 3);
+
+  // Hero section 
+
+    (function() {
+    const track = document.getElementById('compactHeroTrack');
+    if (!track) return;
+    const slides = track.children;
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let autoInterval;
+    let resizeTimer;
+    
+    const dotsContainer = document.getElementById('compactHeroDots');
+    
+    function updateSlideWidth() {
+      if (slides.length === 0) return;
+      const slideWidth = slides[0].offsetWidth;
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    function renderDots() {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-violet-light w-5' : 'bg-white/30 hover:bg-white/60'}`;
+        dot.addEventListener('click', () => {
+          stopAutoRotation();
+          goToSlide(i);
+          startAutoRotation();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+    
+    function goToSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+      currentIndex = index;
+      updateSlideWidth();
+      if (dotsContainer) {
+        for (let i = 0; i < dotsContainer.children.length; i++) {
+          const dot = dotsContainer.children[i];
+          if (i === currentIndex) {
+            dot.classList.add('bg-violet-light', 'w-5');
+            dot.classList.remove('bg-white/30', 'w-1.5');
+          } else {
+            dot.classList.remove('bg-violet-light', 'w-5');
+            dot.classList.add('bg-white/30', 'w-1.5');
+          }
+        }
+      }
+    }
+    
+    function nextSlide() {
+      let next = currentIndex + 1;
+      if (next >= totalSlides) next = 0;
+      goToSlide(next);
+    }
+    
+    function startAutoRotation() {
+      if (autoInterval) clearInterval(autoInterval);
+      autoInterval = setInterval(nextSlide, 4000);
+    }
+    
+    function stopAutoRotation() {
+      if (autoInterval) {
+        clearInterval(autoInterval);
+        autoInterval = null;
+      }
+    }
+    
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        updateSlideWidth();
+      }, 100);
+    });
+    
+    renderDots();
+    startAutoRotation();
+    
+    const heroSection = document.querySelector('.relative.min-h-\\[80vh\\]');
+    if (heroSection) {
+      heroSection.addEventListener('mouseenter', stopAutoRotation);
+      heroSection.addEventListener('mouseleave', startAutoRotation);
+    }
+  })();
+
+  // SERVICES CAROUSEL
+
+    // Auto-slide functionality for services carousel (keeping original card sizes)
+  (function() {
+    const track = document.getElementById('svcTrack');
+    const slides = track.children;
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let autoInterval;
+    
+    const dotsContainer = document.getElementById('svcDots');
+    const prevBtn = document.getElementById('svc-prev');
+    const nextBtn = document.getElementById('svc-next');
+    
+    function getVisibleCount() {
+      return window.innerWidth < 768 ? 1 : 3;
+    }
+    
+    function getMaxIndex() {
+      const visible = getVisibleCount();
+      return Math.max(0, totalSlides - visible);
+    }
+    
+    function getSlideWidth() {
+      const firstSlide = slides[0];
+      const gap = 20; // gap-5 = 20px
+      return firstSlide.offsetWidth + gap;
+    }
+    
+    function updateCarousel() {
+      const slideWidth = getSlideWidth();
+      track.style.transition = 'transform 0.5s ease';
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    function renderDots() {
+      if (!dotsContainer) return;
+      const visible = getVisibleCount();
+      const dotCount = Math.ceil(totalSlides / visible);
+      dotsContainer.innerHTML = '';
+      const currentGroup = Math.floor(currentIndex / visible);
+      
+      for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentGroup ? 'bg-violet w-6' : 'bg-slate-300 hover:bg-violet/50'}`;
+        dot.addEventListener('click', () => {
+          resetAutoTimer();
+          const visible = getVisibleCount();
+          currentIndex = i * visible;
+          if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
+          updateCarousel();
+          renderDots();
+          startAutoSlide();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+    
+    function goToNext() {
+      const visible = getVisibleCount();
+      let nextIndex = currentIndex + visible;
+      if (nextIndex > getMaxIndex()) {
+        nextIndex = 0;
+      }
+      currentIndex = nextIndex;
+      updateCarousel();
+      renderDots();
+    }
+    
+    function goToPrev() {
+      const visible = getVisibleCount();
+      let prevIndex = currentIndex - visible;
+      if (prevIndex < 0) {
+        prevIndex = getMaxIndex();
+      }
+      currentIndex = prevIndex;
+      updateCarousel();
+      renderDots();
+    }
+    
+    function startAutoSlide() {
+      if (autoInterval) clearInterval(autoInterval);
+      autoInterval = setInterval(goToNext, 4000);
+    }
+    
+    function stopAutoSlide() {
+      if (autoInterval) {
+        clearInterval(autoInterval);
+        autoInterval = null;
+      }
+    }
+    
+    function resetAutoTimer() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+    
+    // Event listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        goToPrev();
+        startAutoSlide();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        goToNext();
+        startAutoSlide();
+      });
+    }
+    
+    // Pause on hover
+    const carouselContainer = document.querySelector('#services .overflow-hidden');
+    if (carouselContainer) {
+      carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+      carouselContainer.addEventListener('mouseleave', startAutoSlide);
+    }
+    
+    // Handle window resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (currentIndex > getMaxIndex()) {
+          currentIndex = getMaxIndex();
+        }
+        updateCarousel();
+        renderDots();
+      }, 100);
+    });
+    
+    // Initialize
+    renderDots();
+    updateCarousel();
+    startAutoSlide();
+  })();
+</script>
+</body>
+</html>

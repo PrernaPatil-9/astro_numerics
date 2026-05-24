@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Astro Numerics — Contact | Connect for Spiritual Guidance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --indigo: #3730a3;
+      --indigo-md: #4f46e5;
+      --indigo-lt: #eef2ff;
+      --indigo-xlt: #f5f6ff;
+      --gold: #b8860b;
+      --gold-lt: #d4a017;
+      --gold-xlt: #fdf6e3;
+      --blue: #1d4ed8;
+      --blue-lt: #eff6ff;
+      --green: #16a34a;
+      --green-lt: #f0fdf4;
+      --white: #ffffff;
+      --bg: #fafafa;
+      --text: #1e1b4b;
+      --body: #374151;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --border-ind: rgba(79, 70, 229, 0.15);
+      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
+      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
+      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--body);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .logo-text {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--indigo);
+      letter-spacing: 0.01em;
+    }
+    .logo-sub {
+      font-family: var(--ff-sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.83rem;
+      font-weight: 400;
+      color: var(--body);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--indigo-md);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--indigo-md);
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      font-family: var(--ff-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--indigo);
+      cursor: pointer;
+    }
+    #mob-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 27, 75, 0.35);
+      z-index: 190;
+    }
+    #mob-overlay.open {
+      display: block;
+    }
+    #mob-drawer {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 72vw;
+      max-width: 300px;
+      height: 100vh;
+      background: #fff;
+      z-index: 200;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      border-left: 1px solid var(--border);
+    }
+    #mob-drawer.open {
+      display: flex;
+    }
+    #mob-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    #mob-drawer a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.92rem;
+      color: var(--body);
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    #mob-drawer .mob-cta {
+      margin-top: 1.5rem;
+      border: none;
+      text-align: center;
+      justify-content: center;
+    }
+    @media (max-width: 860px) {
+      .nav-links,
+      .nav-cta-wrap {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* Section styles */
+    .section {
+      padding: 80px 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--ff-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--indigo-md);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--indigo-md);
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* Hero */
+    .hero-contact {
+      background: linear-gradient(115deg, var(--indigo-xlt) 0%, var(--white) 100%);
+      padding: 80px 2rem 60px;
+      text-align: center;
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-title span {
+      color: var(--indigo-md);
+      font-style: italic;
+    }
+    .hero-desc {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    /* Contact Grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* Contact Info Cards */
+    .contact-info {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .info-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--indigo-lt);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--indigo-md);
+      flex-shrink: 0;
+    }
+    .info-content h4 {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .info-content p,
+    .info-content a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .info-content a:hover {
+      color: var(--indigo-md);
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: var(--indigo-lt);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--indigo-md);
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+    .social-link:hover {
+      background: var(--indigo-md);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .btn-call {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--blue);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .btn-call:hover {
+      background: #1e40af;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--green);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .btn-wa:hover {
+      background: #15803d;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .contact-form h3 {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+      background: var(--bg);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--indigo-md);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    .submit-btn {
+      background: var(--indigo-md);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.8rem;
+      border-radius: 40px;
+      font-family: var(--ff-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .submit-btn:hover {
+      background: var(--indigo);
+    }
+    .form-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    /* Working Hours Banner */
+    .hours-banner {
+      background: linear-gradient(135deg, var(--gold-xlt) 0%, var(--indigo-xlt) 100%);
+      border-radius: 28px;
+      padding: 2rem;
+      margin-top: 3rem;
+      text-align: center;
+      border: 1px solid var(--border-ind);
+    }
+    .hours-banner h3 {
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .hours-grid {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .hours-item {
+      text-align: center;
+    }
+    .hours-item .day {
+      font-weight: 600;
+      color: var(--indigo-md);
+    }
+    .hours-item .time {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--text);
+      color: rgba(255, 255, 255, 0.65);
+      padding: 64px 2rem 0;
+    }
+    .footer-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+    @media (max-width: 860px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+    .footer-brand .logo-text {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .footer-brand-desc {
+      font-size: 0.83rem;
+      margin-top: 1rem;
+      max-width: 260px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .footer-social .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+    }
+    .footer-social .social-link:hover {
+      background: var(--indigo-md);
+      color: #fff;
+    }
+    .footer-col h4 {
+      font-family: var(--ff-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.55rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .footer-contact-list span {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.83rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer-contact-list i {
+      width: 1rem;
+      color: var(--gold);
+    }
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 3rem auto 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer-gold-mark {
+      font-family: var(--ff-display);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    /* Animation */
+    .animate-item {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-moon"></i></div>
+      <div>
+        <span class="logo-text">Astro Numerics</span>
+        <span class="logo-sub">Align · Manifest · Transform</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <span class="nav-cta-wrap">
+      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
+        <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+      </a>
+    </span>
+    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div id="mob-overlay"></div>
+<div id="mob-drawer">
+  <button id="mob-close"><i class="fas fa-times"></i></button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="products.html">Products</a>
+  <a href="courses.html">Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Enquire</a>
+</div>
+
+<main>
+  <!-- Hero Section -->
+  <div class="hero-contact">
+    <div class="section-eyebrow" style="justify-content: center;">Reach out for guidance</div>
+    <h1 class="hero-title">Let's <span>Connect</span></h1>
+    <p class="hero-desc">Have questions about our services or ready to begin your spiritual journey? We're here to help with clarity, compassion, and confidentiality.</p>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Left Column: Contact Info -->
+        <div class="contact-info" id="contactInfo">
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="info-content">
+              <h4>Visit Our Space</h4>
+              <p>Sunnandan App, Jadhav Nagar, Vadgaon BK, Sinhgad Road, Pune 411041</p>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="info-content">
+              <h4>Call Us</h4>
+              <a href="tel:+919657313963">+91 96573 13963</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="info-content">
+              <h4>WhatsApp</h4>
+              <a href="https://wa.me/919657313963" target="_blank">+91 96573 13963</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="info-content">
+              <h4>Email</h4>
+              <a href="mailto:connect@astronumerics.com">connect@astronumerics.com</a>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          </div>
+          
+          <div class="action-buttons">
+            <a href="tel:+919657313963" class="btn-call"><i class="fas fa-phone"></i> Call Now</a>
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
+          </div>
+        </div>
+
+        <!-- Right Column: Contact Form -->
+        <div class="contact-form" id="contactForm">
+          <h3>Send a Message</h3>
+          <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem;">We'll respond within 24 hours via WhatsApp.</p>
+          
+          <form id="inquiryForm">
+            <div class="form-group">
+              <input type="text" id="fullName" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+              <select id="serviceInterest">
+                <option value="">Select Service of Interest (Optional)</option>
+                <option value="Tarot Reading">Tarot Reading</option>
+                <option value="Numerology Consultation">Numerology Consultation</option>
+                <option value="Name Numerology">Name Numerology</option>
+                <option value="Mobile Number Numerology">Mobile Number Numerology</option>
+                <option value="Graphology Analysis">Graphology Analysis</option>
+                <option value="Vastu Consultation">Vastu Consultation</option>
+                <option value="Astrology Consultation">Astrology Consultation</option>
+                <option value="Crystal Healing">Crystal Healing</option>
+                <option value="Rudraksha Guidance">Rudraksha Guidance</option>
+                <option value="Personal Spiritual Guidance">Personal Spiritual Guidance</option>
+                <option value="Product Enquiry">Product Enquiry</option>
+                <option value="Course Enquiry">Course Enquiry</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <textarea id="message" placeholder="Your message or question..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+            <p class="form-note">Your message will be sent directly to our WhatsApp. We respect your privacy.</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Working Hours Banner -->
+      <div class="hours-banner" id="hoursBanner">
+        <i class="fas fa-clock" style="font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem;"></i>
+        <h3>Consultation Hours</h3>
+        <div class="hours-grid">
+          <div class="hours-item">
+            <div class="day">Monday - Saturday</div>
+            <div class="time">10:00 AM – 7:00 PM (IST)</div>
+          </div>
+          <div class="hours-item">
+            <div class="day">Sunday</div>
+            <div class="time">Flexible / Prior bookings only</div>
+          </div>
+          <div class="hours-item">
+            <div class="day">Online & Offline</div>
+            <div class="time">Call, Chat, Video or In-person at Pune</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
+      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
+      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
+    </div>
+    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Products</a></li><li><a href="#">Courses</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tarot Reading</a></li><li><a href="#">Numerology</a></li><li><a href="#">Vastu</a></li><li><a href="#">Crystal Healing</a></li><li><a href="#">Astrology</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Pune 411041</span></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
+</footer>
+
+<script>
+  // GSAP Animations
+  gsap.from(".hero-contact", {
+    duration: 0.8,
+    opacity: 0,
+    y: 30,
+    ease: "power2.out"
+  });
+  
+  gsap.from("#contactInfo .info-item, #contactInfo .social-links, #contactInfo .action-buttons", {
+    duration: 0.6,
+    opacity: 0,
+    y: 20,
+    stagger: 0.1,
+    delay: 0.2
+  });
+  
+  gsap.from("#contactForm", {
+    duration: 0.7,
+    opacity: 0,
+    x: 30,
+    delay: 0.3
+  });
+  
+  gsap.from("#hoursBanner", {
+    duration: 0.7,
+    opacity: 0,
+    y: 30,
+    delay: 0.5,
+    scrollTrigger: {
+      trigger: "#hoursBanner",
+      start: "top 85%"
+    }
+  });
+
+  // Form submission - sends to WhatsApp
+  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('fullName').value;
+    const phone = document.getElementById('phoneNumber').value;
+    const service = document.getElementById('serviceInterest').value;
+    const message = document.getElementById('message').value;
+    
+    let whatsappMsg = `Hello Astro Numerics,%0A%0A*New Inquiry from Website*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A`;
+    
+    if (service) {
+      whatsappMsg += `*Service Interest:* ${encodeURIComponent(service)}%0A`;
+    }
+    
+    whatsappMsg += `*Message:* ${encodeURIComponent(message)}%0A%0APlease guide me further.`;
+    
+    window.open(`https://wa.me/919657313963?text=${whatsappMsg}`, '_blank');
+  });
+
+  // Mobile Menu functionality
+  const hamb = document.getElementById('hambBtn');
+  const drawer = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+  const closeBtn = document.getElementById('mob-close');
+  
+  if (hamb) {
+    hamb.addEventListener('click', () => {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+  }
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+  }
+</script>
+</body>
+</html>

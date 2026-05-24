@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Astro Numerics — Sacred Services | Tarot, Numerology, Vastu & Healing</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --indigo: #3730a3;
+      --indigo-md: #4f46e5;
+      --indigo-lt: #eef2ff;
+      --indigo-xlt: #f5f6ff;
+      --gold: #b8860b;
+      --gold-lt: #d4a017;
+      --gold-xlt: #fdf6e3;
+      --blue: #1d4ed8;
+      --blue-lt: #eff6ff;
+      --green: #16a34a;
+      --green-lt: #f0fdf4;
+      --white: #ffffff;
+      --bg: #fafafa;
+      --text: #1e1b4b;
+      --body: #374151;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --border-ind: rgba(79, 70, 229, 0.15);
+      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
+      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
+      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--body);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .logo-text {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--indigo);
+      letter-spacing: 0.01em;
+    }
+    .logo-sub {
+      font-family: var(--ff-sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.83rem;
+      font-weight: 400;
+      color: var(--body);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--indigo-md);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--indigo-md);
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      font-family: var(--ff-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--indigo);
+      cursor: pointer;
+    }
+    #mob-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 27, 75, 0.35);
+      z-index: 190;
+    }
+    #mob-overlay.open {
+      display: block;
+    }
+    #mob-drawer {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 72vw;
+      max-width: 300px;
+      height: 100vh;
+      background: #fff;
+      z-index: 200;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      border-left: 1px solid var(--border);
+    }
+    #mob-drawer.open {
+      display: flex;
+    }
+    #mob-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    #mob-drawer a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.92rem;
+      color: var(--body);
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    #mob-drawer .mob-cta {
+      margin-top: 1.5rem;
+      border: none;
+      text-align: center;
+      justify-content: center;
+    }
+    @media (max-width: 860px) {
+      .nav-links,
+      .nav-cta-wrap {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* Section styles */
+    .section {
+      padding: 80px 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--ff-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--indigo-md);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--indigo-md);
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* Hero */
+    .hero-services {
+      background: linear-gradient(115deg, var(--indigo-xlt) 0%, var(--white) 100%);
+      padding: 80px 2rem 60px;
+      text-align: center;
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-title span {
+      color: var(--indigo-md);
+      font-style: italic;
+    }
+    .hero-desc {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 20px 32px rgba(184, 134, 11, 0.08);
+    }
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--indigo-lt);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--indigo-md);
+      margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0.8rem 0;
+    }
+    .wa-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+    .wa-link:hover {
+      background: #15803d;
+    }
+
+    /* Benefits Banner */
+    .benefits-banner {
+      background: var(--indigo-lt);
+      border-radius: 28px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+      text-align: left;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .benefits-grid div {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+    }
+    .benefits-grid i {
+      color: var(--green);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      background: var(--white);
+      border-radius: 28px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+    }
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 500;
+      font-family: var(--ff-sans);
+      color: var(--text);
+    }
+    .faq-answer {
+      display: none;
+      padding-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+    .faq-question i {
+      transition: transform 0.2s;
+      color: var(--indigo-md);
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(45deg);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--text);
+      color: rgba(255, 255, 255, 0.65);
+      padding: 64px 2rem 0;
+    }
+    .footer-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+    @media (max-width: 860px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+    .footer-brand .logo-text {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .footer-brand-desc {
+      font-size: 0.83rem;
+      margin-top: 1rem;
+      max-width: 260px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .social-link:hover {
+      background: var(--indigo-md);
+      color: #fff;
+    }
+    .footer-col h4 {
+      font-family: var(--ff-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.55rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .footer-contact-list span {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.83rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer-contact-list i {
+      width: 1rem;
+      color: var(--gold);
+    }
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 3rem auto 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer-gold-mark {
+      font-family: var(--ff-display);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    /* Animation */
+    .service-card {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    @media (max-width: 768px) {
+      .section {
+        padding: 50px 1.5rem;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-moon"></i></div>
+      <div>
+        <span class="logo-text">Astro Numerics</span>
+        <span class="logo-sub">Align · Manifest · Transform</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#" class="active">Services</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Courses</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="nav-cta-wrap">
+      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
+        <i class="fab fa-whatsapp"></i> Book Consultation
+      </a>
+    </span>
+    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div id="mob-overlay"></div>
+<div id="mob-drawer">
+  <button id="mob-close"><i class="fas fa-times"></i></button>
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Products</a>
+  <a href="#">Courses</a>
+  <a href="#">Contact</a>
+  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Book Consultation</a>
+</div>
+
+<main>
+  <!-- Hero Section -->
+  <div class="hero-services">
+    <div class="section-eyebrow" style="justify-content: center;">Ancient wisdom for modern souls</div>
+    <h1 class="hero-title">Sacred <span>Services</span> for Transformation</h1>
+    <p class="hero-desc">Tarot, Numerology, Vastu, Astrology, Graphology, Crystal Healing & more – each session is personalized to illuminate your path and restore balance.</p>
+  </div>
+
+  <!-- Services Cards Section -->
+  <div class="section">
+    <div class="container">
+      <div class="services-grid" id="servicesGrid">
+        <!-- Tarot Reading -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-star-of-david"></i></div><h3>Tarot Card Reading</h3><div class="service-desc">Personalized intuitive card analysis for love, career, relationships, finance & life decisions. Remove confusion and attract clarity.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20book%20Tarot%20Reading." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Numerology Consultation -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-infinity"></i></div><h3>Numerology Consultation</h3><div class="service-desc">Deep dive into your life path, destiny number, strengths & future possibilities. Understand hidden energy vibrations of your birth date & name.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Numerology%20consultation." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Name Numerology -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-pen-nib"></i></div><h3>Name Numerology</h3><div class="service-desc">Balance your name vibrations to attract success, positivity, and opportunities. Energy-based correction for personal & business names.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20need%20Name%20Numerology%20guidance." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Mobile Number Numerology -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-mobile-alt"></i></div><h3>Mobile Number Numerology</h3><div class="service-desc">Analyze the energy of your mobile number and its impact on communication, opportunities & growth. Choose numbers that align with your life path.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Mobile%20Number%20Numerology%20analysis." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Graphology Analysis -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-feather-alt"></i></div><h3>Graphology Analysis</h3><div class="service-desc">Handwriting analysis to reveal personality traits, emotions, confidence, hidden potential & behavioural patterns – subconscious mirror insights.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Graphology%20analysis." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Vastu Consultation -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-home"></i></div><h3>Vastu Consultation</h3><div class="service-desc">Create harmony, balance & positive energy in home, office or business space. Practical corrections & energy balancing for prosperity & peace.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Vastu%20Consultation." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Astrology Consultation -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-sun"></i></div><h3>Bhrugu Nandi Nadi Astrology</h3><div class="service-desc">Ancient spiritual astrology for deeper life insights, karmic understanding & major life events. Personalized remedies & guidance.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20an%20Astrology%20Consultation." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Crystal Healing -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-gem"></i></div><h3>Crystal Healing</h3><div class="service-desc">Heal and balance your mind, body & energy with powerful crystals. Cleanse negativity, restore emotional balance & enhance confidence.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Crystal%20Healing%20guidance." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Rudraksha Guidance -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-praying-hands"></i></div><h3>Rudraksha Guidance</h3><div class="service-desc">Spiritual Rudraksha bead selection for protection, peace of mind, confidence & positive energy alignment according to your needs & life path.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20need%20Rudraksha%20Guidance." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Personal Spiritual Guidance -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-user-shield"></i></div><h3>Personal Spiritual Guidance</h3><div class="service-desc">Customized solutions for career, business, marriage, relationships & life growth. Holistic support & energy-based remedies.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Personal%20Spiritual%20Guidance." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+        
+        <!-- Healing Services -->
+        <div class="service-card"><div class="card-icon"><i class="fas fa-spa"></i></div><h3>Energy Healing & Crystal Therapy</h3><div class="service-desc">Healing services designed to balance your mind, body & energy. Includes crystal cleansing, salt bath guidance, and personalized healing remedies.</div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20Healing%20Session." target="_blank" class="wa-link"><i class="fab fa-whatsapp"></i> Consult on WhatsApp</a></div>
+      </div>
+
+      <!-- Benefits Banner -->
+      <div class="benefits-banner">
+        <i class="fas fa-chart-line" style="font-size: 2rem; color: var(--indigo-md);"></i>
+        <h3 style="font-family: var(--ff-display); font-size: 1.5rem; margin-top: 0.5rem;">What you gain</h3>
+        <div class="benefits-grid">
+          <div><i class="fas fa-check-circle"></i> Clarity & confidence in life decisions</div>
+          <div><i class="fas fa-check-circle"></i> Positivity, peace & emotional balance</div>
+          <div><i class="fas fa-check-circle"></i> Better understanding of career & relationships</div>
+          <div><i class="fas fa-check-circle"></i> Attract success, growth & positive energy</div>
+          <div><i class="fas fa-check-circle"></i> Reduce confusion, stress & negative thoughts</div>
+          <div><i class="fas fa-check-circle"></i> Harmony in home, office & personal life</div>
+          <div><i class="fas fa-check-circle"></i> Discover strengths & hidden potential</div>
+          <div><i class="fas fa-check-circle"></i> Personalized spiritual guidance & healing</div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h2 style="font-family: var(--ff-display); font-size: 1.8rem; margin-bottom: 1.5rem;">Frequently asked questions</h2>
+        <div class="faq-item"><div class="faq-question"><span>How does Tarot Reading work?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Tarot Reading uses intuitive card guidance to provide clarity and insights about your current situations, emotions, and future possibilities. Each reading is personalized to your questions.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>What details are needed for Numerology consultation?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Full name and date of birth are required for accurate numerology analysis. For name numerology, we also need your current preferred name spelling.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>Can Vastu really improve positivity at home or office?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Yes, Vastu helps balance energies in your space, which may support peace, harmony, productivity, and positive surroundings.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>Is online consultation available?</span><i class="fas fa-plus"></i></div><div class="faq-answer">All consultations are available online through call, chat or video call — comfortable and private.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>How long does a session take?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Sessions range from 15 min to 1 hour depending on service depth. Most are 20–45 minutes.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>Are consultations confidential?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Absolutely. All personal details and discussions remain completely private.</div></div>
+        <div class="faq-item"><div class="faq-question"><span>How can I book a consultation?</span><i class="fas fa-plus"></i></div><div class="faq-answer">Simply message us on WhatsApp at +91 9657313963 with your name, selected service, date of birth, and your questions. We'll respond quickly and help you schedule your slot.</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
+      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
+      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
+    </div>
+    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Products</a></li><li><a href="#">Courses</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tarot Reading</a></li><li><a href="#">Numerology</a></li><li><a href="#">Vastu</a></li><li><a href="#">Crystal Healing</a></li><li><a href="#">Astrology</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Pune 411041</span></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
+</footer>
+
+<script>
+  // GSAP Animation
+  gsap.registerPlugin(ScrollTrigger);
+  
+  gsap.utils.toArray(".service-card").forEach((card, i) => {
+    gsap.to(card, {
+      duration: 0.6,
+      y: 0,
+      opacity: 1,
+      delay: i * 0.05,
+      scrollTrigger: {
+        trigger: "#servicesGrid",
+        start: "top 80%",
+        toggleActions: "play none none none"
+      }
+    });
+  });
+  
+  gsap.from(".benefits-banner, .faq-section", {
+    duration: 0.7,
+    y: 30,
+    opacity: 0,
+    stagger: 0.15,
+    scrollTrigger: {
+      trigger: ".benefits-banner",
+      start: "top 85%"
+    }
+  });
+  
+  // FAQ Toggle
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('active');
+      const icon = q.querySelector('i');
+      if (item.classList.contains('active')) {
+        icon.classList.remove('fa-plus');
+        icon.classList.add('fa-minus');
+      } else {
+        icon.classList.remove('fa-minus');
+        icon.classList.add('fa-plus');
+      }
+    });
+  });
+  
+  // Mobile Menu
+  const hamb = document.getElementById('hambBtn');
+  const drawer = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+  const closeBtn = document.getElementById('mob-close');
+  
+  hamb.addEventListener('click', () => {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+  });
+  closeBtn.addEventListener('click', () => {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+  overlay.addEventListener('click', () => {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+</script>
+</body>
+</html>

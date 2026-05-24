@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Astro Numerics — Sacred Crystals, Yantras & Spiritual Accessories</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --indigo: #3730a3;
+      --indigo-md: #4f46e5;
+      --indigo-lt: #eef2ff;
+      --indigo-xlt: #f5f6ff;
+      --gold: #b8860b;
+      --gold-lt: #d4a017;
+      --gold-xlt: #fdf6e3;
+      --blue: #1d4ed8;
+      --blue-lt: #eff6ff;
+      --green: #16a34a;
+      --green-lt: #f0fdf4;
+      --white: #ffffff;
+      --bg: #fafafa;
+      --text: #1e1b4b;
+      --body: #374151;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --border-ind: rgba(79, 70, 229, 0.15);
+      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
+      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
+      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--body);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .logo-text {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--indigo);
+      letter-spacing: 0.01em;
+    }
+    .logo-sub {
+      font-family: var(--ff-sans);
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-top: -2px;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.83rem;
+      font-weight: 400;
+      color: var(--body);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--indigo-md);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--indigo-md);
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 6px;
+      font-family: var(--ff-sans);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--indigo);
+      cursor: pointer;
+    }
+    #mob-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 27, 75, 0.35);
+      z-index: 190;
+    }
+    #mob-overlay.open {
+      display: block;
+    }
+    #mob-drawer {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 72vw;
+      max-width: 300px;
+      height: 100vh;
+      background: #fff;
+      z-index: 200;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      border-left: 1px solid var(--border);
+    }
+    #mob-drawer.open {
+      display: flex;
+    }
+    #mob-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    #mob-drawer a {
+      text-decoration: none;
+      font-family: var(--ff-sans);
+      font-size: 0.92rem;
+      color: var(--body);
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    #mob-drawer .mob-cta {
+      margin-top: 1.5rem;
+      border: none;
+      text-align: center;
+      justify-content: center;
+    }
+    @media (max-width: 860px) {
+      .nav-links,
+      .nav-cta-wrap {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* Section styles */
+    .section {
+      padding: 80px 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--ff-sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--indigo-md);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--indigo-md);
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    /* Hero */
+    .hero-products {
+      background: linear-gradient(115deg, var(--indigo-xlt) 0%, var(--white) 100%);
+      padding: 80px 2rem 60px;
+      text-align: center;
+    }
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-title span {
+      color: var(--indigo-md);
+      font-style: italic;
+    }
+    .hero-desc {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    /* Category Tabs */
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .category-btn {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-family: var(--ff-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .category-btn:hover,
+    .category-btn.active {
+      background: var(--indigo-md);
+      color: white;
+      border-color: var(--indigo-md);
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 20px 32px rgba(184, 134, 11, 0.08);
+    }
+    .product-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--indigo-lt);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 2rem;
+      color: var(--indigo-md);
+    }
+    .product-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .product-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+    .wa-enquire {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .wa-enquire:hover {
+      background: #15803d;
+    }
+
+    /* Banner */
+    .info-banner {
+      background: linear-gradient(135deg, var(--indigo) 0%, #1e1b4b 100%);
+      border-radius: 32px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      color: white;
+      text-align: center;
+    }
+    .info-banner h2 {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--text);
+      color: rgba(255, 255, 255, 0.65);
+      padding: 64px 2rem 0;
+    }
+    .footer-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+    @media (max-width: 860px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+    .footer-brand .logo-text {
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .footer-brand-desc {
+      font-size: 0.83rem;
+      margin-top: 1rem;
+      max-width: 260px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .social-link:hover {
+      background: var(--indigo-md);
+      color: #fff;
+    }
+    .footer-col h4 {
+      font-family: var(--ff-sans);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin-bottom: 0.55rem;
+    }
+    .footer-col a {
+      text-decoration: none;
+      font-size: 0.84rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover {
+      color: rgba(255, 255, 255, 0.95);
+    }
+    .footer-contact-list span {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.83rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer-contact-list i {
+      width: 1rem;
+      color: var(--gold);
+    }
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 3rem auto 0;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .footer-gold-mark {
+      font-family: var(--ff-display);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      .section {
+        padding: 50px 1.5rem;
+      }
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon"><i class="fas fa-moon"></i></div>
+      <div>
+        <span class="logo-text">Astro Numerics</span>
+        <span class="logo-sub">Align · Manifest · Transform</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#" class="active">Products</a></li>
+      <li><a href="#">Courses</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <span class="nav-cta-wrap">
+      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
+        <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+      </a>
+    </span>
+    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<div id="mob-overlay"></div>
+<div id="mob-drawer">
+  <button id="mob-close"><i class="fas fa-times"></i></button>
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Products</a>
+  <a href="#">Courses</a>
+  <a href="#">Contact</a>
+  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Enquire</a>
+</div>
+
+<main>
+  <!-- Hero Section -->
+  <div class="hero-products">
+    <div class="section-eyebrow" style="justify-content: center;">Energy-based sacred tools</div>
+    <h1 class="hero-title">Healing Crystals, <span>Yantras</span> & Spiritual Accessories</h1>
+    <p class="hero-desc">Authentic gemstones, Rudraksh, and yantras energetically aligned to amplify positive vibrations, protect your aura, and attract abundance.</p>
+  </div>
+
+  <!-- Products Section -->
+  <div class="section">
+    <div class="container">
+      <!-- Category Tabs -->
+      <div class="category-tabs">
+        <button class="category-btn active" data-cat="all">All Products</button>
+        <button class="category-btn" data-cat="crystals">Crystals & Bracelets</button>
+        <button class="category-btn" data-cat="yantras">Yantras</button>
+        <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
+        <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </div>
+
+  <!-- Info Banner -->
+  <div class="container">
+    <div class="info-banner">
+      <i class="fas fa-gem" style="font-size: 2.5rem; opacity: 0.7;"></i>
+      <h2>Authentic. Energetically Cleansed. Ready for You.</h2>
+      <p>All our crystals, yantras, and Rudraksha are sourced with care and charged with positive intentions.</p>
+      <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20more%20about%20your%20products%20and%20pricing." target="_blank" class="wa-enquire" style="margin-top: 1rem; background: white; color: var(--indigo);"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
+      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
+      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
+    </div>
+    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Products</a></li><li><a href="#">Courses</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tarot Reading</a></li><li><a href="#">Numerology</a></li><li><a href="#">Vastu</a></li><li><a href="#">Crystal Healing</a></li><li><a href="#">Astrology</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Pune 411041</span></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
+</footer>
+
+<script>
+  // Product Data from PDF (prices removed as requested)
+  const products = [
+    // Crystals & Bracelets (from PDF)
+    { name: "Clear Quartz Plain", desc: "Amplifier & clarity stone — magnifies intentions and energy.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Clear Quartz Diamond Cut", desc: "High vibration energy for mental clarity and focus.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Rose Quartz", desc: "Stone of love & compassion — opens heart chakra.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Citrine", desc: "Abundance & manifestation — attracts prosperity.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Amethyst", desc: "Spiritual protection & intuition — calms the mind.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Triple Protection", desc: "Evil eye & negativity shield — powerful protection.", cat: "crystals", icon: "fas fa-shield-alt" },
+    { name: "Red Jasper", desc: "Stability & courage — grounding energy.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Lapis Lazuli", desc: "Wisdom & truth — enhances communication.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Money Attract Bracelet", desc: "Wealth magnet — attracts financial opportunities.", cat: "crystals", icon: "fas fa-dollar-sign" },
+    { name: "Green Aventurine", desc: "Luck & opportunity — manifest abundance.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "7 Chakra Bracelet", desc: "Balanced energy centers — alignment of all chakras.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Tiger Eye Bracelet", desc: "Protection & confidence — courage and strength.", cat: "crystals", icon: "fas fa-gem" },
+    { name: "Pyrite Bracelet", desc: "Abundance & protection — fool's gold for prosperity.", cat: "crystals", icon: "fas fa-gem" },
+    // Yantras (from PDF)
+    { name: "Money Attraction Yantra", desc: "Sacred geometric tool to attract wealth & prosperity.", cat: "yantras", icon: "fas fa-chart-line" },
+    { name: "Education Yantra", desc: "Enhances knowledge, focus & academic success.", cat: "yantras", icon: "fas fa-graduation-cap" },
+    { name: "Business Growth Yantra", desc: "Attracts customers & expands business opportunities.", cat: "yantras", icon: "fas fa-chart-simple" },
+    { name: "Conceive Yantra", desc: "Blessings for fertility & parenthood.", cat: "yantras", icon: "fas fa-baby" },
+    { name: "Health Yantra", desc: "Promotes physical & mental well-being.", cat: "yantras", icon: "fas fa-heartbeat" },
+    { name: "Pocket Yantra", desc: "Portable prosperity & protection for daily carry.", cat: "yantras", icon: "fas fa-wallet" },
+    // Rudraksha
+    { name: "Rudraksha Beads", desc: "Spiritual protection, peace of mind & emotional stability.", cat: "rudraksha", icon: "fas fa-praying-hands" },
+    { name: "5 Mukhi Rudraksha", desc: "Balances all chakras & reduces stress.", cat: "rudraksha", icon: "fas fa-pray" },
+    // Spiritual Accessories
+    { name: "Salt Bath", desc: "Energetic cleansing bath salts for negativity removal.", cat: "accessories", icon: "fas fa-water" },
+    { name: "Pooja Kit", desc: "Complete spiritual kit for daily rituals & offerings.", cat: "accessories", icon: "fas fa-fire" },
+    { name: "Healing Stones Set", desc: "Collection of healing stones for chakra balancing.", cat: "accessories", icon: "fas fa-gem" }
+  ];
+
+  // Function to render products
+  function renderProducts(category) {
+    const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    
+    const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
+    
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 3rem;">No products found in this category.</div>';
+      return;
+    }
+    
+    grid.innerHTML = filtered.map(product => `
+      <div class="product-card">
+        <div class="product-icon"><i class="${product.icon}" style="font-size: 2rem; color: var(--indigo-md);"></i></div>
+        <h3>${product.name}</h3>
+        <div class="product-desc">${product.desc}</div>
+        <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20enquire%20about%20the%20${encodeURIComponent(product.name)}." target="_blank" class="wa-enquire"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+      </div>
+    `).join('');
+    
+    // GSAP animation for new cards
+    gsap.fromTo(".product-card", 
+      { opacity: 0, y: 30 },
+      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05 }
+    );
+  }
+
+  // Category filter functionality
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const category = this.getAttribute('data-cat');
+      renderProducts(category);
+    });
+  });
+
+  // Initial render - show all products
+  renderProducts('all');
+
+  // GSAP animations
+  gsap.from(".hero-products", {
+    duration: 0.8,
+    opacity: 0,
+    y: 30,
+    ease: "power2.out"
+  });
+  
+  gsap.from(".info-banner", {
+    duration: 0.7,
+    y: 40,
+    opacity: 0,
+    delay: 0.3
+  });
+
+  // Mobile Menu functionality
+  const hamb = document.getElementById('hambBtn');
+  const drawer = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+  const closeBtn = document.getElementById('mob-close');
+  
+  if (hamb) {
+    hamb.addEventListener('click', () => {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+  }
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+    });
+  }
+</script>
+</body>
+</html>
