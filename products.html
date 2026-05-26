@@ -2,288 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Astro Numerics — Sacred Crystals, Yantras & Spiritual Accessories</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            midnight: { DEFAULT: '#0f0c29', 800: '#1a1548', 700: '#231d5e', 600: '#2d2475' },
+            violet: { DEFAULT: '#4338ca', light: '#6366f1', pale: '#eef2ff', xpale: '#f5f3ff' },
+            amber: { DEFAULT: '#b45309', light: '#d97706', xlight: '#fef3c7', pale: '#fffbeb' },
+            jade: { DEFAULT: '#059669', light: '#10b981', pale: '#ecfdf5' },
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.7s ease forwards',
+            'marquee': 'marquee 30s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 20s linear infinite',
+            'blink': 'blink 2.2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'none' } },
+            marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            blink: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.25 } },
+          },
+        }
+      }
+    }
+  </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    body { font-family: 'Outfit', sans-serif; background-color: #f8fafc; }
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.92); }
 
-    :root {
-      --indigo: #3730a3;
-      --indigo-md: #4f46e5;
-      --indigo-lt: #eef2ff;
-      --indigo-xlt: #f5f6ff;
-      --gold: #b8860b;
-      --gold-lt: #d4a017;
-      --gold-xlt: #fdf6e3;
-      --blue: #1d4ed8;
-      --blue-lt: #eff6ff;
-      --green: #16a34a;
-      --green-lt: #f0fdf4;
-      --white: #ffffff;
-      --bg: #fafafa;
-      --text: #1e1b4b;
-      --body: #374151;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --border-ind: rgba(79, 70, 229, 0.15);
-      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
-      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
-      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
-    }
-
-    body {
-      font-family: var(--ff-body);
-      font-weight: 300;
-      background: var(--bg);
-      color: var(--body);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-    }
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-    .logo-text {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--indigo);
-      letter-spacing: 0.01em;
-    }
-    .logo-sub {
-      font-family: var(--ff-sans);
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      display: block;
-      margin-top: -2px;
-    }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.83rem;
-      font-weight: 400;
-      color: var(--body);
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      right: 0;
-      height: 1.5px;
-      background: var(--indigo-md);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--indigo-md);
-    }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      transform: scaleX(1);
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--green);
-      color: #fff;
-      padding: 0.55rem 1.4rem;
-      border-radius: 6px;
-      font-family: var(--ff-sans);
-      font-size: 0.82rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover {
-      background: #15803d;
-      transform: translateY(-1px);
-    }
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--indigo);
-      cursor: pointer;
-    }
-    #mob-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 27, 75, 0.35);
-      z-index: 190;
-    }
-    #mob-overlay.open {
-      display: block;
-    }
-    #mob-drawer {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 72vw;
-      max-width: 300px;
-      height: 100vh;
-      background: #fff;
-      z-index: 200;
-      flex-direction: column;
-      padding: 5rem 2rem 2rem;
-      border-left: 1px solid var(--border);
-    }
-    #mob-drawer.open {
-      display: flex;
-    }
-    #mob-close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--muted);
-      cursor: pointer;
-    }
-    #mob-drawer a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.92rem;
-      color: var(--body);
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    #mob-drawer .mob-cta {
-      margin-top: 1.5rem;
-      border: none;
+    .hero-products {
+      background: linear-gradient(115deg, #f5f3ff 0%, #ffffff 100%);
+      padding: 120px 2rem 60px;
       text-align: center;
-      justify-content: center;
     }
-    @media (max-width: 860px) {
-      .nav-links,
-      .nav-cta-wrap {
-        display: none;
-      }
-      .hamburger {
-        display: block;
-      }
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: #0f0c29;
+      margin-bottom: 1rem;
     }
-
-    /* Section styles */
-    .section {
-      padding: 80px 2rem;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .hero-title span { color: #4338ca; font-style: italic; }
+    .hero-desc { max-width: 600px; margin: 0 auto; color: #6b7280; }
     .section-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-family: var(--ff-sans);
       font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--indigo-md);
+      color: #4338ca;
       margin-bottom: 1rem;
     }
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1.5px;
-      background: var(--indigo-md);
-    }
-    .section-title {
-      font-family: var(--ff-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.2;
-    }
+    .section-eyebrow::before { content: ''; display: block; width: 20px; height: 1.5px; background: #4338ca; }
 
-    /* Hero */
-    .hero-products {
-      background: linear-gradient(115deg, var(--indigo-xlt) 0%, var(--white) 100%);
-      padding: 80px 2rem 60px;
-      text-align: center;
-    }
-    .hero-title {
-      font-family: var(--ff-display);
-      font-size: clamp(2.5rem, 5vw, 3.8rem);
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1rem;
-    }
-    .hero-title span {
-      color: var(--indigo-md);
-      font-style: italic;
-    }
-    .hero-desc {
-      max-width: 600px;
-      margin: 0 auto;
-      color: var(--muted);
-    }
-
-    /* Category Tabs */
     .category-tabs {
       display: flex;
       flex-wrap: wrap;
@@ -291,93 +78,151 @@
       gap: 0.8rem;
       margin-bottom: 3rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #e5e7eb;
     }
     .category-btn {
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: white;
+      border: 1px solid #e5e7eb;
       padding: 0.5rem 1.2rem;
       border-radius: 40px;
-      font-family: var(--ff-sans);
       font-size: 0.8rem;
       font-weight: 500;
-      color: var(--muted);
+      color: #6b7280;
       cursor: pointer;
       transition: all 0.2s;
     }
     .category-btn:hover,
     .category-btn.active {
-      background: var(--indigo-md);
+      background: #4338ca;
       color: white;
-      border-color: var(--indigo-md);
+      border-color: #4338ca;
     }
 
-    /* Products Grid */
+    /* ===== ENHANCED IMAGE-BAND CARD LAYOUT (with real product imagery) ===== */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
     }
+
     .product-card {
-      background: var(--white);
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      padding: 1.8rem;
-      transition: all 0.3s ease;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      background: white;
+      border-radius: 28px;
+      border: 1px solid #e9eef3;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
     }
     .product-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--gold);
-      box-shadow: 0 20px 32px rgba(184, 134, 11, 0.08);
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px -12px rgba(67, 56, 202, 0.22);
+      border-color: #cdd9ff;
     }
-    .product-icon {
-      width: 70px;
-      height: 70px;
-      background: var(--indigo-lt);
-      border-radius: 20px;
+
+    /* Image band — each card gets a beautiful, thematic image */
+    .product-image-band {
+      height: 200px;
+      background-size: cover;
+      background-position: center 35%;
+      background-repeat: no-repeat;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 0.8rem;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-image-band {
+      transform: scale(1.01);
+    }
+    /* overlay gradient for better text contrast */
+    .product-image-band::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10,10,25,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 90%);
+      pointer-events: none;
+      border-radius: 0;
+    }
+    /* category pill inside image band */
+    .band-pill-img {
+      position: relative;
+      z-index: 2;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(6px);
+      color: #1e1b4b;
+      padding: 4px 12px;
+      border-radius: 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      font-family: 'Outfit', sans-serif;
+    }
+    /* optional crystal icon overlay (small mystical detail) */
+    .image-icon-overlay {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      z-index: 2;
+      background: rgba(255,255,245,0.2);
+      backdrop-filter: blur(4px);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 2rem;
-      color: var(--indigo-md);
+      font-size: 1rem;
+      color: rgba(255,255,245,0.95);
     }
-    .product-card h3 {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.5rem;
+
+    .product-body {
+      padding: 1.2rem 1.3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      background: white;
+    }
+    .product-body h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #0b1120;
+      margin-bottom: 0.45rem;
+      line-height: 1.3;
     }
     .product-desc {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #4b5563;
       line-height: 1.5;
+      flex: 1;
       margin-bottom: 1.2rem;
     }
     .wa-enquire {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      background: var(--green);
+      background: #059669;
       color: white;
-      padding: 0.5rem 1.2rem;
-      border-radius: 30px;
+      padding: 0.55rem 1rem;
+      border-radius: 40px;
       text-decoration: none;
       font-size: 0.75rem;
       font-weight: 500;
-      transition: background 0.2s;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+      width: auto;
     }
-    .wa-enquire:hover {
-      background: #15803d;
-    }
+    .wa-enquire:hover { background: #047857; transform: translateY(-2px); box-shadow: 0 8px 16px -8px #05966960; }
 
-    /* Banner */
     .info-banner {
-      background: linear-gradient(135deg, var(--indigo) 0%, #1e1b4b 100%);
+      background: linear-gradient(135deg, #4338ca 0%, #1e1b4b 100%);
       border-radius: 32px;
       padding: 3rem 2rem;
       margin: 3rem 0;
@@ -385,326 +230,378 @@
       text-align: center;
     }
     .info-banner h2 {
-      font-family: var(--ff-display);
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
     }
 
-    /* Footer */
-    footer {
-      background: var(--text);
-      color: rgba(255, 255, 255, 0.65);
-      padding: 64px 2rem 0;
+    .star-banner {
+      background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%);
+      position: relative;
+      width: 100%;
+      overflow: hidden;
     }
-    .footer-grid {
-      max-width: 1160px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr 1fr;
-      gap: 3rem;
-    }
-    @media (max-width: 860px) {
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-    }
-    .footer-brand .logo-text {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    .footer-brand-desc {
-      font-size: 0.83rem;
-      margin-top: 1rem;
-      max-width: 260px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    .footer-social {
+    .marquee-inner {
       display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
+      width: max-content;
+      animation: marqueeMove 28s linear infinite;
     }
-    .social-link {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .social-link:hover {
-      background: var(--indigo-md);
-      color: #fff;
-    }
-    .footer-col h4 {
-      font-family: var(--ff-sans);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.4);
-      margin-bottom: 1.2rem;
-    }
-    .footer-col ul {
-      list-style: none;
-    }
-    .footer-col li {
-      margin-bottom: 0.55rem;
-    }
-    .footer-col a {
-      text-decoration: none;
-      font-size: 0.84rem;
-      color: rgba(255, 255, 255, 0.6);
-      transition: color 0.2s;
-    }
-    .footer-col a:hover {
-      color: rgba(255, 255, 255, 0.95);
-    }
-    .footer-contact-list span {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.83rem;
-      margin-bottom: 0.5rem;
-    }
-    .footer-contact-list i {
-      width: 1rem;
-      color: var(--gold);
-    }
-    .footer-bottom {
-      max-width: 1160px;
-      margin: 3rem auto 0;
-      padding: 1.5rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .footer-gold-mark {
-      font-family: var(--ff-display);
-      font-style: italic;
-      font-size: 0.8rem;
-      color: var(--gold);
-      opacity: 0.7;
+    @keyframes marqueeMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
-    @media (max-width: 768px) {
-      .section {
-        padding: 50px 1.5rem;
-      }
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 640px) {
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .product-image-band { height: 150px; }
+      .product-body h3 { font-size: 1rem; }
+    }
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-700 overflow-x-hidden">
 
-<!-- Navigation -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <div class="logo-icon"><i class="fas fa-moon"></i></div>
-      <div>
-        <span class="logo-text">Astro Numerics</span>
-        <span class="logo-sub">Align · Manifest · Transform</span>
+<!-- ===== NAVIGATION ===== -->
+<nav class="sticky top-0 z-50 glass border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-500 flex items-center justify-center shadow-lg shadow-violet-200">
+        <i class="fas fa-moon text-white text-sm"></i>
       </div>
+      <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">Astro Numerics</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#" class="active">Products</a></li>
-      <li><a href="#">Courses</a></li>
-      <li><a href="#">Contact</a></li>
+    <ul class="hidden md:flex items-center gap-6 text-sm font-body font-medium text-slate-600">
+      <li><a href="index.html" class="hover:text-violet transition-colors">Home</a></li>
+      <li><a href="about.html" class="hover:text-violet transition-colors">About</a></li>
+      <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
+      <li><a href="products.html" class="hover:text-violet transition-colors text-violet-600 border-b border-violet-300">Products</a></li>
+      <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
-    <span class="nav-cta-wrap">
-      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
-        <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+    <div class="hidden md:flex items-center">
+      <a href="https://wa.me/919657313963" target="_blank"
+        class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-jade-light transition-all hover:-translate-y-0.5 shadow-md shadow-jade/20">
+        <i class="fab fa-whatsapp"></i> Consult Now
       </a>
-    </span>
-    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+    </div>
+    <button id="hambBtn" class="md:hidden p-2 text-violet-700 text-xl"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
-<div id="mob-overlay"></div>
-<div id="mob-drawer">
-  <button id="mob-close"><i class="fas fa-times"></i></button>
-  <a href="#">Home</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Products</a>
-  <a href="#">Courses</a>
-  <a href="#">Contact</a>
-  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Enquire</a>
+
+<!-- Mobile drawer -->
+<div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
+<div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
+  <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
+  <div class="flex flex-col gap-1">
+    <a href="index.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Home</a>
+    <a href="about.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">About</a>
+    <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
+    <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
+    <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
+    <a href="https://wa.me/919657313963" target="_blank"
+      class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
+      <i class="fab fa-whatsapp"></i> Consult Now
+    </a>
+  </div>
 </div>
 
 <main>
-  <!-- Hero Section -->
-  <div class="hero-products">
-    <div class="section-eyebrow" style="justify-content: center;">Energy-based sacred tools</div>
-    <h1 class="hero-title">Healing Crystals, <span>Yantras</span> & Spiritual Accessories</h1>
-    <p class="hero-desc">Authentic gemstones, Rudraksh, and yantras energetically aligned to amplify positive vibrations, protect your aura, and attract abundance.</p>
+<!-- Hero Section -->
+<div class="hero-products" style="background-image: url('/assets/images/bg.jpg'); background-size: cover; background-position: center; position: relative; padding: 80px 2rem 60px;">
+
+  <!-- Dark Overlay for Readability -->
+  <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15, 12, 41, 0.75), rgba(67, 56, 202, 0.55)); z-index: 1;"></div>
+
+  <!-- Content -->
+  <div style="position: relative; z-index: 2; max-width: 700px; margin: 0 auto; text-align: center;">
+    
+    <div class="section-eyebrow" style="justify-content: center; margin-bottom: 12px; color: #e0e7ff;">
+      Energy-based sacred tools
+    </div>
+    
+    <h1 class="hero-title" style="margin-bottom: 16px; color: white; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);">
+      Healing Crystals, <span style="color: #a5b4fc;">Yantras</span> & Spiritual Accessories
+    </h1>
+    
+    <p class="hero-desc" style="color: #e0e7ff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);">
+      Authentic gemstones, Rudraksh, and yantras energetically aligned to amplify positive vibrations, protect your aura, and attract abundance.
+    </p>
   </div>
+</div>
 
-  <!-- Products Section -->
-  <div class="section">
-    <div class="container">
-      <!-- Category Tabs -->
-      <div class="category-tabs">
-        <button class="category-btn active" data-cat="all">All Products</button>
-        <button class="category-btn" data-cat="crystals">Crystals & Bracelets</button>
-        <button class="category-btn" data-cat="yantras">Yantras</button>
-        <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
-        <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
+  <!-- Marquee Trust Banner -->
+  <div class="star-banner py-3 overflow-hidden border-y border-violet/20">
+    <div class="marquee-inner gap-12 items-center">
+      <div class="flex gap-12 items-center shrink-0 px-6">
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-300 text-xs"></i> Reply in Minutes</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+        <span class="text-white/20">✦</span>
       </div>
-
-      <!-- Products Grid -->
-      <div class="products-grid" id="productsGrid"></div>
+      <div class="flex gap-12 items-center shrink-0 px-6" aria-hidden="true">
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-300 text-xs"></i> Reply in Minutes</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+        <span class="text-white/20">✦</span>
+        <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+        <span class="text-white/20">✦</span>
+      </div>
     </div>
   </div>
 
+<!-- Products Section -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-16">
+  <div class="category-tabs">
+    <button class="category-btn active" data-cat="all">All Products</button>
+    <button class="category-btn" data-cat="crystals">Crystals & Bracelets</button>
+    <button class="category-btn" data-cat="yantras">Yantras</button>
+    <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
+    <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</div>
+
   <!-- Info Banner -->
-  <div class="container">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="info-banner">
       <i class="fas fa-gem" style="font-size: 2.5rem; opacity: 0.7;"></i>
       <h2>Authentic. Energetically Cleansed. Ready for You.</h2>
       <p>All our crystals, yantras, and Rudraksha are sourced with care and charged with positive intentions.</p>
-      <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20more%20about%20your%20products%20and%20pricing." target="_blank" class="wa-enquire" style="margin-top: 1rem; background: white; color: var(--indigo);"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+      <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20more%20about%20your%20products." target="_blank" class="wa-enquire" style="margin-top: 1rem; background: white; color: #4338ca;"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
     </div>
   </div>
 </main>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
-      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
-      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
-    </div>
-    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Products</a></li><li><a href="#">Courses</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tarot Reading</a></li><li><a href="#">Numerology</a></li><li><a href="#">Vastu</a></li><li><a href="#">Crystal Healing</a></li><li><a href="#">Astrology</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Pune 411041</span></div></div>
+<!-- FOOTER same as original with minor polish -->
+<footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
+    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
   </div>
-  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
+      <div class="space-y-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+            <span class="material-symbols-outlined text-2xl text-white">auto_awesome</span>
+          </div>
+          <span class="font-display text-xl font-semibold tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Astro Numerics</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
+        <div class="flex gap-3 pt-2">
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-instagram text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-youtube text-sm"></i></a>
+          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300"><i class="fab fa-whatsapp text-sm"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-violet-400">explore</span><span>Navigate</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Home</span></a></li>
+          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">About</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Services</span></a></li>
+          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Products</span></a></li>
+          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Courses</span></a></li>
+          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Contact</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-amber-400">spa</span><span>Offerings</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">123</span><span class="text-sm">Numerology</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">stars</span><span class="text-sm">Birth Chart</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">home</span><span class="text-sm">Vastu</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">history</span><span class="text-sm">Past Life</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-emerald-400">call</span><span>Get in Touch</span>
+        </h4>
+        <div class="space-y-4">
+          <a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl text-violet-400 group-hover:scale-110 transition-transform">phone_in_talk</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl text-emerald-400 group-hover:scale-110 transition-transform">chat</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors">
+            <span class="material-symbols-outlined text-xl text-amber-400 group-hover:scale-110 transition-transform">mail</span>
+            <span class="text-sm">connect@astronumerics.com</span>
+          </a>
+          <div class="pt-3 flex items-start gap-3 text-white/40 text-xs">
+            <span class="material-symbols-outlined text-base">schedule</span>
+            <span>Mon - Sat: 10:00 AM - 7:00 PM IST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8">
+      <div class="flex items-center gap-2 text-white/30 text-xs">
+        <span class="material-symbols-outlined text-sm">copyright</span>
+        <span>2025 Astro Numerics. All rights reserved.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5 text-amber-400/60 text-xs">
+          <span class="material-symbols-outlined text-sm">stars</span>
+          <span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span>
+        </div>
+        <a href="#" class="text-white/30 hover:text-white/60 transition-colors">
+          <span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>
 
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20about%20your%20sacred%20products." target="_blank" class="fixed bottom-6 left-6 z-50 group">
+  <div class="relative">
+    <div class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75"></div>
+    <div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 hover:scale-110 transition-transform duration-300">
+      <i class="fab fa-whatsapp text-white text-2xl md:text-3xl"></i>
+    </div>
+    <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Chat with us 💬</div>
+    </div>
+  </div>
+</a>
+
+<!-- Back to Top Button -->
+<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
+  <div class="relative">
+    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
+    <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
+    </div>
+  </div>
+</button>
+
 <script>
-  // Product Data from PDF (prices removed as requested)
+  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.opacity = '1';
+      backToTopBtn.style.visibility = 'visible';
+    } else {
+      backToTopBtn.style.opacity = '0';
+      backToTopBtn.style.visibility = 'hidden';
+    }
+  });
+
+  const hamb = document.getElementById('hambBtn');
+  const drawer = document.getElementById('mob-drawer');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
+  const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
+  if (hamb) hamb.addEventListener('click', open);
+  if (close) close.addEventListener('click', shut);
+  if (overlay) overlay.addEventListener('click', shut);
+
+  // ----- PRODUCT DATA WITH SPECIFIC HIGH-QUALITY IMAGES -----
+  // each product gets a thematic unsplash/placeholder image that matches spiritual essence.
   const products = [
-    // Crystals & Bracelets (from PDF)
-    { name: "Clear Quartz Plain", desc: "Amplifier & clarity stone — magnifies intentions and energy.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Clear Quartz Diamond Cut", desc: "High vibration energy for mental clarity and focus.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Rose Quartz", desc: "Stone of love & compassion — opens heart chakra.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Citrine", desc: "Abundance & manifestation — attracts prosperity.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Amethyst", desc: "Spiritual protection & intuition — calms the mind.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Triple Protection", desc: "Evil eye & negativity shield — powerful protection.", cat: "crystals", icon: "fas fa-shield-alt" },
-    { name: "Red Jasper", desc: "Stability & courage — grounding energy.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Lapis Lazuli", desc: "Wisdom & truth — enhances communication.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Money Attract Bracelet", desc: "Wealth magnet — attracts financial opportunities.", cat: "crystals", icon: "fas fa-dollar-sign" },
-    { name: "Green Aventurine", desc: "Luck & opportunity — manifest abundance.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "7 Chakra Bracelet", desc: "Balanced energy centers — alignment of all chakras.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Tiger Eye Bracelet", desc: "Protection & confidence — courage and strength.", cat: "crystals", icon: "fas fa-gem" },
-    { name: "Pyrite Bracelet", desc: "Abundance & protection — fool's gold for prosperity.", cat: "crystals", icon: "fas fa-gem" },
-    // Yantras (from PDF)
-    { name: "Money Attraction Yantra", desc: "Sacred geometric tool to attract wealth & prosperity.", cat: "yantras", icon: "fas fa-chart-line" },
-    { name: "Education Yantra", desc: "Enhances knowledge, focus & academic success.", cat: "yantras", icon: "fas fa-graduation-cap" },
-    { name: "Business Growth Yantra", desc: "Attracts customers & expands business opportunities.", cat: "yantras", icon: "fas fa-chart-simple" },
-    { name: "Conceive Yantra", desc: "Blessings for fertility & parenthood.", cat: "yantras", icon: "fas fa-baby" },
-    { name: "Health Yantra", desc: "Promotes physical & mental well-being.", cat: "yantras", icon: "fas fa-heartbeat" },
-    { name: "Pocket Yantra", desc: "Portable prosperity & protection for daily carry.", cat: "yantras", icon: "fas fa-wallet" },
-    // Rudraksha
-    { name: "Rudraksha Beads", desc: "Spiritual protection, peace of mind & emotional stability.", cat: "rudraksha", icon: "fas fa-praying-hands" },
-    { name: "5 Mukhi Rudraksha", desc: "Balances all chakras & reduces stress.", cat: "rudraksha", icon: "fas fa-pray" },
-    // Spiritual Accessories
-    { name: "Salt Bath", desc: "Energetic cleansing bath salts for negativity removal.", cat: "accessories", icon: "fas fa-water" },
-    { name: "Pooja Kit", desc: "Complete spiritual kit for daily rituals & offerings.", cat: "accessories", icon: "fas fa-fire" },
-    { name: "Healing Stones Set", desc: "Collection of healing stones for chakra balancing.", cat: "accessories", icon: "fas fa-gem" }
+    { name: "Clear Quartz Plain", desc: "Amplifier & clarity stone — magnifies intentions and energy.", cat: "crystals", img: "/assets/images/p_1.webp" },
+    { name: "Clear Quartz Diamond Cut", desc: "High vibration energy for mental clarity & focus.", cat: "crystals", img: "/assets/images/p_2.webp" },
+    { name: "Rose Quartz", desc: "Stone of love & compassion — opens heart chakra.", cat: "crystals", img: "/assets/images/p_3.jpg" },
+    { name: "Citrine", desc: "Abundance & manifestation — attracts prosperity.", cat: "crystals", img: "/assets/images/p_4.jpg" },
+    { name: "Amethyst", desc: "Spiritual protection & intuition — calms the mind.", cat: "crystals", img: "/assets/images/p_5.webp" },
+    { name: "Triple Protection", desc: "Evil eye & negativity shield — powerful protection.", cat: "crystals", img: "/assets/images/p_6.webp" },
+    { name: "Red Jasper", desc: "Stability & courage — grounding energy.", cat: "crystals", img: "/assets/images/p_7.webp" },
+    { name: "Lapis Lazuli", desc: "Wisdom & truth — enhances communication.", cat: "crystals", img: "/assets/images/p_8.webp" },
+    { name: "Money Attract Bracelet", desc: "Wealth magnet — attracts financial opportunities.", cat: "crystals", img: "/assets/images/p_9.webp" },
+    { name: "Green Aventurine", desc: "Luck & opportunity — manifest abundance.", cat: "crystals", img: "/assets/images/p_10.jpg" },
+    { name: "7 Chakra Bracelet", desc: "Balanced energy centers — alignment of all chakras.", cat: "crystals", img: "/assets/images/p_11.webp" },
+    { name: "Tiger Eye Bracelet", desc: "Protection & confidence — courage and strength.", cat: "crystals", img: "/assets/images/p_12.webp" },
+    { name: "Pyrite Bracelet", desc: "Abundance & protection — fool's gold for prosperity.", cat: "crystals", img: "/assets/images/p_13.webp" },
+    { name: "Money Attraction Yantra", desc: "Sacred geometric tool to attract wealth & prosperity.", cat: "yantras", img: "/assets/images/p_14.webp" },
+    { name: "Education Yantra", desc: "Enhances knowledge, focus & academic success.", cat: "yantras", img: "/assets/images/p_15.jpeg" },
+    { name: "Business Growth Yantra", desc: "Attracts customers & expands business.", cat: "yantras", img: "/assets/images/p_16.png" },
+    { name: "Conceive Yantra", desc: "Blessings for fertility & parenthood.", cat: "yantras", img: "/assets/images/p_17.jpg" },
+    { name: "Health Yantra", desc: "Promotes physical & mental well-being.", cat: "yantras", img: "/assets/images/p_18.webp" },
+    { name: "Pocket Yantra", desc: "Portable prosperity & protection for daily carry.", cat: "yantras", img: "/assets/images/p_19.jpg" },
+    { name: "Rudraksha Beads", desc: "Spiritual protection, peace of mind & emotional stability.", cat: "rudraksha", img: "/assets/images/p_20.webp" },
+    { name: "5 Mukhi Rudraksha", desc: "Balances all chakras & reduces stress.", cat: "rudraksha", img: "/assets/images/p_21.webp" },
+    { name: "Salt Bath", desc: "Energetic cleansing bath salts for negativity removal.", cat: "accessories", img: "/assets/images/p_22.webp" },
+    { name: "Pooja Kit", desc: "Complete spiritual kit for daily rituals & offerings.", cat: "accessories", img: "/assets/images/p_23.jpg" },
+    { name: "Healing Stones Set", desc: "Collection of healing stones for chakra balancing.", cat: "accessories", img: "/assets/images/p_24.webp" }
   ];
 
-  // Function to render products
   function renderProducts(category) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
-    
     const filtered = category === 'all' ? products : products.filter(p => p.cat === category);
-    
     if (filtered.length === 0) {
-      grid.innerHTML = '<div style="text-align: center; grid-column: 1/-1; padding: 3rem;">No products found in this category.</div>';
+      grid.innerHTML = '<div style="text-align:center;grid-column:1/-1;padding:3rem;color:#6b7280;">No products found in this category.</div>';
       return;
     }
-    
-    grid.innerHTML = filtered.map(product => `
-      <div class="product-card">
-        <div class="product-icon"><i class="${product.icon}" style="font-size: 2rem; color: var(--indigo-md);"></i></div>
-        <h3>${product.name}</h3>
-        <div class="product-desc">${product.desc}</div>
-        <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20enquire%20about%20the%20${encodeURIComponent(product.name)}." target="_blank" class="wa-enquire"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
-      </div>
-    `).join('');
-    
-    // GSAP animation for new cards
-    gsap.fromTo(".product-card", 
-      { opacity: 0, y: 30 },
-      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05 }
-    );
+    grid.innerHTML = filtered.map(product => {
+      let categoryLabel = "";
+      if (product.cat === "crystals") categoryLabel = "Crystals";
+      else if (product.cat === "yantras") categoryLabel = "Yantra";
+      else if (product.cat === "rudraksha") categoryLabel = "Rudraksha";
+      else categoryLabel = "Accessories";
+      
+      return `
+        <div class="product-card">
+          <div class="product-image-band" style="background-image: url('${product.img}'); background-size: cover;">
+            <span class="band-pill-img">${categoryLabel}</span>
+            <div class="image-icon-overlay"><i class="fas fa-spa"></i></div>
+          </div>
+          <div class="product-body">
+            <h3>${product.name}</h3>
+            <div class="product-desc">${product.desc}</div>
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20enquire%20about%20${encodeURIComponent(product.name)}." target="_blank" class="wa-enquire">
+              <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+            </a>
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
-  // Category filter functionality
   document.querySelectorAll('.category-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-      const category = this.getAttribute('data-cat');
-      renderProducts(category);
+      renderProducts(this.getAttribute('data-cat'));
     });
   });
 
-  // Initial render - show all products
   renderProducts('all');
-
-  // GSAP animations
-  gsap.from(".hero-products", {
-    duration: 0.8,
-    opacity: 0,
-    y: 30,
-    ease: "power2.out"
-  });
-  
-  gsap.from(".info-banner", {
-    duration: 0.7,
-    y: 40,
-    opacity: 0,
-    delay: 0.3
-  });
-
-  // Mobile Menu functionality
-  const hamb = document.getElementById('hambBtn');
-  const drawer = document.getElementById('mob-drawer');
-  const overlay = document.getElementById('mob-overlay');
-  const closeBtn = document.getElementById('mob-close');
-  
-  if (hamb) {
-    hamb.addEventListener('click', () => {
-      drawer.classList.add('open');
-      overlay.classList.add('open');
-    });
-  }
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-    });
-  }
-  if (overlay) {
-    overlay.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-    });
-  }
 </script>
 </body>
 </html>

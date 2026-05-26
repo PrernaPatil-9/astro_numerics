@@ -2,390 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Astro Numerics — Numerology Courses | Learn from the Masters</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
-  <!-- GSAP with ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            midnight: { DEFAULT: '#0f0c29', 800: '#1a1548', 700: '#231d5e', 600: '#2d2475' },
+            violet: { DEFAULT: '#4338ca', light: '#6366f1', pale: '#eef2ff', xpale: '#f5f3ff' },
+            amber: { DEFAULT: '#b45309', light: '#d97706', xlight: '#fef3c7', pale: '#fffbeb' },
+            jade: { DEFAULT: '#059669', light: '#10b981', pale: '#ecfdf5' },
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.7s ease forwards',
+            'marquee': 'marquee 30s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 20s linear infinite',
+            'blink': 'blink 2.2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'none' } },
+            marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            blink: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.25 } },
+          },
+        }
+      }
+    }
+  </script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    body { font-family: 'Outfit', sans-serif; }
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .hero-grid { background-image: radial-gradient(rgba(99,102,241,0.12) 1px, transparent 1px); background-size: 30px 30px; }
+    .text-grad { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gold-grad { background: linear-gradient(135deg, #b45309 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; } .reveal.d2 { transition-delay: 0.2s; } .reveal.d3 { transition-delay: 0.3s; } .reveal.d4 { transition-delay: 0.4s; }
+    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.92); }
+    .dark-glass { backdrop-filter: blur(20px); background: rgba(15,12,41,0.85); }
+    .blink-dot { animation: blink 2.2s ease-in-out infinite; }
+    .marquee-inner { display: flex; width: max-content; animation: marqueeMove 28s linear infinite; }
+    @keyframes marqueeMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .hero-img-overlay { background: linear-gradient(to right, #0f0c29 40%, rgba(15,12,41,0.3) 100%); }
+    @media (max-width: 768px) { .hero-img-overlay { background: linear-gradient(to bottom, rgba(15,12,41,0.7) 0%, #0f0c29 70%); } }
+    .star-banner { background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%); position: relative; width: 100%; overflow: hidden; }
+    .fade-in-1 { animation: fadeUp 0.8s ease 0.1s both; }
+    .fade-in-2 { animation: fadeUp 0.8s ease 0.3s both; }
+    .fade-in-3 { animation: fadeUp 0.8s ease 0.5s both; }
+    .fade-in-4 { animation: fadeUp 0.8s ease 0.7s both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
-    :root {
-      --indigo: #3730a3;
-      --indigo-md: #4f46e5;
-      --indigo-lt: #eef2ff;
-      --indigo-xlt: #f5f6ff;
-      --gold: #b8860b;
-      --gold-lt: #d4a017;
-      --gold-xlt: #fdf6e3;
-      --blue: #1d4ed8;
-      --blue-lt: #eff6ff;
-      --green: #16a34a;
-      --green-lt: #f0fdf4;
-      --white: #ffffff;
-      --bg: #fafafa;
-      --text: #1e1b4b;
-      --body: #374151;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --border-ind: rgba(79, 70, 229, 0.15);
-      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
-      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
-      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
-    }
-
-    body {
-      font-family: var(--ff-body);
-      font-weight: 300;
-      background: var(--bg);
-      color: var(--body);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-    }
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-    .logo-text {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--indigo);
-      letter-spacing: 0.01em;
-    }
-    .logo-sub {
-      font-family: var(--ff-sans);
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      display: block;
-      margin-top: -2px;
-    }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.83rem;
-      font-weight: 400;
-      color: var(--body);
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      right: 0;
-      height: 1.5px;
-      background: var(--indigo-md);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--indigo-md);
-    }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      transform: scaleX(1);
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--green);
-      color: #fff;
-      padding: 0.55rem 1.4rem;
-      border-radius: 6px;
-      font-family: var(--ff-sans);
-      font-size: 0.82rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover {
-      background: #15803d;
-      transform: translateY(-1px);
-    }
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--indigo);
-      cursor: pointer;
-    }
-    #mob-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 27, 75, 0.35);
-      z-index: 190;
-    }
-    #mob-overlay.open {
-      display: block;
-    }
-    #mob-drawer {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 72vw;
-      max-width: 300px;
-      height: 100vh;
-      background: #fff;
-      z-index: 200;
-      flex-direction: column;
-      padding: 5rem 2rem 2rem;
-      border-left: 1px solid var(--border);
-    }
-    #mob-drawer.open {
-      display: flex;
-    }
-    #mob-close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--muted);
-      cursor: pointer;
-    }
-    #mob-drawer a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.92rem;
-      color: var(--body);
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    #mob-drawer .mob-cta {
-      margin-top: 1.5rem;
-      border: none;
+    /* ── Hero ── */
+    .hero-courses {
+      background: linear-gradient(115deg, #f5f3ff 0%, #ffffff 100%);
+      padding: 120px 2rem 60px;
       text-align: center;
-      justify-content: center;
     }
-    @media (max-width: 860px) {
-      .nav-links,
-      .nav-cta-wrap {
-        display: none;
-      }
-      .hamburger {
-        display: block;
-      }
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: #0f0c29;
+      margin-bottom: 1rem;
     }
-
-    /* Section styles */
-    .section {
-      padding: 80px 2rem;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-eyebrow {
+    .hero-title span { color: #4338ca; font-style: italic; }
+    .hero-desc { max-width: 600px; margin: 0 auto; color: #6b7280; }
+    .section-eyebrow-old {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-family: var(--ff-sans);
       font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--indigo-md);
+      color: #4338ca;
       margin-bottom: 1rem;
     }
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1.5px;
-      background: var(--indigo-md);
-    }
-    .section-title {
-      font-family: var(--ff-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.2;
-    }
+    .section-eyebrow-old::before { content: ''; display: block; width: 20px; height: 1.5px; background: #4338ca; }
 
-    /* Hero */
-    .hero-courses {
-      background: linear-gradient(115deg, var(--indigo-xlt) 0%, var(--white) 100%);
-      padding: 80px 2rem 60px;
-      text-align: center;
-    }
-    .hero-title {
-      font-family: var(--ff-display);
-      font-size: clamp(2.5rem, 5vw, 3.8rem);
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1rem;
-    }
-    .hero-title span {
-      color: var(--indigo-md);
-      font-style: italic;
-    }
-    .hero-desc {
-      max-width: 600px;
-      margin: 0 auto;
-      color: var(--muted);
-    }
-
-    /* Courses Grid */
-    .courses-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-    .course-card {
-      background: var(--white);
-      border-radius: 28px;
-      border: 1px solid var(--border);
-      padding: 2rem;
-      transition: all 0.3s ease;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-      position: relative;
-      overflow: hidden;
-    }
-    .course-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--indigo-md), var(--gold));
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .course-card:hover::before {
-      opacity: 1;
-    }
-    .course-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--gold);
-      box-shadow: 0 20px 32px rgba(184, 134, 11, 0.08);
-    }
-    .course-icon {
-      width: 70px;
-      height: 70px;
-      background: var(--indigo-lt);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 2rem;
-      color: var(--indigo-md);
-    }
-    .course-card h2 {
-      font-family: var(--ff-display);
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-    }
-    .course-description {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .course-features {
-      text-align: left;
-      margin: 1rem 0;
-      padding-left: 0;
-      list-style: none;
-    }
-    .course-features li {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .course-features li i {
-      color: var(--green);
-      font-size: 0.7rem;
-      width: 16px;
-    }
-    .wa-enquire {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--green);
-      color: white;
-      padding: 0.6rem 1.4rem;
-      border-radius: 40px;
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: background 0.2s;
-      margin-top: 1rem;
-    }
-    .wa-enquire:hover {
-      background: #15803d;
-    }
-
-    /* Info Banner */
+    /* ── Info banner ── */
     .info-banner {
-      background: linear-gradient(135deg, var(--indigo) 0%, #1e1b4b 100%);
+      background: linear-gradient(135deg, #4338ca 0%, #1e1b4b 100%);
       border-radius: 32px;
       padding: 3rem 2rem;
       margin: 3rem 0;
@@ -393,16 +102,16 @@
       text-align: center;
     }
     .info-banner h2 {
-      font-family: var(--ff-display);
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
     }
-    .info-banner .btn-outline-light {
+    .btn-outline-light {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       background: transparent;
-      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border: 1.5px solid rgba(255,255,255,0.5);
       color: white;
       padding: 0.7rem 1.6rem;
       border-radius: 40px;
@@ -410,438 +119,1086 @@
       margin-top: 1rem;
       transition: all 0.2s;
     }
-    .info-banner .btn-outline-light:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: white;
-    }
+    .btn-outline-light:hover { background: rgba(255,255,255,0.1); border-color: white; }
 
-    /* Testimonial Section */
+    /* ── Testimonial ── */
     .testimonial-section {
-      background: var(--indigo-xlt);
+      background: #f5f3ff;
       border-radius: 28px;
       padding: 2.5rem;
       margin-top: 3rem;
       text-align: center;
     }
     .testimonial-text {
-      font-family: var(--ff-display);
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
       font-size: 1.1rem;
       max-width: 700px;
       margin: 1rem auto;
-      color: var(--text);
+      color: #0f0c29;
     }
-    .testimonial-author {
-      font-weight: 500;
-      color: var(--indigo-md);
-    }
+    .testimonial-author { font-weight: 500; color: #4338ca; }
 
-    /* FAQ Section */
-    .faq-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .faq-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      transition: transform 0.2s;
-    }
-    .faq-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--gold);
-    }
-    .faq-card i {
-      color: var(--indigo-md);
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      display: inline-block;
-    }
-    .faq-card h3 {
-      font-family: var(--ff-display);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-    }
-    .faq-card p {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* Footer */
-    footer {
-      background: var(--text);
-      color: rgba(255, 255, 255, 0.65);
-      padding: 64px 2rem 0;
-    }
-    .footer-grid {
-      max-width: 1160px;
+ /* FAQ Modern Design */
+  .faq-modern {
+    margin-top: 4rem;
+    padding: 2rem 0 4rem;
+    background: linear-gradient(135deg, #f5f3ff 0%, #ffffff 100%);
+    border-radius: 48px;
+  }
+  
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .faq-header .faq-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #4338ca;
+    margin-bottom: 1rem;
+  }
+  
+  .faq-header .faq-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: #4338ca;
+  }
+  
+  .faq-header .faq-eyebrow::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: #4338ca;
+  }
+  
+  .faq-header h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #0f0c29;
+    margin-bottom: 0.75rem;
+  }
+  
+  .faq-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .faq-accordion-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .faq-item {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #eef2ff;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  }
+  
+  .faq-item:hover {
+    border-color: #c7d2fe;
+    box-shadow: 0 8px 20px rgba(67, 56, 202, 0.08);
+  }
+  
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .faq-question:hover {
+    background: #fafaff;
+  }
+  
+  .faq-question-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+  }
+  
+  .faq-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .faq-icon-wrapper i {
+    font-size: 1.25rem;
+    color: #4338ca;
+  }
+  
+  .faq-question h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f0c29;
+    margin: 0;
+  }
+  
+  .faq-chevron {
+    color: #9ca3af;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  
+  .faq-item.active .faq-chevron {
+    transform: rotate(180deg);
+    color: #4338ca;
+  }
+  
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fefefe;
+    border-top: 0px solid #eef2ff;
+  }
+  
+  .faq-item.active .faq-answer {
+    max-height: 200px;
+    border-top-width: 1px;
+  }
+  
+  .faq-answer p {
+    padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  
+  .faq-answer i {
+    color: #10b981;
+    margin-right: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* CTA Banner at bottom */
+  .faq-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem 2rem;
+    background: linear-gradient(135deg, #0f0c29 0%, #1e1b4b 100%);
+    border-radius: 32px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .faq-cta p {
+    color: #e0e7ff;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .faq-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #d97706;
+    color: white;
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  
+  .faq-cta a:hover {
+    background: #b45309;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  
+  @media (max-width: 640px) {
+    .faq-question { padding: 1rem; }
+    .faq-icon-wrapper { width: 36px; height: 36px; }
+    .faq-icon-wrapper i { font-size: 1rem; }
+    .faq-question h3 { font-size: 0.95rem; }
+    .faq-header h2 { font-size: 1.6rem; }
+  }
+    /* ════════════════════════════════════════
+       REDESIGNED COURSES CARDS STYLES
+    ════════════════════════════════════════ */
+    .courses-section {
+      max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr 1fr;
-      gap: 3rem;
+      padding: 80px 24px 40px;
     }
-    @media (max-width: 860px) {
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-      }
-    }
-    .footer-brand .logo-text {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    .footer-brand-desc {
-      font-size: 0.83rem;
-      margin-top: 1rem;
-      max-width: 260px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    .footer-social {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-    }
-    .social-link {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      display: flex;
+    .cs-header { text-align: center; margin-bottom: 56px; }
+    .cs-eyebrow {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .social-link:hover {
-      background: var(--indigo-md);
-      color: #fff;
-    }
-    .footer-col h4 {
-      font-family: var(--ff-sans);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.4);
-      margin-bottom: 1.2rem;
+      color: #4338ca;
+      margin-bottom: 14px;
     }
-    .footer-col ul {
-      list-style: none;
+    .cs-eyebrow::before, .cs-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, #4338ca);
     }
-    .footer-col li {
-      margin-bottom: 0.55rem;
+    .cs-eyebrow::after { background: linear-gradient(90deg, #4338ca, transparent); }
+    .cs-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: #0f0c29;
+      line-height: 1.15;
+      margin-bottom: 14px;
     }
-    .footer-col a {
-      text-decoration: none;
-      font-size: 0.84rem;
-      color: rgba(255, 255, 255, 0.6);
-      transition: color 0.2s;
+    .cs-title em { color: #4338ca; font-style: italic; }
+    .cs-subtitle { font-size: 0.95rem; color: #6b7280; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+    .cards-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
-    .footer-col a:hover {
-      color: rgba(255, 255, 255, 0.95);
-    }
-    .footer-contact-list span {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.83rem;
-      margin-bottom: 0.5rem;
-    }
-    .footer-contact-list i {
-      width: 1rem;
-      color: var(--gold);
-    }
-    .footer-bottom {
-      max-width: 1160px;
-      margin: 3rem auto 0;
-      padding: 1.5rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .footer-gold-mark {
-      font-family: var(--ff-display);
-      font-style: italic;
-      font-size: 0.8rem;
-      color: var(--gold);
-      opacity: 0.7;
+    .card-featured { grid-column: 1 / -1; }
+    @media (max-width: 860px) {
+      .cards-layout { grid-template-columns: 1fr; }
+      .card-featured { grid-column: 1; }
     }
 
-    /* Animation */
     .course-card {
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1px solid #e9e6ff;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease, border-color 0.35s ease;
+      position: relative;
+    }
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 56px rgba(67,56,202,0.10), 0 8px 20px rgba(67,56,202,0.06);
+      border-color: #c7d2fe;
+    }
+    .course-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--card-accent, linear-gradient(90deg,#4338ca,#8b5cf6));
+      border-radius: 28px 28px 0 0;
       opacity: 0;
-      transform: translateY(30px);
+      transition: opacity 0.3s;
+    }
+    .course-card:hover::before { opacity: 1; }
+
+    /* Featured card horizontal split */
+    .card-featured .card-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 360px;
+    }
+    @media (max-width: 700px) {
+      .card-featured .card-inner { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 768px) {
-      .section {
-        padding: 50px 1.5rem;
-      }
-      .courses-grid {
-        grid-template-columns: 1fr;
-      }
+    .card-visual {
+      background: linear-gradient(140deg, #1e1b5e 0%, #0f0c29 60%, #2d1b69 100%);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
     }
+    .card-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 80%, rgba(139,92,246,0.25) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(67,56,202,0.2) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .visual-number {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 120px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(255,255,255,0.05);
+      position: absolute;
+      bottom: -12px;
+      right: 24px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .card-visual-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.85);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 40px;
+      width: fit-content;
+      backdrop-filter: blur(8px);
+    }
+    .card-visual-badge .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #fbbf24;
+      animation: pulse-amber 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-amber {
+      0%,100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.5); }
+      50% { box-shadow: 0 0 0 5px rgba(251,191,36,0); }
+    }
+    .visual-icon {
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      color: #a5b4fc;
+      backdrop-filter: blur(8px);
+      position: relative; z-index: 1;
+    }
+    .visual-title-small {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(165,180,252,0.7);
+      margin-bottom: 6px;
+    }
+    .visual-title-big {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+    }
+    .card-content {
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    @media (max-width: 700px) {
+      .card-visual { padding: 36px 28px; }
+      .card-content { padding: 36px 28px; }
+    }
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4338ca;
+      background: #eef2ff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: #0f0c29;
+      line-height: 1.2;
+    }
+    .card-desc { font-size: 0.875rem; color: #6b7280; line-height: 1.7; }
+    .card-meta { display: flex; flex-wrap: wrap; gap: 18px; }
+    .meta-item { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: #6b7280; }
+    .meta-item i { color: #4338ca; font-size: 0.78rem; }
+    .feature-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      color: #374151;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 5px 12px;
+      border-radius: 40px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .pill i { color: #059669; font-size: 0.68rem; }
+    .course-card:hover .pill { background: #eef2ff; border-color: #c7d2fe; }
+    .cta-row { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+    .btn-enroll {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4338ca 0%, #5b21b6 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(67,56,202,0.3);
+    }
+    .btn-enroll:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(67,56,202,0.38); }
+    .btn-wa-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #ecfdf5;
+      color: #059669;
+      padding: 12px 22px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border: 1px solid #d1fae5;
+      transition: all 0.25s ease;
+    }
+    .btn-wa-sm:hover { background: #d1fae5; transform: translateY(-2px); }
+    .content-divider { height: 1px; background: linear-gradient(90deg, transparent, #e5e7eb 20%, #e5e7eb 80%, transparent); margin: 4px 0; }
+    .instructor-line { display: flex; align-items: center; gap: 10px; }
+    .instructor-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4338ca, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem; font-weight: 600; color: white; flex-shrink: 0;
+    }
+    .instructor-info { line-height: 1.25; }
+    .instructor-name { font-size: 0.8rem; font-weight: 600; color: #111827; }
+    .instructor-role { font-size: 0.72rem; color: #9ca3af; }
+    .stars-row { color: #f59e0b; font-size: 0.7rem; letter-spacing: 1px; }
+    .rating-text { font-size: 0.75rem; color: #9ca3af; margin-left: 4px; }
+
+    /* Standard card specific */
+    .card-std .card-inner { display: flex; flex-direction: column; height: 100%; }
+    .std-visual { padding: 32px 32px 0; display: flex; align-items: flex-start; justify-content: space-between; }
+    .std-icon {
+      width: 60px; height: 60px;
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+    }
+    .std-icon.violet { background: #eef2ff; color: #4338ca; }
+    .std-icon.amber  { background: #fffbeb; color: #b45309; }
+    .card-number-badge {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 3.5rem; font-weight: 700;
+      color: #f0edff; line-height: 1; user-select: none;
+    }
+    .std-content { padding: 24px 32px 32px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+    .card-std .card-title { font-size: 1.35rem; }
+    .card-std .card-desc { font-size: 0.825rem; }
+    .card-std .card-meta { gap: 14px; }
+    .card-std .btn-enroll { padding: 11px 20px; font-size: 0.78rem; }
+    .card-std .btn-wa-sm { padding: 11px 18px; font-size: 0.78rem; }
+    .card-stripe {
+      height: 5px;
+      background: var(--stripe-color, linear-gradient(90deg,#4338ca,#8b5cf6));
+      margin: 0 32px;
+      border-radius: 40px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .course-card:hover .card-stripe { opacity: 1; transform: scaleX(1); }
   </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-700 overflow-x-hidden">
 
-<!-- Navigation -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <div class="logo-icon"><i class="fas fa-moon"></i></div>
-      <div>
-        <span class="logo-text">Astro Numerics</span>
-        <span class="logo-sub">Align · Manifest · Transform</span>
+<!-- ===== NAVIGATION ===== -->
+<nav class="sticky top-0 z-50 glass border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-500 flex items-center justify-center shadow-lg shadow-violet-200">
+        <i class="fas fa-moon text-white text-sm"></i>
       </div>
+      <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">Astro Numerics</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Products</a></li>
-      <li><a href="#" class="active">Courses</a></li>
-      <li><a href="#">Contact</a></li>
+    <ul class="hidden md:flex items-center gap-6 text-sm font-body font-medium text-slate-600">
+      <li><a href="index.html" class="hover:text-violet transition-colors">Home</a></li>
+      <li><a href="about.html" class="hover:text-violet transition-colors">About</a></li>
+      <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
+      <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
+      <li><a href="courses.html" class="hover:text-violet transition-colors text-violet-600 border-b border-violet-300">Courses</a></li>
+      <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
-    <span class="nav-cta-wrap">
-      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
-        <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+    <div class="hidden md:flex items-center">
+      <a href="https://wa.me/919657313963" target="_blank"
+        class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-jade-light transition-all hover:-translate-y-0.5 shadow-md shadow-jade/20">
+        <i class="fab fa-whatsapp"></i> Consult Now
       </a>
-    </span>
-    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+    </div>
+    <button id="hambBtn" class="md:hidden p-2 text-violet-700 text-xl"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
-<div id="mob-overlay"></div>
-<div id="mob-drawer">
-  <button id="mob-close"><i class="fas fa-times"></i></button>
-  <a href="#">Home</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Products</a>
-  <a href="#">Courses</a>
-  <a href="#">Contact</a>
-  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Enquire</a>
+
+<!-- Mobile drawer -->
+<div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
+<div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
+  <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
+  <div class="flex flex-col gap-1">
+    <a href="index.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Home</a>
+    <a href="about.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">About</a>
+    <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
+    <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
+    <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
+    <a href="https://wa.me/919657313963" target="_blank"
+      class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
+      <i class="fab fa-whatsapp"></i> Consult Now
+    </a>
+  </div>
 </div>
 
 <main>
-  <!-- Hero Section -->
-  <div class="hero-courses">
-    <div class="section-eyebrow" style="justify-content: center;">Learn from the Masters</div>
-    <h1 class="hero-title">Numerology <span>Courses</span></h1>
-    <p class="hero-desc">Transform your understanding of numbers — from beginner to professional mastery. Learn the ancient science of numbers with personalized guidance from experienced mentors.</p>
+
+<!-- ===== HERO ===== -->
+<div class="hero-courses" style="background-image: url('/assets/images/cbg1.png'); background-size: cover; background-position: center; position: relative; padding: 160px 2rem 100px;">
+  <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15,12,41,0.82), rgba(67,56,202,0.65)); z-index: 1;"></div>
+  <div style="position: relative; z-index: 2; max-width: 720px; margin: 0 auto; text-align: center;">
+    <div class="section-eyebrow-old" style="justify-content: center; margin-bottom: 16px; color: #e0e7ff; font-size:11px; letter-spacing:0.18em;">
+      Learn from the Masters
+    </div>
+    <h1 class="hero-title" style="margin-bottom: 20px; color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.6); font-size: clamp(2.8rem,6vw,4.2rem);">
+      Numerology <span style="color:#a5b4fc;">Courses</span>
+    </h1>
+    <p class="hero-desc" style="margin-bottom: 0; color: #e0e7ff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-size: 1.05rem;">
+      Transform your understanding of numbers — from beginner to professional mastery. Learn the ancient science of numbers with personalized guidance from experienced mentors.
+    </p>
+  </div>
+</div>
+
+<!-- ===== MARQUEE TRUST BANNER ===== -->
+<div class="star-banner py-3 overflow-hidden border-y border-violet/20">
+  <div class="marquee-inner gap-12 items-center">
+    <div class="flex gap-12 items-center shrink-0 px-6">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Basic Numerology Course</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Advanced Numerology Course</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Mobile Numerology Mastery</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+    </div>
+    <div class="flex gap-12 items-center shrink-0 px-6" aria-hidden="true">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Basic Numerology Course</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Advanced Numerology Course</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-amber-300 text-sm whitespace-nowrap font-medium">Mobile Numerology Mastery</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     REDESIGNED COURSES SECTION
+═══════════════════════════════════════════ -->
+<div class="courses-section">
+
+  <!-- Section header -->
+  <div class="cs-header">
+    <div class="cs-eyebrow">Our Programmes</div>
+    <h2 class="cs-title">Learn the <em>Language of Numbers</em></h2>
+    <p class="cs-subtitle">From beginner foundations to professional mastery — structured courses designed to transform how you read the world.</p>
   </div>
 
-  <!-- Courses Section -->
-  <div class="section">
-    <div class="container">
-      <div class="courses-grid" id="coursesGrid">
-        <!-- Course 1: Basic / Personalized Numerology Course -->
-        <div class="course-card">
-          <div class="course-icon"><i class="fas fa-chart-simple"></i></div>
-          <h2>Basic / Personalized Numerology Course</h2>
-          <div class="course-description">Learn the fundamentals of numerology for self-discovery and personal transformation. Perfect for beginners who want to understand their life path and destiny.</div>
-          <ul class="course-features">
-            <li><i class="fas fa-check-circle"></i> Life Path & Destiny Number calculation</li>
-            <li><i class="fas fa-check-circle"></i> Personal Year cycles & timing</li>
-            <li><i class="fas fa-check-circle"></i> Name vibrations & basic corrections</li>
-            <li><i class="fas fa-check-circle"></i> Understand your strengths & challenges</li>
-          </ul>
-          <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Basic%20%2F%20Personalized%20Numerology%20Course." target="_blank" class="wa-enquire"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+  <!-- Bento Cards Grid -->
+  <div class="cards-layout">
+
+    <!-- ══ CARD 1: FEATURED — Advanced / Professional ══ -->
+    <div class="course-card card-featured" style="--card-accent: linear-gradient(90deg,#4338ca,#8b5cf6,#d97706);">
+      <div class="card-inner">
+
+        <!-- Left visual panel -->
+        <div class="card-visual">
+          <div class="visual-number" aria-hidden="true">02</div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;">
+            <span class="card-visual-badge"><span class="dot"></span> Most Popular</span>
+            <div style="text-align:right;">
+              <div class="stars-row">★★★★★</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;">4.9 / 5.0</div>
+            </div>
+          </div>
+
+          <div style="position:relative;z-index:1;">
+            <div class="visual-icon" style="margin-bottom:20px;"><i class="fas fa-chart-line"></i></div>
+            <div class="visual-title-small">Course 02</div>
+            <div class="visual-title-big">Advance &amp;<br>Professional<br>Numerology</div>
+          </div>
+
+          <div class="instructor-line" style="position:relative;z-index:1;">
+            <div class="instructor-avatar">AN</div>
+            <div class="instructor-info">
+              <div class="instructor-name" style="color:rgba(255,255,255,0.9);">Astro Numerics</div>
+              <div class="instructor-role" style="color:rgba(165,180,252,0.7);">Master Numerologist · 12 yrs exp.</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Course 2: Advance / Professional Numerology Course -->
-        <div class="course-card">
-          <div class="course-icon"><i class="fas fa-chart-line"></i></div>
-          <h2>Advance / Professional Numerology Course</h2>
-          <div class="course-description">Master the art of numerology and start your journey as a professional consultant. In-depth training for serious practitioners.</div>
-          <ul class="course-features">
-            <li><i class="fas fa-check-circle"></i> Complete chart analysis & interpretation</li>
-            <li><i class="fas fa-check-circle"></i> Name correction & vibration balancing</li>
-            <li><i class="fas fa-check-circle"></i> Predictive techniques & timing methods</li>
-            <li><i class="fas fa-check-circle"></i> Client reading & consultation skills</li>
-            <li><i class="fas fa-check-circle"></i> Compatibility & relationship analysis</li>
-          </ul>
-          <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Advance%20%2F%20Professional%20Numerology%20Course." target="_blank" class="wa-enquire"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
+        <!-- Right content panel -->
+        <div class="card-content">
+          <div><span class="card-tag"><i class="fas fa-crown"></i> Professional Track</span></div>
+          <h3 class="card-title">Master the Art of Numerology &amp; Become a Certified Consultant</h3>
+          <p class="card-desc">In-depth training for serious practitioners. Master complete chart analysis, name correction, predictive methods, and build a thriving consultation practice from day one.</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="fas fa-clock"></i> 8 – 10 Weeks</span>
+            <span class="meta-item"><i class="fas fa-play-circle"></i> 24+ Live Sessions</span>
+            <span class="meta-item"><i class="fas fa-globe"></i> Online · Zoom / Meet</span>
+            <span class="meta-item"><i class="fas fa-certificate"></i> Certification</span>
+          </div>
+          <div class="content-divider"></div>
+          <div class="feature-pills">
+            <span class="pill"><i class="fas fa-check-circle"></i> Complete Chart Analysis</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Name Correction</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Predictive Techniques</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Client Reading Skills</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Compatibility Analysis</span>
+          </div>
+          <div class="cta-row">
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Advance%20Numerology%20Course." target="_blank" class="btn-enroll">
+              <i class="fas fa-arrow-right"></i> Enroll Now
+            </a>
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Advance%20Numerology%20Course." target="_blank" class="btn-wa-sm">
+              <i class="fab fa-whatsapp"></i> Ask a Question
+            </a>
+          </div>
         </div>
 
-        <!-- Course 3: Basic & Advance Mobile Numerology Course -->
-        <div class="course-card">
-          <div class="course-icon"><i class="fas fa-mobile-alt"></i></div>
-          <h2>Basic & Advance Mobile Numerology Course</h2>
-          <div class="course-description">Specialized course focusing on the energy of mobile numbers and how they influence communication, opportunities, and growth.</div>
-          <ul class="course-features">
-            <li><i class="fas fa-check-circle"></i> Mobile number energy analysis</li>
-            <li><i class="fas fa-check-circle"></i> Impact on business & personal success</li>
-            <li><i class="fas fa-check-circle"></i> Number selection for specific goals</li>
-            <li><i class="fas fa-check-circle"></i> Advanced mobile number remedies</li>
-            <li><i class="fas fa-check-circle"></i> Practical case studies & applications</li>
-          </ul>
-          <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Basic%20%26%20Advance%20Mobile%20Numerology%20Course." target="_blank" class="wa-enquire"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
-        </div>
       </div>
+    </div>
+    <!-- /CARD 1 -->
 
-      <!-- Info Banner -->
-      <div class="info-banner">
-        <i class="fas fa-graduation-cap" style="font-size: 2.5rem; opacity: 0.7;"></i>
-        <h2>Why Learn Numerology With Us?</h2>
-        <p>5+ years of teaching experience | Personalized attention | Practical approach | Certification upon completion</p>
-        <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20more%20about%20your%20Numerology%20Courses." target="_blank" class="btn-outline-light"><i class="fab fa-whatsapp"></i> Talk to Our Course Advisor</a>
-      </div>
-
-      <!-- Testimonial Section -->
-      <div class="testimonial-section">
-        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--gold); opacity: 0.5;"></i>
-        <p class="testimonial-text">"The Advanced Numerology Course transformed my understanding completely. The teaching was clear, practical, and deeply insightful. I'm now confidently doing professional readings for clients!"</p>
-        <p class="testimonial-author">— Meera S., Certified Numerologist</p>
-      </div>
-
-      <!-- FAQ Section for Courses -->
-      <div style="margin-top: 3rem;">
-        <h2 style="font-family: var(--ff-display); font-size: 1.8rem; text-align: center; margin-bottom: 2rem;">Frequently Asked Questions</h2>
-        <div class="faq-grid">
-          <div class="faq-card">
-            <i class="fas fa-clock"></i>
-            <h3>Course Duration</h3>
-            <p>Basic course: 4-6 weeks | Advance course: 8-10 weeks | Self-paced options available</p>
+    <!-- ══ CARD 2: Basic / Personalized ══ -->
+    <div class="course-card card-std" style="--card-accent: linear-gradient(90deg,#6366f1,#4338ca); --stripe-color: linear-gradient(90deg,#4338ca,#8b5cf6);">
+      <div class="card-inner">
+        <div class="std-visual">
+          <div class="std-icon violet"><i class="fas fa-chart-simple"></i></div>
+          <div class="card-number-badge" aria-hidden="true">01</div>
+        </div>
+        <div class="std-content">
+          <div><span class="card-tag" style="background:#f0f9ff;color:#1d4ed8;"><i class="fas fa-seedling"></i> Beginner Friendly</span></div>
+          <h3 class="card-title">Basic &amp; Personalized Numerology Course</h3>
+          <p class="card-desc">Understand your life path, destiny number, name vibrations, and personal year cycles. The perfect starting point for anyone curious about numerology.</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="fas fa-clock"></i> 4 – 6 Weeks</span>
+            <span class="meta-item"><i class="fas fa-play-circle"></i> 12+ Sessions</span>
+            <span class="meta-item"><i class="fas fa-certificate"></i> Certificate</span>
           </div>
-          <div class="faq-card">
-            <i class="fas fa-globe"></i>
-            <h3>Mode of Learning</h3>
-            <p>Online sessions via Zoom/Google Meet. Recordings available. One-on-one mentorship included.</p>
+          <div class="feature-pills">
+            <span class="pill"><i class="fas fa-check-circle"></i> Life Path &amp; Destiny Numbers</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Personal Year Cycles</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Name Vibrations</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Strengths &amp; Challenges</span>
           </div>
-          <div class="faq-card">
-            <i class="fas fa-certificate"></i>
-            <h3>Certification</h3>
-            <p>Certificate of completion from Astro Numerics. Professional practitioners receive advanced certification.</p>
+          <div class="content-divider"></div>
+          <div class="instructor-line">
+            <div class="instructor-avatar">AN</div>
+            <div class="instructor-info">
+              <div class="instructor-name">Astro Numerics</div>
+              <div class="instructor-role">Master Numerologist</div>
+            </div>
+            <div style="margin-left:auto;text-align:right;">
+              <div class="stars-row">★★★★★</div>
+              <div class="rating-text">5.0 · Beginner</div>
+            </div>
           </div>
-          <div class="faq-card">
-            <i class="fas fa-rupee-sign"></i>
-            <h3>Investment</h3>
-            <p>Contact us for detailed pricing. EMI options and early bird discounts available.</p>
+          <div class="cta-row" style="flex-wrap:wrap;">
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Basic%20Numerology%20Course." target="_blank" class="btn-enroll">
+              <i class="fas fa-arrow-right"></i> Enroll Now
+            </a>
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Basic%20Numerology%20Course." target="_blank" class="btn-wa-sm">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
           </div>
         </div>
+        <div class="card-stripe"></div>
+        <div style="height:24px;"></div>
+      </div>
+    </div>
+    <!-- /CARD 2 -->
+
+    <!-- ══ CARD 3: Mobile Numerology ══ -->
+    <div class="course-card card-std" style="--card-accent: linear-gradient(90deg,#d97706,#f59e0b);">
+      <div class="card-inner">
+        <div class="std-visual">
+          <div class="std-icon amber"><i class="fas fa-mobile-alt"></i></div>
+          <div class="card-number-badge" aria-hidden="true" style="color:#fef3c7;">03</div>
+        </div>
+        <div class="std-content">
+          <div><span class="card-tag" style="background:#fffbeb;color:#b45309;"><i class="fas fa-star"></i> Specialization</span></div>
+          <h3 class="card-title">Basic &amp; Advance Mobile Numerology Course</h3>
+          <p class="card-desc">Unlock the hidden energy of mobile numbers. Learn to choose numbers that align with your goals and amplify communication, business success, and personal growth.</p>
+          <div class="card-meta">
+            <span class="meta-item"><i class="fas fa-clock"></i> 4 – 8 Weeks</span>
+            <span class="meta-item"><i class="fas fa-play-circle"></i> 16+ Sessions</span>
+            <span class="meta-item"><i class="fas fa-certificate"></i> Certificate</span>
+          </div>
+          <div class="feature-pills">
+            <span class="pill"><i class="fas fa-check-circle"></i> Mobile Number Energy</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Business &amp; Success Impact</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Number Selection</span>
+            <span class="pill"><i class="fas fa-check-circle"></i> Case Studies</span>
+          </div>
+          <div class="content-divider"></div>
+          <div class="instructor-line">
+            <div class="instructor-avatar" style="background: linear-gradient(135deg,#b45309,#d97706);">AN</div>
+            <div class="instructor-info">
+              <div class="instructor-name">Astro Numerics</div>
+              <div class="instructor-role">Mobile Numerology Specialist</div>
+            </div>
+            <div style="margin-left:auto;text-align:right;">
+              <div class="stars-row">★★★★★</div>
+              <div class="rating-text">4.9 · All Levels</div>
+            </div>
+          </div>
+          <div class="cta-row" style="flex-wrap:wrap;">
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Mobile%20Numerology%20Course." target="_blank" class="btn-enroll" style="background: linear-gradient(135deg,#b45309,#d97706); box-shadow: 0 4px 14px rgba(180,83,9,0.3);">
+              <i class="fas fa-arrow-right"></i> Enroll Now
+            </a>
+            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20details%20about%20the%20Mobile%20Numerology%20Course." target="_blank" class="btn-wa-sm" style="background:#fffbeb;color:#b45309;border-color:#fde68a;">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="card-stripe" style="--stripe-color: linear-gradient(90deg,#b45309,#d97706);"></div>
+        <div style="height:24px;"></div>
+      </div>
+    </div>
+    <!-- /CARD 3 -->
+
+  </div>
+  <!-- /cards-layout -->
+
+  <!-- ── Info Banner ── -->
+  <div class="info-banner">
+    <i class="fas fa-graduation-cap" style="font-size: 2.5rem; opacity: 0.7;"></i>
+    <h2>Why Learn Numerology With Us?</h2>
+    <p>5+ years of teaching experience | Personalized attention | Practical approach | Certification upon completion</p>
+    <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20more%20about%20your%20Numerology%20Courses." target="_blank" class="btn-outline-light">
+      <i class="fab fa-whatsapp"></i> Talk to Our Course Advisor
+    </a>
+  </div>
+
+<div class="faq-modern">
+  <div class="faq-header">
+    <div class="faq-eyebrow">KNOW MORE</div>
+    <h2>✨ Frequently Asked Questions</h2>
+    <p>Everything you need to know about our sacred offerings & services</p>
+  </div>
+
+  <div class="faq-accordion-grid">
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-question-left">
+          <div class="faq-icon-wrapper"><i class="fas fa-clock"></i></div>
+          <h3>What is the course duration?</h3>
+        </div>
+        <i class="fas fa-chevron-down faq-chevron"></i>
+      </div>
+      <div class="faq-answer">
+        <p><i class="fas fa-star"></i> Basic course: 4–6 weeks | Advanced course: 8–10 weeks | Self-paced learning options also available with lifetime access to recordings.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-question-left">
+          <div class="faq-icon-wrapper"><i class="fas fa-globe"></i></div>
+          <h3>How do I attend the sessions?</h3>
+        </div>
+        <i class="fas fa-chevron-down faq-chevron"></i>
+      </div>
+      <div class="faq-answer">
+        <p><i class="fas fa-star"></i> Online sessions via Zoom/Google Meet. Recordings shared within 24 hours. You also get one-on-one mentorship and doubt-clearing support.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-question-left">
+          <div class="faq-icon-wrapper"><i class="fas fa-certificate"></i></div>
+          <h3>Will I get a certificate?</h3>
+        </div>
+        <i class="fas fa-chevron-down faq-chevron"></i>
+      </div>
+      <div class="faq-answer">
+        <p><i class="fas fa-star"></i> Yes, you receive a certificate of completion from Astro Numerics. Professional practitioners can opt for advanced certification after assessments.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-question-left">
+          <div class="faq-icon-wrapper"><i class="fas fa-rupee-sign"></i></div>
+          <h3>What is the investment?</h3>
+        </div>
+        <i class="fas fa-chevron-down faq-chevron"></i>
+      </div>
+      <div class="faq-answer">
+        <p><i class="fas fa-star"></i> Contact us for detailed pricing. EMI options available on select courses, and early bird discounts for registrations before the deadline.</p>
       </div>
     </div>
   </div>
+
+  <div class="faq-cta">
+    <p>📿 Still have questions? We're here to guide you.</p>
+    <a href="https://wa.me/919657313963" target="_blank">
+      <i class="fab fa-whatsapp"></i> Chat with an Expert
+    </a>
+  </div>
+</div>
+
+</div>
+<!-- /courses-section -->
+
 </main>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
-      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
-      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
-    </div>
-    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Services</a></li><li><a href="#">Products</a></li><li><a href="#">Courses</a></li><li><a href="#">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Tarot Reading</a></li><li><a href="#">Numerology</a></li><li><a href="#">Vastu</a></li><li><a href="#">Crystal Healing</a></li><li><a href="#">Astrology</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Pune 411041</span></div></div>
+<!-- ===== FOOTER ===== -->
+<footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
+    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
   </div>
-  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
+
+      <div class="space-y-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+            <span class="material-symbols-outlined text-2xl text-white">auto_awesome</span>
+          </div>
+          <span class="font-display text-xl font-semibold tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Astro Numerics</span>
+        </div>
+        <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
+        <div class="flex gap-3 pt-2">
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-instagram text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-youtube text-sm"></i></a>
+          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300"><i class="fab fa-whatsapp text-sm"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-violet-400">explore</span><span>Navigate</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Home</span></a></li>
+          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">About</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Services</span></a></li>
+          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Products</span></a></li>
+          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Courses</span></a></li>
+          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Contact</span></a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-amber-400">spa</span><span>Offerings</span>
+        </h4>
+        <ul class="space-y-3">
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">123</span><span class="text-sm">Numerology</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">stars</span><span class="text-sm">Birth Chart</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">home</span><span class="text-sm">Vastu</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">history</span><span class="text-sm">Past Life</span></a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
+          <span class="material-symbols-outlined text-base text-emerald-400">call</span><span>Get in Touch</span>
+        </h4>
+        <div class="space-y-4">
+          <a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-violet-400 group-hover:scale-110 transition-transform">phone_in_talk</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-emerald-400 group-hover:scale-110 transition-transform">chat</span>
+            <span class="text-sm">+91 96573 13963</span>
+          </a>
+          <a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
+            <span class="material-symbols-outlined text-xl text-amber-400 group-hover:scale-110 transition-transform">mail</span>
+            <span class="text-sm">connect@astronumerics.com</span>
+          </a>
+          <div class="pt-3 flex items-start gap-3 text-white/40 text-xs">
+            <span class="material-symbols-outlined text-base">schedule</span>
+            <span>Mon - Sat: 10:00 AM - 7:00 PM IST</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8">
+      <div class="flex items-center gap-2 text-white/30 text-xs">
+        <span class="material-symbols-outlined text-sm">copyright</span>
+        <span>2025 Astro Numerics. All rights reserved.</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5 text-amber-400/60 text-xs">
+          <span class="material-symbols-outlined text-sm">stars</span>
+          <span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span>
+        </div>
+        <a href="#" class="text-white/30 hover:text-white/60 transition-colors">
+          <span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>
 
-<script>
-  // Register ScrollTrigger plugin
-  gsap.registerPlugin(ScrollTrigger);
-  
-  // Hero animation
-  gsap.from(".hero-courses", {
-    duration: 0.8,
-    opacity: 0,
-    y: 30,
-    ease: "power2.out"
-  });
-  
-  // Course cards animation with ScrollTrigger
-  gsap.from(".course-card", {
-    duration: 0.6,
-    opacity: 0,
-    y: 30,
-    stagger: 0.15,
-    scrollTrigger: {
-      trigger: "#coursesGrid",
-      start: "top 80%",
-      toggleActions: "play none none none"
-    }
-  });
-  
-  // Info banner animation
-  gsap.from(".info-banner", {
-    duration: 0.7,
-    y: 40,
-    opacity: 0,
-    scrollTrigger: {
-      trigger: ".info-banner",
-      start: "top 85%"
-    }
-  });
-  
-  // Testimonial animation
-  gsap.from(".testimonial-section", {
-    duration: 0.7,
-    scale: 0.97,
-    opacity: 0,
-    scrollTrigger: {
-      trigger: ".testimonial-section",
-      start: "top 85%"
-    }
-  });
-  
-  // FAQ cards animation
-  gsap.from(".faq-card", {
-    duration: 0.6,
-    y: 30,
-    opacity: 0,
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: ".faq-grid",
-      start: "top 85%"
-    }
-  });
-  
-  // Set initial opacity for course cards to 0 (will be animated by GSAP)
-  gsap.set(".course-card", { opacity: 0, y: 30 });
-  
-  // Manually trigger the animation after a short delay to ensure visibility
-  setTimeout(() => {
-    gsap.to(".course-card", {
-      duration: 0.6,
-      opacity: 1,
-      y: 0,
-      stagger: 0.15
-    });
-  }, 100);
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20know%20about%20your%20Numerology%20Courses." target="_blank" class="fixed bottom-6 left-6 z-50 group">
+  <div class="relative">
+    <div class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75"></div>
+    <div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 hover:scale-110 transition-transform duration-300">
+      <i class="fab fa-whatsapp text-white text-2xl md:text-3xl"></i>
+    </div>
+    <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Chat with us 💬</div>
+    </div>
+  </div>
+</a>
 
-  // Mobile Menu functionality
+<!-- Back to Top Button -->
+<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
+  <div class="relative">
+    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
+    <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
+    </div>
+  </div>
+</button>
+
+<script>
+  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { backToTopBtn.style.opacity = '1'; backToTopBtn.style.visibility = 'visible'; }
+    else { backToTopBtn.style.opacity = '0'; backToTopBtn.style.visibility = 'hidden'; }
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
   const hamb = document.getElementById('hambBtn');
   const drawer = document.getElementById('mob-drawer');
   const overlay = document.getElementById('mob-overlay');
-  const closeBtn = document.getElementById('mob-close');
-  
-  if (hamb) {
-    hamb.addEventListener('click', () => {
-      drawer.classList.add('open');
-      overlay.classList.add('open');
-    });
+  const close = document.getElementById('mob-close');
+  const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
+  const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
+  hamb.addEventListener('click', open);
+  close.addEventListener('click', shut);
+  overlay.addEventListener('click', shut);
+
+  // Staggered card entrance animation
+  const courseCards = document.querySelectorAll('.course-card');
+  courseCards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(32px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 150 + i * 160);
+  });
+
+  const infoBanner = document.querySelector('.info-banner');
+  if (infoBanner) {
+    infoBanner.style.opacity = '0'; infoBanner.style.transform = 'translateY(40px)'; infoBanner.style.transition = 'all 0.7s ease';
+    setTimeout(() => { infoBanner.style.opacity = '1'; infoBanner.style.transform = 'translateY(0)'; }, 600);
   }
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
-    });
+
+  const testimonial = document.querySelector('.testimonial-section');
+  if (testimonial) {
+    testimonial.style.opacity = '0'; testimonial.style.transform = 'scale(0.97)'; testimonial.style.transition = 'all 0.7s ease';
+    setTimeout(() => { testimonial.style.opacity = '1'; testimonial.style.transform = 'scale(1)'; }, 800);
   }
-  if (overlay) {
-    overlay.addEventListener('click', () => {
-      drawer.classList.remove('open');
-      overlay.classList.remove('open');
+
+  document.querySelectorAll('.faq-card').forEach((card, i) => {
+    card.style.opacity = '0'; card.style.transform = 'translateY(30px)'; card.style.transition = 'all 0.6s ease';
+    setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 900 + i * 100);
+  });
+
+   // Accordion functionality for FAQ items
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const questionDiv = item.querySelector('.faq-question');
+    questionDiv.addEventListener('click', () => {
+      // Close other items (optional - uncomment for exclusive open)
+      // document.querySelectorAll('.faq-item').forEach(otherItem => {
+      //   if (otherItem !== item && otherItem.classList.contains('active')) {
+      //     otherItem.classList.remove('active');
+      //   }
+      // });
+      item.classList.toggle('active');
     });
-  }
+  });
 </script>
 </body>
 </html>

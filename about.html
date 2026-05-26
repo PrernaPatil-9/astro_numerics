@@ -2,826 +2,419 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Astro Numerics — About | Align · Manifest · Transform</title>
-
-  <!-- Google Fonts & Font Awesome -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- GSAP Core & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Outfit', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            midnight: { DEFAULT: '#0f0c29', 800: '#1a1548', 700: '#231d5e', 600: '#2d2475' },
+            violet: { DEFAULT: '#4338ca', light: '#6366f1', pale: '#eef2ff', xpale: '#f5f3ff' },
+            amber: { DEFAULT: '#b45309', light: '#d97706', xlight: '#fef3c7', pale: '#fffbeb' },
+            jade: { DEFAULT: '#059669', light: '#10b981', pale: '#ecfdf5' },
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.7s ease forwards',
+            'marquee': 'marquee 30s linear infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'spin-slow': 'spin 20s linear infinite',
+            'blink': 'blink 2.2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: { from: { opacity: 0, transform: 'translateY(24px)' }, to: { opacity: 1, transform: 'none' } },
+            marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } },
+            blink: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.25 } },
+          },
+        }
+      }
+    }
+  </script>
   <style>
-    /* ===== DESIGN TOKENS (exactly like index) ===== */
-    :root {
-      --indigo: #3730a3;
-      --indigo-md: #4f46e5;
-      --indigo-lt: #eef2ff;
-      --indigo-xlt: #f5f6ff;
-      --gold: #b8860b;
-      --gold-lt: #d4a017;
-      --gold-xlt: #fdf6e3;
-      --blue: #1d4ed8;
-      --green: #16a34a;
-      --white: #ffffff;
-      --bg: #fafafa;
-      --text: #1e1b4b;
-      --body: #374151;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --border-ind: rgba(79, 70, 229, 0.15);
-      --ff-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
-      --ff-sans: 'DM Sans', 'Roboto', system-ui, sans-serif;
-      --ff-body: 'Roboto', 'DM Sans', system-ui, sans-serif;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: var(--ff-body);
-      font-weight: 300;
-      background: var(--bg);
-      color: var(--body);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* ===== NAVIGATION (exactly as index) ===== */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-    }
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-      background: linear-gradient(135deg, var(--indigo), var(--indigo-md));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-    .logo-text {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--indigo);
-      letter-spacing: 0.01em;
-    }
-    .logo-sub {
-      font-family: var(--ff-sans);
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      display: block;
-      margin-top: -2px;
-    }
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-    .nav-links a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.83rem;
-      font-weight: 400;
-      color: var(--body);
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      right: 0;
-      height: 1.5px;
-      background: var(--indigo-md);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.25s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--indigo-md);
-    }
-    .nav-links a:hover::after,
-    .nav-links a.active::after {
-      transform: scaleX(1);
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--green);
-      color: #fff;
-      padding: 0.55rem 1.4rem;
-      border-radius: 6px;
-      font-family: var(--ff-sans);
-      font-size: 0.82rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover {
-      background: #15803d;
-      transform: translateY(-1px);
-    }
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--indigo);
-      cursor: pointer;
-    }
-    #mob-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 27, 75, 0.35);
-      z-index: 190;
-    }
-    #mob-overlay.open {
-      display: block;
-    }
-    #mob-drawer {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 72vw;
-      max-width: 300px;
-      height: 100vh;
-      background: #fff;
-      z-index: 200;
-      flex-direction: column;
-      padding: 5rem 2rem 2rem;
-      border-left: 1px solid var(--border);
-    }
-    #mob-drawer.open {
-      display: flex;
-    }
-    #mob-close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--muted);
-      cursor: pointer;
-    }
-    #mob-drawer a {
-      text-decoration: none;
-      font-family: var(--ff-sans);
-      font-size: 0.92rem;
-      color: var(--body);
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    #mob-drawer .mob-cta {
-      margin-top: 1.5rem;
-      border: none;
-      text-align: center;
-      justify-content: center;
-    }
-    @media (max-width: 860px) {
-      .nav-links,
-      .nav-cta-wrap {
-        display: none;
-      }
-      .hamburger {
-        display: block;
-      }
-    }
-
-    /* ===== SECTION STYLES ===== */
-    .section {
-      padding: 88px 2rem;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--ff-sans);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--indigo-md);
-      margin-bottom: 1rem;
-    }
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 1.5px;
-      background: var(--indigo-md);
-    }
-    .section-title {
-      font-family: var(--ff-display);
-      font-size: clamp(1.9rem, 3.5vw, 2.75rem);
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.2;
-    }
-
-    /* Hero Banner with astro imagery & floating cards */
-    .about-hero {
-      position: relative;
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      background: linear-gradient(125deg, rgba(55, 48, 163, 0.02) 0%, rgba(79, 70, 229, 0.05) 100%);
-      overflow: hidden;
-      padding: 4rem 2rem;
-    }
-    .hero-bg-astro {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-      background-size: cover;
-      background-position: center 30%;
-      opacity: 0.08;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-bg-stars {
-      position: absolute;
-      top: -20%;
-      right: -5%;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(184, 134, 11, 0.12) 0%, rgba(79, 70, 229, 0.03) 70%);
-      border-radius: 50%;
-      z-index: 0;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 700px;
-    }
-    .hero-title {
-      font-family: var(--ff-display);
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 1.2rem;
-    }
-    .hero-title span {
-      color: var(--indigo-md);
-      font-style: italic;
-    }
-    .hero-desc {
-      font-size: 1.05rem;
-      color: var(--body);
-      max-width: 600px;
-      margin-bottom: 2rem;
-      line-height: 1.7;
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      border: 1.5px solid var(--indigo-md);
-      color: var(--indigo-md);
-      padding: 0.7rem 1.6rem;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    .btn-outline:hover {
-      background: var(--indigo-lt);
-    }
-    /* Floating astro cards */
-    .hero-astro-cards {
-      position: absolute;
-      right: 5%;
-      top: 50%;
-      transform: translateY(-30%);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      z-index: 2;
-      max-width: 280px;
-    }
-    .astro-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(8px);
-      border-radius: 20px;
-      padding: 1rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
-      border: 1px solid var(--border-ind);
-    }
-    .astro-card i {
-      font-size: 1.4rem;
-      color: var(--gold);
-    }
-    .astro-card span {
-      font-family: var(--ff-sans);
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-    @media (max-width: 900px) {
-      .hero-astro-cards {
-        display: none;
-      }
-    }
-
-    /* Cards grid */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-    .feature-card {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-    .feature-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--gold);
-      box-shadow: 0 20px 32px rgba(184, 134, 11, 0.08);
-    }
-    .card-icon {
-      width: 64px;
-      height: 64px;
-      background: var(--indigo-lt);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.2rem;
-      font-size: 1.8rem;
-      color: var(--indigo-md);
-    }
-    .feature-card h3 {
-      font-family: var(--ff-display);
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Stats banner */
-    .stats-banner {
-      background: linear-gradient(135deg, var(--indigo) 0%, #1e1b4b 100%);
-      border-radius: 32px;
-      padding: 3rem 2rem;
-      margin: 3rem 0;
-      color: white;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      text-align: center;
-    }
-    .stat-item h4 {
-      font-size: 2.5rem;
-      font-family: var(--ff-display);
-      font-weight: 600;
-    }
-    .stat-item p {
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    /* Mission Banner */
-    .mission-banner {
-      background: var(--gold-xlt);
-      border-left: 6px solid var(--gold);
-      padding: 2rem 2.5rem;
-      border-radius: 24px;
-      margin: 2rem 0;
-    }
-
-    /* Pill tags */
-    .expertise-pill {
-      display: inline-block;
-      background: var(--white);
-      border: 1px solid var(--border-ind);
-      padding: 0.3rem 1rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--indigo-md);
-      margin: 0.2rem;
-    }
-    .expert-card {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 2rem;
-      border: 1px solid var(--border);
-      transition: transform 0.2s;
-    }
-    .expert-card:hover {
-      transform: translateY(-4px);
-    }
-
-    /* Footer (exactly as index) */
-    footer {
-      background: var(--text);
-      color: rgba(255, 255, 255, 0.65);
-      padding: 64px 2rem 0;
-    }
-    .footer-grid {
-      max-width: 1160px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1fr 1fr;
-      gap: 3rem;
-    }
-    @media (max-width: 860px) {
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .footer-brand .logo-text {
-      color: rgba(255, 255, 255, 0.9);
-    }
-    .footer-brand-desc {
-      font-size: 0.83rem;
-      margin-top: 1rem;
-      max-width: 260px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    .footer-social {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-    }
-    .social-link {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-    }
-    .social-link:hover {
-      background: var(--indigo-md);
-      color: #fff;
-    }
-    .footer-col h4 {
-      font-family: var(--ff-sans);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.4);
-      margin-bottom: 1.2rem;
-    }
-    .footer-col ul {
-      list-style: none;
-    }
-    .footer-col li {
-      margin-bottom: 0.55rem;
-    }
-    .footer-col a {
-      text-decoration: none;
-      font-size: 0.84rem;
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .footer-col a:hover {
-      color: rgba(255, 255, 255, 0.95);
-    }
-    .footer-contact-list span {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.83rem;
-      margin-bottom: 0.5rem;
-    }
-    .footer-contact-list i {
-      width: 1rem;
-      color: var(--gold);
-    }
-    .footer-bottom {
-      max-width: 1160px;
-      margin: 3rem auto 0;
-      padding: 1.5rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .footer-gold-mark {
-      font-family: var(--ff-display);
-      font-style: italic;
-      font-size: 0.8rem;
-      color: var(--gold);
-      opacity: 0.7;
-    }
+    body { font-family: 'Outfit', sans-serif; background: #fefaf5; color: #1e1b2e; }
+    .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .hero-grid { background-image: radial-gradient(rgba(99,102,241,0.08) 1px, transparent 1px); background-size: 30px 30px; }
+    .text-grad { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gold-grad { background: linear-gradient(135deg, #b45309 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .card-shine { position: relative; overflow: hidden; }
+    .card-shine::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%); transition: transform 0.6s; transform: translateX(-100%) rotate(45deg); pointer-events: none; }
+    .card-shine:hover::before { transform: translateX(100%) rotate(45deg); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: 0.1s; } .reveal.d2 { transition-delay: 0.2s; } .reveal.d3 { transition-delay: 0.3s; } .reveal.d4 { transition-delay: 0.4s; }
+    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.96); box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+    .blink-dot { animation: blink 2.2s ease-in-out infinite; }
+    .star-banner { background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%); border-top: 1px solid rgba(99,102,241,0.2); border-bottom: 1px solid rgba(99,102,241,0.2); }
+    .marquee-inner { display: flex; width: max-content; animation: marquee 28s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .animate-spin-slow { animation: spin-slow 30s linear infinite; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .value-card { transition: all 0.35s cubic-bezier(0.23,1,0.32,1); }
+    .value-card:hover { transform: translateY(-4px); box-shadow: 0 20px 35px -12px rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
+    .stat-card { transition: all 0.3s ease; }
+    .stat-card:hover { transform: translateY(-4px); background: #ffffff; box-shadow: 0 12px 24px -10px rgba(0,0,0,0.05); }
   </style>
 </head>
-<body>
+<body class="overflow-x-hidden">
 
-<!-- ===== NAVBAR (identical to index) ===== -->
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <div class="logo-icon"><i class="fas fa-moon"></i></div>
-      <div>
-        <span class="logo-text">Astro Numerics</span>
-        <span class="logo-sub">Align · Manifest · Transform</span>
+<!-- ═══════════════════════════════════════════════ NAV (EXACT COPY FROM INDEX) ═══════════════════════════════════ -->
+<nav class="sticky top-0 z-50 glass border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2.5 shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-500 flex items-center justify-center shadow-lg shadow-violet-200">
+        <i class="fas fa-moon text-white text-sm"></i>
       </div>
+      <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">Astro Numerics</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="products.html">Products</a></li>
-      <li><a href="courses.html">Courses</a></li>
-      <li><a href="contact.html">Contact</a></li>
+    <ul class="hidden md:flex items-center gap-6 text-sm font-body font-medium text-slate-600">
+      <li><a href="index.html" class="hover:text-violet transition-colors">Home</a></li>
+      <li><a href="about.html" class="hover:text-violet transition-colors text-violet-600 border-b border-violet-300">About</a></li>
+      <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
+      <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
+      <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
-    <span class="nav-cta-wrap">
-      <a href="https://wa.me/919657313963" target="_blank" class="btn-primary">
-        <i class="fab fa-whatsapp"></i> Book Consultation
+    <div class="hidden md:flex items-center">
+      <a href="https://wa.me/919657313963" target="_blank"
+        class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-jade-light transition-all hover:-translate-y-0.5 shadow-md shadow-jade/20">
+        <i class="fab fa-whatsapp"></i> Consult Now
       </a>
-    </span>
-    <button class="hamburger" id="hambBtn"><i class="fas fa-bars"></i></button>
+    </div>
+    <button id="hambBtn" class="md:hidden p-2 text-violet-700 text-xl"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
-<div id="mob-overlay"></div>
-<div id="mob-drawer">
-  <button id="mob-close"><i class="fas fa-times"></i></button>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="services.html">Services</a>
-  <a href="products.html">Products</a>
-  <a href="courses.html">Courses</a>
-  <a href="contact.html">Contact</a>
-  <a href="https://wa.me/919657313963" target="_blank" class="btn-primary mob-cta"><i class="fab fa-whatsapp"></i> Book Consultation</a>
+
+<!-- Mobile drawer (exact copy from index) -->
+<div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
+<div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
+  <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
+  <div class="flex flex-col gap-1">
+    <a href="index.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Home</a>
+    <a href="about.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">About</a>
+    <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
+    <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
+    <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
+    <a href="https://wa.me/919657313963" target="_blank"
+      class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
+      <i class="fab fa-whatsapp"></i> Consult Now
+    </a>
+  </div>
 </div>
 
-<main>
-  <!-- HERO SECTION with astro background image & floating cards -->
-  <div class="about-hero" id="heroSection">
-    <div class="hero-bg-astro"></div>
-    <div class="hero-bg-stars"></div>
-    <div class="container hero-content">
-      <div class="section-eyebrow">Our sacred journey</div>
-      <h1 class="hero-title">Where spirituality <span>meets</span> guidance</h1>
-      <p class="hero-desc">Welcome to Astro Numerics — a divine healing space dedicated to helping you understand your life path, relationships, career, and personal growth through ancient spiritual sciences and intuitive practices.</p>
-      <a href="#mission" class="btn-outline"><i class="fas fa-feather-alt"></i> Discover our mission</a>
+<!-- ═══════════════════════════════════════════════ HERO ABOUT (light cosmic) -->
+<section class="relative min-h-[70vh] flex items-center overflow-hidden bg-gradient-to-br from-violet-50 via-white to-amber-50">
+  <div class="absolute inset-0 hero-grid opacity-40"></div>
+  <div class="orb w-96 h-96 bg-violet-200/40 top-20 -left-20"></div>
+  <div class="orb w-80 h-80 bg-amber-100/40 bottom-10 right-0"></div>
+  
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-2 pb-10 md:pt-4 md:pb-12 text-center">
+    <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-violet-100 rounded-full px-4 py-1.5 text-xs font-medium text-violet-600 tracking-wider mb-6 reveal">
+      <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot"></span>
+      Our Sacred Journey
     </div>
-    <div class="hero-astro-cards">
-      <div class="astro-card"><i class="fas fa-star-of-david"></i><span>Tarot · Numerology · Vastu</span></div>
-      <div class="astro-card"><i class="fas fa-gem"></i><span>Crystal Healing · Graphology</span></div>
-      <div class="astro-card"><i class="fas fa-chart-line"></i><span>5+ years of experience</span></div>
+    <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-light text-slate-900 leading-[1.1] tracking-tight mb-5 reveal">
+      Where spirituality<br/><span class="text-grad">meets guidance</span>
+    </h1>
+    <p class="text-slate-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal">
+      Welcome to Astro Numerics — a divine healing space dedicated to helping you understand your life path, relationships, career, and personal growth through ancient spiritual sciences.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4 mt-8 reveal">
+      <a href="#mission" class="inline-flex items-center gap-2 bg-white border border-violet-200 text-violet-700 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-violet-50 transition-all shadow-sm">
+        <i class="fas fa-feather-alt"></i> Discover our mission
+      </a>
+      <a href="https://wa.me/919657313963" target="_blank" class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-jade-light transition-all shadow-md shadow-jade/20">
+        <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+      </a>
+    </div>
+    <!-- floating badges -->
+    <div class="flex flex-wrap justify-center gap-3 mt-12 reveal">
+      <div class="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-xs text-slate-600 border border-slate-100 shadow-sm"><i class="fas fa-star-of-david text-violet-400 mr-1"></i> Tarot · Numerology · Vastu</div>
+      <div class="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-xs text-slate-600 border border-slate-100 shadow-sm"><i class="fas fa-gem text-amber-500 mr-1"></i> Crystal Healing · Graphology</div>
+      <div class="bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-xs text-slate-600 border border-slate-100 shadow-sm"><i class="fas fa-globe text-violet-400 mr-1"></i> Online & Offline · 3 Languages</div>
     </div>
   </div>
+</section>
 
-  <!-- Intro Cards: Mission & Values based on PDF -->
-  <div class="container" style="margin-top: 2rem;">
-    <div class="card-grid" id="cardGrid">
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-hand-sparkles"></i></div><h3>Personalized Spiritual Guidance</h3><p>Every consultation is designed according to your energy, life path, and personal concerns — with care, intuition, and positive energy.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-leaf"></i></div><h3>Ancient Wisdom + Modern Clarity</h3><p>We combine traditional spiritual sciences with modern lifestyle guidance to help you achieve clarity, confidence, and success.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-heart"></i></div><h3>Holistic Healing Approach</h3><p>Tarot, Numerology, Astrology, Vastu, Graphology, Crystal Healing & more — one trusted space for complete transformation.</p></div>
+<!-- ═══════════════════════════════════════════════ MARQUEE TRUST BANNER (from index) ═══════════════════════════ -->
+<div class="star-banner py-3 overflow-hidden border-y border-violet/20">
+  <div class="marquee-inner gap-12 items-center">
+    <div class="flex gap-12 items-center shrink-0 px-6">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-300 text-xs"></i> Reply in Minutes</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+      <span class="text-white/20">✦</span>
+    </div>
+    <div class="flex gap-12 items-center shrink-0 px-6" aria-hidden="true">
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-clock text-violet-300 text-xs"></i> Available 24/7</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-lock text-violet-300 text-xs"></i> 100% Private</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-user-check text-violet-300 text-xs"></i> Verified Experts</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-comment-dots text-violet-300 text-xs"></i> Reply in Minutes</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-leaf text-violet-300 text-xs"></i> Vedic Wisdom</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-star text-amber-400 text-xs"></i> 5,000+ Seekers Guided</span>
+      <span class="text-white/20">✦</span>
+      <span class="flex items-center gap-2 text-white/60 text-sm whitespace-nowrap"><i class="fas fa-heart text-violet-300 text-xs"></i> Trusted Since 2012</span>
+      <span class="text-white/20">✦</span>
     </div>
   </div>
+</div>
 
-  <!-- Full About Description (exactly from PDF) + Mission Banner -->
-  <div class="section" id="mission">
-    <div class="container">
-      <div class="mission-banner">
-        <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--gold); opacity: 0.6;"></i>
-        <p style="font-size: 1.1rem; font-family: var(--ff-display); font-style: italic; margin: 0.5rem 0;">“Transform your energy, understand your destiny, and attract the life you deserve.”</p>
-        <p>We are dedicated to helping people find clarity, positivity, healing, and success through spiritual guidance and energy-based sciences. Our expertise includes Tarot Reading, Numerology, Graphology, Vastu, Astrology, Crystal Healing, and personalized spiritual consultations. With a combination of intuition, ancient wisdom, and positive energy practices, we guide individuals in improving their relationships, career, business, health, confidence, and overall life path. Every consultation is personalized to bring balance, clarity, and transformation into your life.</p>
+<!-- ═══════════════════════════════════════════════ CORE VALUES (6 pillars) -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-4">
+        <div class="w-8 h-px bg-violet"></div> What we stand for
+        <div class="w-8 h-px bg-violet"></div>
       </div>
+      <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900">Three pillars of our practice</h2>
+      <p class="text-slate-500 text-sm mt-3">Rooted in integrity, wisdom, and compassionate guidance.</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">01</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-hand-sparkles text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Personalized Guidance</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Every consultation is shaped around your unique energy, life path, and personal situation — never generic advice.</p>
+      </div>
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">02</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-leaf text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Ancient Wisdom</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">We blend traditional spiritual sciences with modern lifestyle understanding to deliver clarity that truly resonates.</p>
+      </div>
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">03</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-heart text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Holistic Healing</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Tarot, Numerology, Astrology, Vastu, Graphology, Crystal Healing — one trusted space for complete transformation.</p>
+      </div>
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">04</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-lock text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Full Confidentiality</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Your privacy and trust are always our highest priority. Every session is held in complete confidence.</p>
+      </div>
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">05</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-bolt text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Energy-Based Solutions</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Practical remedies focused on improving positivity, balance, and growth — not fear-based predictions.</p>
+      </div>
+      <div class="value-card bg-slate-50/50 rounded-2xl p-6 border border-slate-100 hover:bg-white transition-all">
+        <div class="text-4xl font-display text-violet-200 mb-2">06</div>
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-4"><i class="fas fa-users text-violet-600"></i></div>
+        <h3 class="font-display text-xl font-semibold text-slate-800 mb-2">Every Life Situation</h3>
+        <p class="text-slate-500 text-sm leading-relaxed">Love, career, marriage, business, finance, health — whatever your challenge, we offer a compassionate path forward.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 2.5rem; margin-top: 2rem;">
-        <div style="flex: 1.5;">
-          <h2 class="section-title" style="font-size: 1.8rem;">Our mission & dedication</h2>
-          <p style="margin: 1rem 0;">Our goal is to guide individuals toward a more balanced, positive, and successful life by understanding their unique energy patterns and life path. Every consultation is designed with care, intuition, and deep analysis to provide meaningful insights and practical direction.</p>
-          <p>We believe that when your energy aligns correctly, your life begins to flow with clarity, confidence, and abundance. At Astro Numerics, we are committed to supporting your journey of self‑discovery, healing, and spiritual growth with honesty and dedication.</p>
-          <div style="margin-top: 1.5rem;">
-            <span class="expertise-pill">Tarot Card Reading</span>
-            <span class="expertise-pill">Numerology & Name Numerology</span>
-            <span class="expertise-pill">Vastu Shastra</span>
-            <span class="expertise-pill">Graphology Analysis</span>
-            <span class="expertise-pill">Crystal Healing</span>
-            <span class="expertise-pill">Rudraksha Guidance</span>
-            <span class="expertise-pill">Bhrugu Nandi Nadi Astrology</span>
+<!-- ═══════════════════════════════════════════════ MISSION + STATS (light cream) -->
+<section id="mission" class="py-20 bg-amber-50/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <div class="flex items-center gap-3 text-amber-600 text-xs font-semibold tracking-widest uppercase mb-4">
+          <div class="w-8 h-px bg-amber-400"></div> Our purpose
+        </div>
+        <blockquote class="font-display text-2xl md:text-3xl font-light italic text-slate-800 border-l-4 border-amber-400 pl-6 mb-6">"Transform your energy, understand your destiny, and attract the life you deserve."</blockquote>
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">We are dedicated to helping people find clarity, positivity, healing, and success through spiritual guidance and energy-based sciences. Our goal is to guide individuals toward a more balanced, positive, and successful life by understanding their unique energy patterns and life path.</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Tarot Card Reading</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Numerology</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Vastu Shastra</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Graphology</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Crystal Healing</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Nadi Astrology</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm reveal">
+        <div class="flex items-center gap-2 text-amber-600 text-xs font-semibold uppercase mb-4"><i class="fas fa-chart-line"></i> At a glance</div>
+        <p class="text-slate-500 text-sm mb-6">A complete spiritual wellness practice rooted in Vedic wisdom and intuitive guidance.</p>
+        <div class="grid grid-cols-2 gap-5">
+          <div class="text-center p-3 bg-slate-50/80 rounded-xl"><div class="font-display text-3xl font-bold text-violet-600">5<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide">Years active</div></div>
+          <div class="text-center p-3 bg-slate-50/80 rounded-xl"><div class="font-display text-3xl font-bold text-violet-600">1.2K<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide">Seekers guided</div></div>
+          <div class="text-center p-3 bg-slate-50/80 rounded-xl"><div class="font-display text-3xl font-bold text-violet-600">12</div><div class="text-xs text-slate-400 uppercase tracking-wide">Modalities</div></div>
+          <div class="text-center p-3 bg-slate-50/80 rounded-xl"><div class="font-display text-3xl font-bold text-violet-600">3</div><div class="text-xs text-slate-400 uppercase tracking-wide">Languages</div></div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-slate-100 text-center">
+          <div class="text-xs text-slate-400 uppercase tracking-wide">Consultation hours</div>
+          <div class="text-sm font-medium text-slate-700">Monday – Saturday · 10:00 AM – 7:00 PM</div>
+          <div class="text-sm text-violet-600 font-semibold mt-1">Starting at ₹999</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ EXPERT PROFILE -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3"><div class="w-8 h-px bg-violet"></div> Your guide</div>
+      <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900">Meet the practitioner</h2>
+    </div>
+    <div class="grid lg:grid-cols-[340px_1fr] gap-10 items-start">
+      <div class="bg-slate-50/80 rounded-2xl p-6 border border-slate-100 sticky top-20">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-violet-600 flex items-center justify-center text-white text-3xl mb-4 shadow-md"><i class="fas fa-user-astronaut"></i></div>
+        <h3 class="font-display text-2xl font-semibold text-slate-800">Raajeshhwari Bhosale Suryavanshi</h3>
+        <div class="text-sm text-violet-500 mb-2">Kshitija Raajeshhwari Suryavanshi</div>
+        <div class="inline-flex items-center gap-1 bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full mb-4"><i class="fas fa-star"></i> 5+ Years Experience</div>
+        <div class="space-y-2 text-sm text-slate-500 border-t border-slate-100 pt-4">
+          <div class="flex gap-2"><i class="fas fa-map-marker-alt text-violet-400 w-4 mt-0.5"></i><span>Sinhgad Road, Pune 411041</span></div>
+          <div class="flex gap-2"><i class="fas fa-clock text-violet-400 w-4 mt-0.5"></i><span>Mon–Sat · 10 AM – 7 PM</span></div>
+          <div class="flex gap-2"><i class="fas fa-language text-violet-400 w-4 mt-0.5"></i><span>Marathi · Hindi · English</span></div>
+          <div class="flex gap-2"><i class="fab fa-whatsapp text-jade w-4 mt-0.5"></i><a href="https://wa.me/919657313963" class="hover:text-violet">+91 9657313963</a></div>
+        </div>
+        <a href="https://wa.me/919657313963" target="_blank" class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-2.5 rounded-xl text-sm font-medium hover:bg-jade-light transition-all"> <i class="fab fa-whatsapp"></i> Book a Session</a>
+      </div>
+      <div class="space-y-6">
+        <div><h4 class="font-display text-xl font-semibold text-slate-800 mb-2">Background & Expertise</h4><p class="text-slate-600 text-sm leading-relaxed">With over five years of dedicated practice in spiritual sciences, Raajeshhwari brings a rare combination of intuition, traditional knowledge, and modern empathy to every session. Her consultations have guided over 1,200 seekers across India in navigating life's most complex challenges.</p></div>
+        <div><h4 class="font-display text-xl font-semibold text-slate-800 mb-2">Areas of Specialization</h4><div class="flex flex-wrap gap-2"><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Tarot Reading</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Numerology</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Name Numerology</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Bhrugu Nandi Nadi</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Vastu Shastra</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Graphology</span><span class="bg-violet-50 text-violet-700 px-3 py-1 rounded-full text-xs">Crystal Healing</span></div></div>
+        <div><h4 class="font-display text-xl font-semibold text-slate-800 mb-2">Approach & Philosophy</h4><p class="text-slate-600 text-sm leading-relaxed">Every consultation begins with careful listening. The goal is never to create dependency, but to empower each person with the clarity and confidence to make their own decisions. Sessions combine intuitive reading with evidence-based observations from handwriting, birth data, and energy patterns.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ STATS SHOWCASE (light) -->
+<section class="py-16 bg-gradient-to-r from-violet-50/40 via-white to-amber-50/40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">5<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Years of practice</div></div>
+      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">1200<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Seekers guided</div></div>
+      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">12</div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Spiritual modalities</div></div>
+      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">100<span class="text-amber-500">%</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Confidential sessions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ TEAM ETHOS (why us) -->
+<section class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="relative rounded-2xl overflow-hidden h-96 shadow-xl">
+        <img src="/assets/images/carousel_1.avif" class="w-full h-full object-cover" alt="Spiritual guidance"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+        <div class="absolute bottom-6 left-6 right-6"><blockquote class="font-display text-white text-xl italic">Guiding people toward better decisions and a more positive future.</blockquote></div>
+      </div>
+      <div class="reveal"><div class="flex items-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-4"><div class="w-8 h-px bg-violet"></div> Our philosophy</div><h2 class="font-display text-3xl md:text-4xl font-light text-slate-900 mb-4">Experienced, intuitive & compassionate</h2><p class="text-slate-600 text-sm leading-relaxed mb-4">We are a team of experienced spiritual consultants dedicated to providing accurate, insightful, and practical guidance through various ancient and intuitive sciences.</p><p class="text-slate-600 text-sm leading-relaxed mb-4">With deep knowledge in Tarot Reading, Numerology, Astrology, Vastu Shastra, Graphology, Crystal Healing, and Rudraksha Guidance, we focus on understanding each individual's unique energy and life path.</p><div class="flex flex-wrap gap-2 mt-4"><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">5+ Years of Experience</span><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">Trusted across India</span><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">Marathi · Hindi · English</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ CTA (warm gradient) -->
+<section class="py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="bg-gradient-to-br from-white to-violet-50 rounded-3xl p-8 md:p-12 text-center border border-violet-100 shadow-md">
+      <div class="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 text-xs font-medium text-violet-600 shadow-sm mb-5"><span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot"></span> Begin your journey</div>
+      <h2 class="font-display text-3xl md:text-5xl font-light text-slate-900 mb-3">Begin your transformation <span class="text-grad">today</span></h2>
+      <p class="text-slate-500 max-w-md mx-auto mb-8">Align. Manifest. Transform. One conversation can change everything.</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://wa.me/919657313963" target="_blank" class="inline-flex items-center gap-2 bg-jade text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-jade-light transition-all shadow-lg shadow-jade/20"><i class="fab fa-whatsapp"></i> Book on WhatsApp</a>
+        <a href="tel:+919657313963" class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-6 py-3 rounded-full text-sm font-medium hover:border-violet-300 hover:text-violet-600 transition-all"><i class="fas fa-phone"></i> +91 9657313963</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ FOOTER (EXACT COPY FROM INDEX) ═══════════════════════════════ -->
+<footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
+    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
+      <div class="space-y-5">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-amber-500/20 flex items-center justify-center shadow-lg shadow-violet-500/10">
+            <span class="material-symbols-outlined text-2xl text-white">auto_awesome</span>
           </div>
+          <span class="font-display text-xl font-semibold tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Astro Numerics</span>
         </div>
-        <!-- Expert Profile Card (exactly from PDF) -->
-        <div class="expert-card" style="flex: 1;">
-          <i class="fas fa-user-astronaut" style="font-size: 2.2rem; color: var(--gold);"></i>
-          <h3 style="font-family: var(--ff-display); margin: 0.5rem 0;">Raajeshhwari Bhosale Suryavanshi</h3>
-          <p style="font-size: 0.85rem; color: var(--indigo-md);">Kshitija Raajeshhwari Suryavanshi</p>
-          <p class="expertise-pill" style="background: var(--indigo-lt);">5+ Years Experience</p>
-          <p style="font-size: 0.85rem; margin-top: 0.8rem;">Expertise: Tarot Reading, Numerology & Name Numerology, Astrology (Nadi & Traditional), Vastu Shastra, Graphology, Crystal Healing, Rudraksha Guidance, Personal Life Guidance & Energy Healing.</p>
-          <hr style="margin: 1rem 0; border-color: var(--border);">
-          <p><i class="fas fa-map-marker-alt"></i> Sunnandan App, Jadhav Nagar, Vadgaon BK, Sinhgad Road, Pune 411041</p>
-          <p><i class="fas fa-clock"></i> Mon–Sat · 10:00 AM – 7:00 PM</p>
-          <p><i class="fas fa-language"></i> Languages: Marathi, Hindi, English</p>
-          <p><i class="fas fa-rupee-sign"></i> Consultation charges ₹999 onwards</p>
+        <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
+        <div class="flex gap-3 pt-2">
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-instagram text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-youtube text-sm"></i></a>
+          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300"><i class="fab fa-whatsapp text-sm"></i></a>
         </div>
       </div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-violet-400">explore</span><span>Navigate</span></h4><ul class="space-y-3"><li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Home</span></a></li><li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">About</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Services</span></a></li><li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Products</span></a></li><li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Courses</span></a></li><li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">chevron_right</span><span class="text-sm">Contact</span></a></li></ul></div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-amber-400">spa</span><span>Offerings</span></h4><ul class="space-y-3"><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">123</span><span class="text-sm">Numerology</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">diamond</span><span class="text-sm">Crystal Healing</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">stars</span><span class="text-sm">Birth Chart</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">home</span><span class="text-sm">Vastu</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors"><span class="material-symbols-outlined text-sm opacity-50">history</span><span class="text-sm">Past Life</span></a></li></ul></div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-emerald-400">call</span><span>Get in Touch</span></h4><div class="space-y-4"><a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined text-xl text-violet-400 group-hover:scale-110 transition-transform">phone_in_talk</span><span class="text-sm">+91 96573 13963</span></a><a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined text-xl text-emerald-400 group-hover:scale-110 transition-transform">chat</span><span class="text-sm">+91 96573 13963</span></a><a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors"><span class="material-symbols-outlined text-xl text-amber-400 group-hover:scale-110 transition-transform">mail</span><span class="text-sm">connect@astronumerics.com</span></a><div class="pt-3 flex items-start gap-3 text-white/40 text-xs"><span class="material-symbols-outlined text-base">schedule</span><span>Mon - Sat: 10:00 AM - 7:00 PM IST</span></div></div></div>
     </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8"><div class="flex items-center gap-2 text-white/30 text-xs"><span class="material-symbols-outlined text-sm">copyright</span><span>2025 Astro Numerics. All rights reserved.</span></div><div class="flex items-center gap-4"><div class="flex items-center gap-1.5 text-amber-400/60 text-xs"><span class="material-symbols-outlined text-sm">stars</span><span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span></div><a href="#" class="text-white/30 hover:text-white/60 transition-colors"><span class="material-symbols-outlined text-sm">keyboard_arrow_up</span></a></div></div>
   </div>
-
-  <!-- Why Choose Us Cards (from PDF) + stats banner -->
-  <div class="container">
-    <div class="section-eyebrow">Why seekers trust us</div>
-    <h2 class="section-title">Guidance you can truly feel</h2>
-    <div class="card-grid" style="margin-top: 1.5rem;">
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-user-check"></i></div><h3>Personalized Spiritual Guidance</h3><p>Every consultation specially designed according to your energy, life path, and personal concerns.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-hand-holding-heart"></i></div><h3>Trusted & Positive Approach</h3><p>Practical guidance, positivity, healing, and confidence-building — no judgment.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-layer-group"></i></div><h3>Multiple Services Under One Roof</h3><p>Tarot, Numerology, Vastu, Graphology, Astrology, Crystal Healing & more.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-lock"></i></div><h3>Confidential & Supportive</h3><p>Your privacy, comfort, and trust are always respected. 100% confidential sessions.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Ancient Wisdom + Modern Understanding</h3><p>Traditional sciences meet modern lifestyle guidance.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-bolt"></i></div><h3>Energy-Based Solutions</h3><p>Remedies focused on improving positivity, balance, and growth.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-heart"></i></div><h3>Guidance For Every Situation</h3><p>Love, career, marriage, business, finance, health, relationships & self-growth.</p></div>
-      <div class="feature-card"><div class="card-icon"><i class="fas fa-globe"></i></div><h3>Online & Offline Flexibility</h3><p>Call, chat, video or in-person at Pune. English, Hindi, Marathi.</p></div>
-    </div>
-
-    <!-- Stats banner with GSAP counter -->
-    <div class="stats-banner" id="statsBanner">
-      <div class="stat-item"><h4 class="counter" data-target="5">0</h4><p>Years Experience</p></div>
-      <div class="stat-item"><h4 class="counter" data-target="1200">0</h4><p>Seekers Guided</p></div>
-      <div class="stat-item"><h4 class="counter" data-target="12">0</h4><p>Spiritual Modalities</p></div>
-      <div class="stat-item"><h4 class="counter" data-target="100">0</h4><p>Confidential Sessions</p></div>
-    </div>
-  </div>
-
-  <!-- Team / About Experts Description (from PDF: "We are a team of experienced spiritual consultants...") -->
-  <div class="container" style="margin-bottom: 4rem;">
-    <div style="background: var(--indigo-xlt); border-radius: 32px; padding: 3rem; text-align: center;">
-      <i class="fas fa-users" style="font-size: 2.8rem; color: var(--indigo-md); opacity: 0.7;"></i>
-      <h2 class="section-title" style="margin-top: 0.5rem;">Experienced, intuitive & compassionate</h2>
-      <p style="max-width: 800px; margin: 1rem auto;">We are a team of experienced spiritual consultants dedicated to providing accurate, insightful, and practical guidance through various ancient and intuitive sciences. With deep knowledge in Tarot Reading, Numerology, Astrology, Vastu Shastra, Graphology, Crystal Healing, and Rudraksha Guidance, we focus on understanding each individual's unique energy and life path.</p>
-      <p>Our approach combines intuition, traditional wisdom, and modern understanding to deliver clear and meaningful solutions for life challenges. Every consultation is personalized with care, honesty, and positive intention to help you achieve clarity, confidence, and growth in life. We believe in guiding people toward better decisions, balanced energy, and a more positive and successful future.</p>
-      <div style="margin-top: 1.8rem;">
-        <span class="expertise-pill">5+ Years of Experience</span>
-        <span class="expertise-pill">Trusted by seekers across India</span>
-        <span class="expertise-pill">3 Languages</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Final CTA Banner (keeps style from index) -->
-  <div class="container" style="margin-bottom: 4rem;">
-    <div style="background: linear-gradient(115deg, var(--indigo) 0%, #2e2a7f 100%); border-radius: 40px; padding: 3.5rem 2rem; text-align: center; color: white;">
-      <i class="fas fa-moon" style="font-size: 3rem; opacity: 0.5; margin-bottom: 1rem; display: block;"></i>
-      <h2 style="font-family: var(--ff-display); font-size: 2rem;">Begin your transformation today</h2>
-      <p style="margin: 1rem auto; max-width: 500px; opacity: 0.85;">Align. Manifest. Transform. One conversation can change everything.</p>
-      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-        <a href="https://wa.me/919657313963" target="_blank" class="btn-primary" style="background: var(--green); color: white;"><i class="fab fa-whatsapp"></i> Book on WhatsApp</a>
-        <a href="tel:+919657313963" style="border: 1.5px solid rgba(255,255,255,0.5); color: white; padding: 0.6rem 1.4rem; border-radius: 40px; text-decoration: none;"><i class="fas fa-phone"></i> +91 9657313963</a>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- ===== FOOTER (identical to index) ===== -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="nav-logo"><div class="logo-icon"><i class="fas fa-moon"></i></div><div><span class="logo-text">Astro Numerics</span><span class="logo-sub">Align · Manifest · Transform</span></div></div>
-      <p class="footer-brand-desc">A divine healing space where spirituality meets guidance — rooted in Vedic wisdom, delivered with clarity and care.</p>
-      <div class="footer-social"><a href="#" class="social-link"><i class="fab fa-instagram"></i></a><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-link"><i class="fab fa-youtube"></i></a><a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a></div>
-    </div>
-    <div class="footer-col"><h4>Navigate</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="products.html">Products</a></li><li><a href="courses.html">Courses</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="services.html">Tarot Reading</a></li><li><a href="services.html">Numerology</a></li><li><a href="services.html">Vastu</a></li><li><a href="services.html">Crystal Healing</a></li><li><a href="services.html">Graphology</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><div class="footer-contact-list"><span><i class="fas fa-phone-alt"></i> +91 9657313963</span><span><i class="fab fa-whatsapp"></i> +91 9657313963</span><span><i class="fas fa-map-marker-alt"></i> Pune, India</span></div></div>
-  </div>
-  <div class="footer-bottom"><span>© 2025 Astro Numerics. All rights reserved.</span><span class="footer-gold-mark">Spiritual Wisdom · Sacred Guidance</span></div>
 </footer>
 
+<!-- Floating WhatsApp (same as index) -->
+<a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20guidance." target="_blank" class="fixed bottom-6 left-6 z-50 group"><div class="relative"><div class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75"></div><div class="relative w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 hover:scale-110 transition-transform"><i class="fab fa-whatsapp text-white text-2xl"></i></div><div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap bg-slate-900/90 text-white text-xs px-3 py-1.5 rounded-lg">Chat with us 💬</div></div></a>
+
+<!-- Back to Top Button -->
+<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
+  <div class="relative">
+    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
+    <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
+    </div>
+  </div>
+</button>
+
 <script>
-  // GSAP Animations + ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
-  
-  // Hero fade-in
-  gsap.from(".hero-content .section-eyebrow, .hero-content .hero-title, .hero-content .hero-desc, .hero-content .btn-outline", {
-    duration: 0.8,
-    y: 40,
-    opacity: 0,
-    stagger: 0.2,
-    ease: "power3.out",
-    scrollTrigger: { trigger: "#heroSection", start: "top 80%", toggleActions: "play none none none" }
-  });
-  
-  // Float-in cards
-  gsap.utils.toArray(".feature-card").forEach((card, i) => {
-    gsap.from(card, {
-      scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" },
-      duration: 0.6,
-      y: 40,
-      opacity: 0,
-      scale: 0.96,
-      delay: i * 0.05,
-      ease: "back.out(0.6)"
-    });
-  });
-  
-  // Stats counter
-  let counted = false;
-  function animateNumbers() {
-    if (counted) return;
-    const counters = document.querySelectorAll(".counter");
-    counters.forEach(counter => {
-      const target = parseInt(counter.getAttribute("data-target"));
-      let current = 0;
-      const increment = target / 50;
-      const update = () => {
-        current += increment;
-        if (current < target) {
-          counter.innerText = Math.floor(current);
-          requestAnimationFrame(update);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      update();
-    });
-    counted = true;
+
+    // Back to Top Functionality
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  ScrollTrigger.create({ trigger: "#statsBanner", start: "top 70%", onEnter: animateNumbers, once: true });
-  
-  gsap.from(".stats-banner .stat-item", {
-    scrollTrigger: { trigger: "#statsBanner", start: "top 80%" },
-    duration: 0.8,
-    scale: 0.9,
-    opacity: 0,
-    stagger: 0.2
+
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.opacity = '1';
+      backToTopBtn.style.visibility = 'visible';
+    } else {
+      backToTopBtn.style.opacity = '0';
+      backToTopBtn.style.visibility = 'hidden';
+    }
   });
-  
-  gsap.from(".mission-banner", {
-    scrollTrigger: { trigger: ".mission-banner", start: "top 85%" },
-    duration: 0.9,
-    x: -30,
-    opacity: 0
-  });
-  
-  gsap.from("div[style*='background: var(--indigo-xlt)']", {
-    scrollTrigger: { trigger: "div[style*='background: var(--indigo-xlt)']", start: "top 80%" },
-    duration: 0.8,
-    scale: 0.97,
-    opacity: 0
-  });
-  
-  // Mobile menu
-  const hamb = document.getElementById('hambBtn');
-  const drawer = document.getElementById('mob-drawer');
-  const overlay = document.getElementById('mob-overlay');
-  const closeBtn = document.getElementById('mob-close');
-  hamb.addEventListener('click', () => { drawer.classList.add('open'); overlay.classList.add('open'); });
-  closeBtn.addEventListener('click', () => { drawer.classList.remove('open'); overlay.classList.remove('open'); });
-  overlay.addEventListener('click', () => { drawer.classList.remove('open'); overlay.classList.remove('open'); });
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Mobile nav
+  const hamb = document.getElementById('hambBtn'), drawer = document.getElementById('mob-drawer'), overlay = document.getElementById('mob-overlay'), close = document.getElementById('mob-close');
+  const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
+  const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
+  hamb.addEventListener('click', open); close.addEventListener('click', shut); overlay.addEventListener('click', shut);
 </script>
 </body>
 </html>
