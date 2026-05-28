@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Astro Numerics — Sacred Services | Tarot, Numerology, Vastu & Healing</title>
 
-  <!-- Same styles and fonts as index page for perfect consistency -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -67,11 +66,127 @@
       background-size: cover;
       background-position: center;
     }
+
+    #service-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15, 12, 41, 0.75);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    #service-modal-overlay.open {
+      display: flex;
+    }
+    #service-modal-box {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 40px 80px rgba(15,12,41,0.30);
+      animation: modalIn 0.35s cubic-bezier(0.23,1,0.32,1) forwards;
+      scrollbar-width: thin;
+      scrollbar-color: #c4b5fd transparent;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    #service-modal-box::-webkit-scrollbar { width: 4px; }
+    #service-modal-box::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 4px; }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(99,102,241,0.15);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10;
+      color: #4338ca;
+      font-size: 15px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .modal-close-btn:hover { background: #eef2ff; transform: scale(1.1); }
+
+    .duration-block {
+      cursor: pointer;
+      border: 2px solid #e0e7ff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: center;
+      transition: all 0.22s ease;
+      background: #f5f3ff;
+      flex: 1;
+    }
+    .duration-block:hover { border-color: #6366f1; background: #eef2ff; }
+    .duration-block.selected {
+      border-color: #4338ca;
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+      color: #fff;
+    }
+    .duration-block.selected .dur-time { color: #c7d2fe; }
+    .duration-block.selected .dur-price { color: #fff; }
+    .duration-block.selected .dur-label { color: #a5b4fc; }
+
+    .dur-time { font-family: 'Outfit', sans-serif; font-size: 13px; color: #7c6fbf; font-weight: 500; display: block; }
+    .dur-price { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; font-weight: 700; color: #1e1b4b; line-height: 1.1; margin-top: 4px; }
+    .dur-label { font-size: 11px; color: #a78bfa; margin-top: 2px; }
+
+    .modal-input {
+      width: 100%;
+      border: 1.5px solid #e0e7ff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      color: #1e1b4b;
+      background: #f9f7ff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .modal-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.10);
+      background: #fff;
+    }
+    .modal-input::placeholder { color: #a5b4fc; }
+
+    .book-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 8px 20px rgba(5,150,105,0.25);
+      text-decoration: none;
+    }
+    .book-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(5,150,105,0.30); }
+    .book-btn:active { transform: scale(0.98); }
+    .book-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
 
-<!-- ═══════════════════════════════════════════════ NAV (EXACT COPY FROM INDEX) ═══════════════════════════════════ -->
 <nav class="sticky top-0 z-50 glass border-b border-slate-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-2.5 shrink-0">
@@ -98,7 +213,6 @@
   </div>
 </nav>
 
-<!-- Mobile drawer (exact copy from index) -->
 <div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
 <div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
   <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
@@ -116,13 +230,9 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════ HERO SECTION WITH BG IMAGE ═══════════════════════════════════ -->
 <section class="relative py-20 md:py-28 overflow-hidden hero-bg-img">
-  <!-- Dark overlay for text readability -->
   <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/40"></div>
-  <!-- Subtle pattern overlay -->
   <div class="absolute inset-0 hero-grid opacity-10"></div>
-  
   <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
     <div class="text-center max-w-3xl mx-auto reveal">
       <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-4 py-1.5 text-xs font-medium text-white mb-5">
@@ -146,7 +256,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ MARQUEE TRUST BANNER (MOVED BELOW HERO) ═══════════════════ -->
 <div class="star-banner py-3 overflow-hidden border-y border-violet/20" style="background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%);">
   <div class="marquee-inner gap-12 items-center">
     <div class="flex gap-12 items-center shrink-0 px-6">
@@ -184,17 +293,14 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════ MAIN SERVICES CONTENT ═══════════════════════════════════ -->
 <main>
-  <!-- Services Grid (11 cards, NO PRICES) -->
   <section id="services-grid" class="py-16 md:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-        
-        <!-- Card 1: Tarot Reading -->
+
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
-            <img src="/assets/images/carousel_1.avif" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_1.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Divination</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-star-of-david"></i></div>
@@ -202,16 +308,13 @@
           <div class="p-6">
             <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Tarot Card Reading</h3>
             <p class="text-slate-500 text-sm leading-relaxed mb-4">Personalized intuitive card analysis for love, career, relationships, finance & life decisions. Remove confusion and attract clarity.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Tarot Reading consultation" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <button onclick="openModal('tarot')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 2: Numerology -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-slate-100 to-indigo-50">
-            <img src="/assets/images/carousel_2.avif" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_2.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Numbers</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-infinity"></i></div>
@@ -219,16 +322,13 @@
           <div class="p-6">
             <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Numerology Consultation</h3>
             <p class="text-slate-500 text-sm leading-relaxed mb-4">Deep dive into your life path, destiny number, strengths & future possibilities. Understand hidden energy vibrations of your birth date & name.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Numerology consultation" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <button onclick="openModal('numerology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 3: Name Numerology -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50">
-            <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=70" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_3.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
             <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Name Energy</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-pen-nib"></i></div>
@@ -236,154 +336,130 @@
           <div class="p-6">
             <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Name Numerology</h3>
             <p class="text-slate-500 text-sm leading-relaxed mb-4">Balance your name vibrations to attract success, positivity, and opportunities. Energy-based correction for personal & business names.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Name Numerology guidance" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <button onclick="openModal('namenumerology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 4: Mobile Number Numerology -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-emerald-50 to-teal-50">
-            <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?auto=format&fit=crop&w=600&q=70" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_4.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Mobile</span></div>
+            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Signature</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-mobile-alt"></i></div>
           </div>
           <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Mobile Number Numerology</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Analyze the energy of your mobile number and its impact on communication, opportunities & growth. Choose numbers that align with your life path.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Mobile Number Numerology" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Signature Numerology</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">Your signature also holds energy. A balanced signature can boost your personal and professional success.</p>
+            <button onclick="openModal('signaturenumerology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 5: Graphology -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-purple-50 to-pink-50">
-            <img src="https://images.unsplash.com/photo-1471897488648-5eae4ac6686b?auto=format&fit=crop&w=600&q=70" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_5.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Handwriting</span></div>
+            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Vehicle</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-feather-alt"></i></div>
           </div>
           <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Graphology Analysis</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Handwriting analysis to reveal personality traits, emotions, confidence, hidden potential & behavioural patterns – subconscious mirror insights.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Graphology consultation" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Vehicle Numerology</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">Vehicle numerology studies your number plate’s energy to attract safer journeys, success, and positive travel vibrations.</p>
+            <button onclick="openModal('vehiclenumerology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 6: Vastu Consultation -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-yellow-50 to-amber-50">
-            <img src="/assets/images/carousel_5.webp" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_6.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Space Energy</span></div>
+            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Vastu</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-home"></i></div>
           </div>
           <div class="p-6">
             <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Vastu Consultation</h3>
             <p class="text-slate-500 text-sm leading-relaxed mb-4">Create harmony, balance & positive energy in home, office or business space. Practical corrections & energy balancing for prosperity & peace.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Vastu consultation" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <button onclick="openModal('vastu')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 7: Nadi Astrology -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-indigo-50 to-blue-50">
-            <img src="/assets/images/product_7.png" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_7.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Cosmos</span></div>
+            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Logo</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-sun"></i></div>
           </div>
           <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Bhrugu Nandi Nadi Astrology</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Ancient spiritual astrology for deeper life insights, karmic understanding & major life events. Personalized remedies & guidance.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Nadi Astrology reading" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Scientific logo design & visiting cards </h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">Scientific logo and visiting card design align colors, numbers, and visuals to attract positive energy, professionalism, and business growth.</p>
+            <button onclick="openModal('logodesign')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 8: Crystal Healing -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
           <div class="relative h-52 overflow-hidden bg-gradient-to-br from-rose-50 to-red-50">
-            <img src="/assets/images/carousel_3.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+            <img src="/assets/images/S_8.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Energy</span></div>
+            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Graphology</span></div>
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-gem"></i></div>
           </div>
           <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Crystal Healing</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Heal and balance your mind, body & energy with powerful crystals. Cleanse negativity, restore emotional balance & enhance confidence.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Crystal Healing session" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
+            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Graphology – Handwriting Analysis</h3>
+            <p class="text-slate-500 text-sm leading-relaxed mb-4">Graphology is the study of handwriting to understand personality, emotions, and behavior through subconscious expression.</p>
+            <button onclick="openModal('graphology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
           </div>
         </div>
 
-        <!-- Card 9: Rudraksha Guidance -->
         <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
-          <div class="relative h-52 overflow-hidden bg-gradient-to-br from-slate-100 to-stone-100">
-            <img src="/assets/images/product_9.webp" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Spiritual</span></div>
-            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-praying-hands"></i></div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Rudraksha Guidance</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Spiritual Rudraksha bead selection for protection, peace of mind, confidence & positive energy alignment according to your needs & life path.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Rudraksha guidance" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
-          </div>
+  <div class="relative h-52 overflow-hidden bg-gradient-to-br from-purple-50 to-indigo-50">
+    <img src="/assets/images/S_9.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+    <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Astrology</span></div>
+    <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-moon"></i></div>
+  </div>
+  <div class="p-6">
+    <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Astrology Consultation</h3>
+    <p class="text-slate-500 text-sm leading-relaxed mb-4">Astrology helps you understand your life path and purpose, using ancient wisdom to bring clarity, better decisions, and confidence in life.</p>
+    <button onclick="openModal('astrology')" class="inline-flex items-center gap-2 border border-violet-200 bg-violet-50 text-violet-700 font-medium px-4 py-2 rounded-lg text-sm hover:bg-violet-100 transition-all flex-1 justify-center"><i class="fas fa-info-circle"></i> Know More</button>
+  </div>
+</div>
         </div>
-
-        <!-- Card 10: Personal Spiritual Guidance -->
-        <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
-          <div class="relative h-52 overflow-hidden bg-gradient-to-br from-teal-50 to-cyan-50">
-            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=70" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Life Guidance</span></div>
-            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-user-shield"></i></div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Personal Spiritual Guidance</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Customized solutions for career, business, marriage, relationships & life growth. Holistic support & energy-based remedies.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Personal Spiritual Guidance" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 11: Energy Healing -->
-        <div class="service-card bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 shadow-sm hover:shadow-xl transition-all group">
-          <div class="relative h-52 overflow-hidden bg-gradient-to-br from-lime-50 to-green-50">
-            <img src="/assets/images/product_11.webp" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <div class="absolute bottom-3 left-4"><span class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full text-violet-700">Healing</span></div>
-            <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-amber-500"><i class="fas fa-spa"></i></div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-semibold text-slate-800 mb-2">Energy Healing & Crystal Therapy</h3>
-            <p class="text-slate-500 text-sm leading-relaxed mb-4">Healing services designed to balance your mind, body & energy. Includes crystal cleansing, salt bath guidance, and personalized healing remedies.</p>
-            <div class="flex items-center justify-end mt-3">
-              <a href="https://wa.me/919657313963?text=I want Energy Healing session" target="_blank" class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium px-4 py-2 rounded-lg text-sm hover:bg-jade hover:text-white transition-all"><i class="fab fa-whatsapp"></i> Consult Now</a>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 </main>
 
-<!-- ═══════════════════════════════════════════════ FOOTER (EXACT COPY FROM INDEX) ═══════════════════════════════ -->
+<div id="service-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div id="service-modal-box">
+    <button class="modal-close-btn" onclick="closeModal()" aria-label="Close modal"><i class="fas fa-times"></i></button>
+    <div class="relative h-52 overflow-hidden rounded-t-2xl">
+      <img id="modal-img" src="" alt="" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+      <div class="absolute bottom-4 left-5"><span id="modal-badge" class="bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded-full text-violet-700"></span></div>
+    </div>
+    <div class="p-6">
+      <h2 id="modal-title" class="font-display text-2xl md:text-3xl font-semibold text-slate-800 mb-2"></h2>
+      <p id="modal-desc" class="text-slate-500 text-sm leading-relaxed mb-5"></p>
+      <div id="modal-includes" class="mb-5 bg-violet-50 rounded-xl p-4">
+        <p class="text-xs font-semibold text-violet-600 uppercase tracking-wider mb-2">What's Included</p>
+        <ul id="modal-includes-list" class="space-y-1"></ul>
+      </div>
+      <div class="border-t border-slate-100 mb-5"></div>
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Select Session Option</p>
+      <div id="modal-durations" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6"></div>
+      <div class="border-t border-slate-100 pt-5 mb-5">
+        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Your Details</p>
+        <div class="flex flex-col gap-3">
+          <input id="modal-name" type="text" placeholder="Your Full Name" class="modal-input" />
+          <input id="modal-phone" type="tel" placeholder="Your Contact Number" class="modal-input" />
+        </div>
+      </div>
+      <button id="modal-book-btn" onclick="bookAppointment()" class="book-btn"><i class="fab fa-whatsapp text-lg"></i> Book Your Appointment</button>
+      <p class="text-center text-xs text-slate-400 mt-3">You'll be redirected to WhatsApp to confirm your booking.</p>
+    </div>
+  </div>
+</div>
+
 <footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
   <div class="absolute inset-0 opacity-20 pointer-events-none">
     <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
@@ -414,10 +490,8 @@
   </div>
 </footer>
 
-<!-- Floating WhatsApp (same as index) -->
 <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank" class="fixed bottom-6 left-6 z-50 group"><div class="relative"><div class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75"></div><div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 hover:scale-110 transition-transform duration-300"><i class="fab fa-whatsapp text-white text-2xl md:text-3xl"></i></div><div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"><div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Chat with us 💬</div></div></div></a>
 
-<!-- Back to Top Button -->
 <button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
   <div class="relative">
     <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
@@ -428,34 +502,116 @@
 </button>
 
 <script>
+  const serviceData = {
+    tarot: {
+      title: 'Tarot Card Reading', badge: 'Divination', img: '/assets/images/S_1.jpeg',
+      desc: 'Tarot reading and angel cards offer deep insights into your life’s path. Through the symbols and messages, tarot guides you to understand challenges, uncover hidden truths, and make empowered decisions.',
+      includes: ['Full card spread based on your question','Love, career, finance & relationship guidance','Energy & timing insights','Personalized remedies & action steps'],
+      durations: [{ time: '15 Min', price: '₹599', label: 'Quick Insight' },{ time: '30 Min', price: '₹999', label: 'Deep Dive' }],
+    },
+    numerology: { title: 'Numerology Consultation', badge: 'Numbers', img: '/assets/images/S_2.jpeg', desc: 'Numerology is the study of numbers and how they affect your life. It helps you understand your personality, decisions, and life path.', includes: ['Life path & destiny number analysis','Personality & strengths mapping','Future timeline & lucky periods','Personal year & month forecast'], durations: [{ price: '₹2500', label: 'Detailed Numerology' },{ price: '₹3200', label: 'Numerology Package + Detailed Number Report + Sign Numerology + Name Numerology' }] },
+    namenumerology: { title: 'Name Numerology', badge: 'Name Energy', img: '/assets/images/S_3.jpeg', desc: 'Your name has a vibration that influences your success and confidence. By adjusting name numbers, you can attract better opportunities.', includes: ['Current name vibration analysis','Compatibility with birth number','Suggested name corrections','Business name energy evaluation'], durations: [{ price: '₹1100', label: 'Name Numerology' }] },
+    signaturenumerology: { title: 'Signature Numerology', badge: 'Signature', img: '/assets/images/S_4.jpeg', desc: 'Your signature also holds energy. A balanced signature can boost your personal and professional success.', includes: ['Current signature energy analysis', 'Impact on personal & professional life', 'Lucky signature recommendations', 'Best signature combinations'], durations: [{ price: '₹399', label: 'Signature Numerology' }] },
+    vehiclenumerology: { title: 'Vehicle Numerology', badge: 'Vehical', img: '/assets/images/S_5.jpeg', desc: 'Vehicle numerology analyzes the energy of your vehicle’s number plate. The numbers carry vibrations that can influence your safety, success, and overall energy on the road. By aligning your vehicle number with positive vibrations, you can attract safer journeys and better opportunities in your travels.', includes: ['Vehicle numerology analysis', 'Lucky vehicle number recommendations', 'Best vehicle number combinations', 'Vehicle energy impact assessment'], durations: [{ price: '₹700', label: 'Old Number Analysis' },{ price: '1500', label: 'New Number Suggestion' }] },
+    vastu: { title: 'Vastu Consultation', badge: 'Space Energy', img: '/assets/images/S_6.jpeg', desc: 'Vastu is an ancient science that balances the energy of your home and workplace. It guides how the arrangement of spaces, directions, and elements affect your well-being. When Vastu is in harmony, it reduces stress, attracts positive energy, and supports success in life and business. Understanding and applying Vastu principles can bring peace, balance, and prosperity to your daily life.', includes: ['Room-by-room energy assessment','Direction & element corrections','Remedies without demolition','Prosperity tips'], durations: [{ price: '₹5000', label: 'Vastu Visit +  Vastu Analysis + Vastu Remedies' }] },
+    logodesign: { title: 'Scientific Logo Design & Visiting Cards', badge: 'Logo', img: '/assets/images/S_7.jpeg', desc: 'Scientific logo design and visiting cards have a deep impact on your business. The numbers, colors, and design elements all carry vibrations that influence how clients perceive you. A well-designed logo and card not only reflect your professionalism, but also attract the right energy and opportunities, helping your business grow and stand out. Each detail is carefully chosen to align with your personal and business vibrations, creating a lasting impression and success.', includes: ['Scientific logo design analysis', 'Energy-balanced visiting card design', 'Brand vibration & color psychology insights', 'Business growth-oriented design recommendations'], durations: [{ price: '₹11000', label: 'Logo as per Business + Logo as per Date of Birth ' }] },
+    graphology: { title: 'Graphology – Handwriting Analysis', badge: 'Graphology', img: '/assets/images/S_8.jpeg', desc: 'Graphology – Handwriting Analysis for Self-Discovery Graphology is the study and analysis of handwriting to understand a person’s personality traits, emotions, behavior patterns, strengths, and mindset. Every stroke, curve, spacing, and slant in handwriting reflects unique characteristics of an individual’s inner nature and thought process.Through graphology, handwriting can reveal insights about confidence, communication style, creativity, emotional balance, leadership qualities, decision-making ability, and much more. It is widely used for personal growth, relationship understanding, career guidance, and self-awareness. Graphology is based on the idea that handwriting is connected to the subconscious mind. Since no two people write exactly the same way, handwriting becomes a powerful expression of individuality and personality.', includes: ['Chakra assessment','Crystal selection','Placement guidance','Cleansing instructions','Personality analysis','Emotional understanding','Career & talent guidance','Relationship compatibility','Confidence & mindset insights','Behavioral patterns','Self-improvement & personal growth'], durations: [{ price: '₹499', label: 'Basic Handwriting Analysis' },{ price: '₹999', label: 'Detailed Graphology Report'},{ price: '₹1999', label: 'Premium Graphology Consultation'},{ price: '₹499', label: 'Detailed Signature Analysis'}] },
+    astrology: {
+  title: 'Astrology Consultation',
+  badge: 'Astrology',
+  img: '/assets/images/S_9.jpeg',
+  desc: 'Astrology is a powerful tool that helps you understand your life purpose and future path. Brighu, Nandi, and Nadi astrology offer ancient wisdom, decoding your past, present, and future. By aligning with these insights, you gain clarity, make better decisions, and navigate life with confidence and peace.',
+  includes: [
+    'Marriage issue analysis',
+    'Relationship problem guidance',
+    'Child-related astrology insights',
+    'Business, career & job predictions',
+    'Education & abroad education guidance',
+    'Foreign settlement insights'
+  ],
+  durations: [
+    { price: '₹1100', label: 'Marriage Issue' },
+    { price: '₹1100', label: 'Relationship Issue' },
+    { price: '₹1100', label: 'Child Birth' },
+    { price: '₹1100', label: 'Business Career Job' },
+    { price: '₹1100', label: 'Education & Abroad Education' },
+    { price: '₹1100', label: 'Foreign Settlement' }
+  ],
+},    };
 
-      // Back to Top Functionality
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  let selectedDurationIndex = null;
+  let currentService = null;
+
+  function openModal(serviceKey) {
+    const svc = serviceData[serviceKey];
+    if (!svc) return;
+    currentService = svc;
+    selectedDurationIndex = null;
+
+    document.getElementById('modal-img').src = svc.img;
+    document.getElementById('modal-badge').textContent = svc.badge;
+    document.getElementById('modal-title').textContent = svc.title;
+    document.getElementById('modal-desc').textContent = svc.desc;
+    document.getElementById('modal-name').value = '';
+    document.getElementById('modal-phone').value = '';
+
+    const list = document.getElementById('modal-includes-list');
+    list.innerHTML = '';
+    svc.includes.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-2 text-sm text-violet-800';
+      li.innerHTML = `<i class="fas fa-check-circle text-violet-500 mt-0.5 shrink-0"></i><span>${item}</span>`;
+      list.appendChild(li);
+    });
+
+    const durContainer = document.getElementById('modal-durations');
+    durContainer.innerHTML = '';
+    svc.durations.forEach((d, i) => {
+      const block = document.createElement('div');
+      block.className = 'duration-block';
+      const hasTime = d.hasOwnProperty('time');
+      block.innerHTML = `${hasTime ? `<div class="dur-time">${d.time}</div>` : ''}<div class="dur-price">${d.price}</div><div class="dur-label">${d.label}</div>`;
+      block.addEventListener('click', () => selectDuration(i));
+      durContainer.appendChild(block);
+    });
+
+    document.getElementById('service-modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('service-modal-box').scrollTop = 0;
   }
 
+  function selectDuration(index) { selectedDurationIndex = index; document.querySelectorAll('.duration-block').forEach((b, i) => b.classList.toggle('selected', i === index)); }
+  function closeModal() { document.getElementById('service-modal-overlay').classList.remove('open'); document.body.style.overflow = ''; currentService = null; selectedDurationIndex = null; }
+
+  function bookAppointment() {
+    const name = document.getElementById('modal-name').value.trim();
+    const phone = document.getElementById('modal-phone').value.trim();
+    if (!name) { document.getElementById('modal-name').focus(); return; }
+    if (!phone) { document.getElementById('modal-phone').focus(); return; }
+    if (selectedDurationIndex === null) { alert('Please select a session option before booking.'); return; }
+
+    const svc = currentService;
+    const dur = svc.durations[selectedDurationIndex];
+    const hasTime = dur.hasOwnProperty('time');
+    const optionText = hasTime ? `${dur.time} (${dur.label})` : dur.label;
+
+    const msg = `Hello Astro Numerics! 🙏\n\nI would like to book an appointment for:\n📌 *Service:* ${svc.title}\n📋 *Option:* ${optionText}\n💰 *Price:* ${dur.price}\n\n👤 *Name:* ${name}\n📞 *Contact:* ${phone}\n\nPlease confirm my appointment. Thank you!`;
+    window.open(`https://wa.me/919657313963?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  document.getElementById('service-modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
   const backToTopBtn = document.getElementById('backToTopBtn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.style.opacity = '1';
-      backToTopBtn.style.visibility = 'visible';
-    } else {
-      backToTopBtn.style.opacity = '0';
-      backToTopBtn.style.visibility = 'hidden';
-    }
-  });
-  
-  // Mobile navigation (same as index)
-  const hamb = document.getElementById('hambBtn');
-  const drawer = document.getElementById('mob-drawer');
-  const overlay = document.getElementById('mob-overlay');
-  const closeBtn = document.getElementById('mob-close');
-  if(hamb && drawer && overlay && closeBtn) {
-    hamb.addEventListener('click', () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); });
-    closeBtn.addEventListener('click', () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); });
-    overlay.addEventListener('click', () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); });
+  window.addEventListener('scroll', () => { backToTopBtn.style.opacity = window.scrollY > 300 ? '1' : '0'; backToTopBtn.style.visibility = window.scrollY > 300 ? 'visible' : 'hidden'; });
+
+  const hamb = document.getElementById('hambBtn'), drawer = document.getElementById('mob-drawer'), overlayMob = document.getElementById('mob-overlay'), closeBtn = document.getElementById('mob-close');
+  if(hamb && drawer && overlayMob && closeBtn) {
+    hamb.addEventListener('click', () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlayMob.classList.remove('hidden'); });
+    closeBtn.addEventListener('click', () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlayMob.classList.add('hidden'); });
+    overlayMob.addEventListener('click', () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlayMob.classList.add('hidden'); });
   }
-  // Scroll reveal
   const obs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
