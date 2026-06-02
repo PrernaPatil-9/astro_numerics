@@ -98,23 +98,23 @@
       border-color: #4338ca;
     }
 
-    /* ===== ENHANCED IMAGE-BAND CARD LAYOUT (with real product imagery) ===== */
+    /* ===== FIXED IMAGE CARD LAYOUT - IMAGES FULLY VISIBLE ===== */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
     }
 
     .product-card {
-      background: white;
-      border-radius: 28px;
-      border: 1px solid #e9eef3;
+      border-radius: 24px;
+      border: 1px solid #eef2f6;
       overflow: hidden;
       transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
       box-shadow: 0 8px 20px rgba(0,0,0,0.02), 0 2px 6px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
+      background: white;
     }
     .product-card:hover {
       transform: translateY(-8px);
@@ -122,87 +122,77 @@
       border-color: #cdd9ff;
     }
 
-    /* Image band — each card gets a beautiful, thematic image */
-    .product-image-band {
-      height: 200px;
-      background-size: cover;
-      background-position: center 35%;
-      background-repeat: no-repeat;
+    /* Fix: image container with object-fit contain to ensure full image visible, no crop */
+    .product-image-wrapper {
       position: relative;
+      width: 100%;
+      background: #f9f9fc;
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 0.8rem;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-color: #faf8ff;
+      /* Fixed aspect ratio to keep consistency, but image will be fully visible */
+      aspect-ratio: 1 / 1;
+    }
+    
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;   /* CRITICAL: ensures full image is visible without cropping */
+      object-position: center;
       transition: transform 0.4s ease;
+      display: block;
     }
-    .product-card:hover .product-image-band {
-      transform: scale(1.01);
+    
+    .product-card:hover .product-img {
+      transform: scale(1.03);
     }
-    /* overlay gradient for better text contrast */
-    .product-image-band::after {
-      content: '';
+    
+    /* Gradient overlay for better text contrast - now placed as separate element */
+    .image-overlay-content {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(0deg, rgba(10,10,25,0.55) 0%, rgba(0,0,0,0.2) 50%, transparent 90%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(8,6,22,0.82) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
+      padding: 1rem 1.2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
       pointer-events: none;
-      border-radius: 0;
-    }
-    /* category pill inside image band */
-    .band-pill-img {
-      position: relative;
       z-index: 2;
+    }
+    .image-overlay-content h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.25;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+      margin: 0;
+    }
+    
+    /* Pill category badge top-left */
+    .band-pill-img {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 3;
       font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(6px);
       color: #1e1b4b;
-      padding: 4px 12px;
+      padding: 5px 12px;
       border-radius: 40px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
       font-family: 'Outfit', sans-serif;
-    }
-    /* optional crystal icon overlay (small mystical detail) */
-    .image-icon-overlay {
-      position: absolute;
-      bottom: 12px;
-      right: 14px;
-      z-index: 2;
-      background: rgba(255,255,245,0.2);
-      backdrop-filter: blur(4px);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: rgba(255,255,245,0.95);
+      pointer-events: none;
     }
 
-    .product-body {
-      padding: 1.2rem 1.3rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      background: white;
-    }
-    .product-body h3 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #0b1120;
-      margin-bottom: 0.45rem;
-      line-height: 1.3;
-    }
-    .product-desc {
-      font-size: 0.8rem;
-      color: #4b5563;
-      line-height: 1.5;
-      flex: 1;
-      margin-bottom: 1.2rem;
-    }
     .wa-enquire {
       display: inline-flex;
       align-items: center;
@@ -218,6 +208,8 @@
       transition: all 0.2s ease;
       align-self: flex-start;
       width: auto;
+      pointer-events: auto;
+      margin-top: 4px;
     }
     .wa-enquire:hover { background: #047857; transform: translateY(-2px); box-shadow: 0 8px 16px -8px #05966960; }
 
@@ -252,9 +244,10 @@
     }
 
     @media (max-width: 640px) {
-      .products-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-      .product-image-band { height: 150px; }
-      .product-body h3 { font-size: 1rem; }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+      .image-overlay-content h3 { font-size: 1rem; }
+      .wa-enquire { font-size: 0.68rem; padding: 0.45rem 0.8rem; }
+      .band-pill-img { font-size: 0.55rem; top: 8px; left: 8px; }
     }
     @media (max-width: 480px) {
       .products-grid { grid-template-columns: 1fr; }
@@ -309,23 +302,16 @@
 </div>
 
 <main>
-<!-- Hero Section -->
+<!-- Hero Section with improved background -->
 <div class="hero-products" style="background-image: url('/assets/images/bg.jpg'); background-size: cover; background-position: center; position: relative; padding: 80px 2rem 60px;">
-
-  <!-- Dark Overlay for Readability -->
   <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15, 12, 41, 0.75), rgba(67, 56, 202, 0.55)); z-index: 1;"></div>
-
-  <!-- Content -->
   <div style="position: relative; z-index: 2; max-width: 700px; margin: 0 auto; text-align: center;">
-    
     <div class="section-eyebrow" style="justify-content: center; margin-bottom: 12px; color: #e0e7ff;">
       Energy-based sacred tools
     </div>
-    
     <h1 class="hero-title" style="margin-bottom: 16px; color: white; text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);">
       Healing Crystals, <span style="color: #a5b4fc;">Yantras</span> & Spiritual Accessories
     </h1>
-    
     <p class="hero-desc" style="color: #e0e7ff; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);">
       Authentic gemstones, Rudraksh, and yantras energetically aligned to amplify positive vibrations, protect your aura, and attract abundance.
     </p>
@@ -375,8 +361,9 @@
   <div class="category-tabs">
     <button class="category-btn active" data-cat="all">All Products</button>
     <button class="category-btn" data-cat="crystals">Crystals & Bracelets</button>
-    <button class="category-btn" data-cat="yantras">Yantras</button>
+    <button class="category-btn" data-cat="zodiac">Zodiac Bracelets</button>
     <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
+    <button class="category-btn" data-cat="yantras">Yantras</button>
     <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
   </div>
 
@@ -394,7 +381,7 @@
   </div>
 </main>
 
-<!-- FOOTER same as original with minor polish -->
+<!-- FOOTER -->
 <footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
   <div class="absolute inset-0 opacity-20 pointer-events-none">
     <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
@@ -501,7 +488,7 @@
 <!-- Back to Top Button -->
 <button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
   <div class="relative">
-    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
+    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20" />
     <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
       <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
     </div>
@@ -531,35 +518,38 @@
   if (close) close.addEventListener('click', shut);
   if (overlay) overlay.addEventListener('click', shut);
 
-  // ----- PRODUCT DATA WITH SPECIFIC HIGH-QUALITY IMAGES -----
-  // each product gets a thematic unsplash/placeholder image that matches spiritual essence.
-  const products = [
-    { name: "Clear Quartz Plain", desc: "Amplifier & clarity stone — magnifies intentions and energy.", cat: "crystals", img: "/assets/images/p_1.webp" },
-    { name: "Clear Quartz Diamond Cut", desc: "High vibration energy for mental clarity & focus.", cat: "crystals", img: "/assets/images/p_2.webp" },
-    { name: "Rose Quartz", desc: "Stone of love & compassion — opens heart chakra.", cat: "crystals", img: "/assets/images/p_3.jpg" },
-    { name: "Citrine", desc: "Abundance & manifestation — attracts prosperity.", cat: "crystals", img: "/assets/images/p_4.jpg" },
-    { name: "Amethyst", desc: "Spiritual protection & intuition — calms the mind.", cat: "crystals", img: "/assets/images/p_5.webp" },
-    { name: "Triple Protection", desc: "Evil eye & negativity shield — powerful protection.", cat: "crystals", img: "/assets/images/p_6.webp" },
-    { name: "Red Jasper", desc: "Stability & courage — grounding energy.", cat: "crystals", img: "/assets/images/p_7.webp" },
-    { name: "Lapis Lazuli", desc: "Wisdom & truth — enhances communication.", cat: "crystals", img: "/assets/images/p_8.webp" },
-    { name: "Money Attract Bracelet", desc: "Wealth magnet — attracts financial opportunities.", cat: "crystals", img: "/assets/images/p_9.webp" },
-    { name: "Green Aventurine", desc: "Luck & opportunity — manifest abundance.", cat: "crystals", img: "/assets/images/p_10.jpg" },
-    { name: "7 Chakra Bracelet", desc: "Balanced energy centers — alignment of all chakras.", cat: "crystals", img: "/assets/images/p_11.webp" },
-    { name: "Tiger Eye Bracelet", desc: "Protection & confidence — courage and strength.", cat: "crystals", img: "/assets/images/p_12.webp" },
-    { name: "Pyrite Bracelet", desc: "Abundance & protection — fool's gold for prosperity.", cat: "crystals", img: "/assets/images/p_13.webp" },
-    { name: "Money Attraction Yantra", desc: "Sacred geometric tool to attract wealth & prosperity.", cat: "yantras", img: "/assets/images/p_14.webp" },
-    { name: "Education Yantra", desc: "Enhances knowledge, focus & academic success.", cat: "yantras", img: "/assets/images/p_15.jpeg" },
-    { name: "Business Growth Yantra", desc: "Attracts customers & expands business.", cat: "yantras", img: "/assets/images/p_16.png" },
-    { name: "Conceive Yantra", desc: "Blessings for fertility & parenthood.", cat: "yantras", img: "/assets/images/p_17.jpg" },
-    { name: "Health Yantra", desc: "Promotes physical & mental well-being.", cat: "yantras", img: "/assets/images/p_18.webp" },
-    { name: "Pocket Yantra", desc: "Portable prosperity & protection for daily carry.", cat: "yantras", img: "/assets/images/p_19.jpg" },
-    { name: "Rudraksha Beads", desc: "Spiritual protection, peace of mind & emotional stability.", cat: "rudraksha", img: "/assets/images/p_20.webp" },
-    { name: "5 Mukhi Rudraksha", desc: "Balances all chakras & reduces stress.", cat: "rudraksha", img: "/assets/images/p_21.webp" },
-    { name: "Salt Bath", desc: "Energetic cleansing bath salts for negativity removal.", cat: "accessories", img: "/assets/images/p_22.webp" },
-    { name: "Pooja Kit", desc: "Complete spiritual kit for daily rituals & offerings.", cat: "accessories", img: "/assets/images/p_23.jpg" },
-    { name: "Healing Stones Set", desc: "Collection of healing stones for chakra balancing.", cat: "accessories", img: "/assets/images/p_24.webp" }
-  ];
-
+const products = [
+  { name: "Angelite & Celestite", desc: "Promotes angelic communication, inner peace, spiritual awareness, and higher guidance.", cat: "crystals", img: "/assets/images/P_1.jpeg" },
+  { name: "Amethyst", desc: "Enhances intuition, mental clarity, spiritual protection, and emotional balance.", cat: "crystals", img: "/assets/images/P_2.jpeg" },
+  { name: "Amber", desc: "Brings warmth, positivity, healing energy, and emotional cleansing.", cat: "crystals", img: "/assets/images/P_3.jpeg" },
+  { name: "Amazonite", desc: "Encourages confidence, truth, communication, and manifestation of abundance.", cat: "crystals", img: "/assets/images/P_4.jpeg" },
+  { name: "Blood Stone", desc: "Boosts courage, vitality, protection, and strengthens inner resilience.", cat: "crystals", img: "/assets/images/P_5.jpeg" },
+  { name: "Black Tourmaline", desc: "Powerful protection stone that shields against negativity and unwanted energies.", cat: "crystals", img: "/assets/images/P_6.jpeg" },
+  { name: "Black Obsidian", desc: "Grounds energy, removes negativity, and supports emotional healing.", cat: "crystals", img: "/assets/images/P_7.jpeg" },
+  { name: "Howlite", desc: "Promotes calmness, patience, emotional healing, and stress relief.", cat: "crystals", img: "/assets/images/P_8.jpeg" },
+  { name: "Hematite", desc: "Provides grounding, stability, confidence, and mental focus.", cat: "crystals", img: "/assets/images/P_9.jpeg" },
+  { name: "Green Aventurine", desc: "Known as the stone of luck, prosperity, opportunity, and growth.", cat: "crystals", img: "/assets/images/P_10.jpeg" },
+  { name: "Garnet", desc: "Inspires passion, energy, commitment, and personal transformation.", cat: "crystals", img: "/assets/images/P_11.jpeg" },
+  { name: "Dhan Labh", desc: "Traditionally associated with attracting wealth, prosperity, and financial growth.", cat: "crystals", img: "/assets/images/P_12.jpeg" },
+  { name: "Dessert Rose", desc: "Encourages clarity, grounding, confidence, and manifestation of goals.", cat: "crystals", img: "/assets/images/P_13.jpeg" },
+  { name: "Clear Quartz", desc: "Master healing crystal that amplifies energy, intentions, and spiritual growth.", cat: "crystals", img: "/assets/images/P_14.jpeg" },
+  { name: "Citrine", desc: "Attracts abundance, success, confidence, joy, and positive energy.", cat: "crystals", img: "/assets/images/P_15.jpeg" },
+  { name: "Triple Protection", desc: "A powerful blend for protection, grounding, and energy cleansing.", cat: "crystals", img: "/assets/images/P_16.jpeg" },
+  { name: "Tiger Eye", desc: "Enhances confidence, courage, focus, and protection during challenges.", cat: "crystals", img: "/assets/images/P_17.jpeg" },
+  { name: "Sunstone", desc: "Radiates joy, optimism, leadership, motivation, and personal power.", cat: "crystals", img: "/assets/images/P_18.jpeg" },
+  { name: "Rose Quartz", desc: "The stone of unconditional love, compassion, harmony, and emotional healing.", cat: "crystals", img: "/assets/images/P_19.jpeg" },
+  { name: "Red Jasper", desc: "Provides strength, stability, endurance, and grounding energy.", cat: "crystals", img: "/assets/images/P_20.jpeg" },
+  { name: "Pyrite", desc: "Attracts wealth, success, protection, and boosts confidence.", cat: "crystals", img: "/assets/images/P_21.jpeg" },
+  { name: "MoonStone", desc: "Supports intuition, emotional balance, feminine energy, and new beginnings.", cat: "crystals", img: "/assets/images/P_22.jpeg" },
+  { name: "Malachite", desc: "A stone of transformation, protection, healing, and positive change.", cat: "crystals", img: "/assets/images/P_23.jpeg" },
+  { name: "Lapis Lazuli", desc: "Enhances wisdom, truth, communication, intuition, and self-awareness.", cat: "crystals", img: "/assets/images/P_24.jpeg" },
+  { name: "Jade", desc: "Symbolizes prosperity, harmony, good fortune, and emotional balance.", cat: "crystals", img: "/assets/images/P_25.jpeg" },
+  { name: "Jasper", desc: "Provides nurturing energy, protection, grounding, and stability.", cat: "crystals", img: "/assets/images/P_26.jpeg" },
+  { name: "7 Chakra Bracelet", desc: "Balances the seven chakras, promoting harmony, healing, and positive energy flow.", cat: "crystals", img: "/assets/images/P_27.jpeg" },
+  { name: "Sagittarius", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_28.jpeg" },
+  { name: "Scorpio", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_29.jpeg" },
+  { name: "Libra", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_30.jpeg" }
+];
   function renderProducts(category) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
@@ -570,23 +560,23 @@
     }
     grid.innerHTML = filtered.map(product => {
       let categoryLabel = "";
-      if (product.cat === "crystals") categoryLabel = "Crystals";
+      if (product.cat === "crystals") categoryLabel = "Crystals & Bracelets";
       else if (product.cat === "yantras") categoryLabel = "Yantra";
       else if (product.cat === "rudraksha") categoryLabel = "Rudraksha";
+      else if (product.cat === "zodiac") categoryLabel = "Zodiac Bracelets";
       else categoryLabel = "Accessories";
-      
+
       return `
         <div class="product-card">
-          <div class="product-image-band" style="background-image: url('${product.img}'); background-size: cover;">
-            <span class="band-pill-img">${categoryLabel}</span>
-            <div class="image-icon-overlay"><i class="fas fa-spa"></i></div>
-          </div>
-          <div class="product-body">
-            <h3>${product.name}</h3>
-            <div class="product-desc">${product.desc}</div>
-            <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20enquire%20about%20${encodeURIComponent(product.name)}." target="_blank" class="wa-enquire">
-              <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
-            </a>
+          <div class="product-image-wrapper">
+            <img class="product-img" src="${product.img}" alt="${product.name}" loading="lazy" onerror="this.src='https://placehold.co/400x400/f3f0ff/4338ca?text=${encodeURIComponent(product.name)}'">
+            <span class="band-pill-img" style="display: none !important;">${categoryLabel}</span>
+            <div class="image-overlay-content">
+              <h3>${product.name}</h3>
+              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20enquire%20about%20${encodeURIComponent(product.name)}." target="_blank" class="wa-enquire">
+                <i class="fab fa-whatsapp"></i> Enquire on WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       `;

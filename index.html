@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
  <!-- Replace this line -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <!-- With this -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" /> 
@@ -106,6 +107,77 @@
     50%      { box-shadow: 0 0 50px rgba(99,102,241,0.35), 0 0 0 12px rgba(99,102,241,0.07); }
   }
   
+  /* hero */
+  
+    :root {
+    --violet: #8b5cf6;
+    --violet-light: #a78bfa;
+    --jade: #10b981;
+    --jade-light: #34d399;
+    --midnight: #0f0c29;
+    --amber: #fbbf24;
+  }
+  
+  .bg-midnight { background-color: #0f0c29; }
+  .text-violet-light { color: #a78bfa; }
+  .bg-jade { background-color: #10b981; }
+  .bg-jade-light { background-color: #34d399; }
+  .text-amber { color: #fbbf24; }
+  .shadow-jade\/30 { box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+  
+  .blink-dot {
+    animation: blink 1.5s infinite;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  
+  .hero-dot.active {
+    background-color: #10b981 !important;
+    width: 1.5rem;
+    border-radius: 9999px;
+  }
+  
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .font-display {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  }
+  
+  .hover\:-translate-y-0\.5:hover {
+    transform: translateY(-2px);
+  }
+  
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+  
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  
+  .floating {
+    animation: float 4s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  
+  .drop-shadow-2xl {
+    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.25));
+  }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
@@ -155,7 +227,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════ HERO -->
+<!-- ═══════════════════════════════════════════════ HERO (TEXT SHIFTED RIGHT, LARGER IMAGES) -->
 <section class="relative min-h-[80vh] flex items-center overflow-hidden bg-midnight">
   <!-- Astro / Cosmic Background Image -->
   <div class="absolute inset-0">
@@ -163,7 +235,7 @@
       alt="Starry cosmos galaxy" class="w-full h-full object-cover opacity-40"/>
   </div>
   <!-- Overlay gradient for text readability -->
-  <div class="absolute inset-0 bg-gradient-to-r from-midnight via-midnight/20 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-midnight via-midnight/60 to-transparent"></div>
   
   <!-- Soft floating orbs -->
   <div class="orb w-64 h-64 bg-violet-600/20 top-10 left-0"></div>
@@ -175,16 +247,17 @@
       <div id="compactHeroTrack" class="flex transition-transform duration-700 ease-out">
         
         <!-- SLIDE 1 :: Clarity & Direction -->
-        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          <div class="flex-1 text-left">
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+        <div class="min-w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <!-- Left Side Text - shifted more to the right -->
+          <div class="flex-1 max-w-xl lg:pl-16 xl:pl-24 2xl:pl-32">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
               <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
               Trusted Guidance · Since 2012
             </div>
-            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.2] tracking-tight mb-4">
               Clarity.<br/>Direction.<br/><span class="text-violet-light font-medium">Positive Transformation.</span>
             </h1>
-            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-6">
               Connect with experienced spiritual guides for personalised insights on love, career, and life's path — right from your phone.
             </p>
             <div class="flex flex-wrap gap-3">
@@ -196,112 +269,108 @@
                 Explore Services
               </a>
             </div>
+            <div class="flex items-center gap-4 mt-5">
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-shield-alt text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">100% Confidential</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-clock text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">24/7 Available</span>
+              </div>
+            </div>
           </div>
-          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-star-of-david text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Tarot Reading</div><div class="text-white/40 text-xs">Illuminates the path ahead.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-infinity text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Numerology</div><div class="text-white/40 text-xs">Decode life path & destiny.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-gem text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Crystal Healing</div><div class="text-white/40 text-xs">Restore energetic balance.</div></div>
-            </div>
-            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
-              <i class="fas fa-shield-alt text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">100% Confidential</span>
-              <span class="text-white/20 text-xs">·</span>
-              <i class="fas fa-clock text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">24/7 Available</span>
+          
+          <!-- Right Side IMAGE Banner -->
+          <div class="flex-1 flex justify-end pr-4 lg:pr-8">
+            <div class="w-80 md:w-96 lg:w-[420px] xl:w-[480px] floating">
+              <img src="/assets/images/BTT.jpg" 
+                   alt="Tarot Reading Banner" 
+                   class="w-full object-contain drop-shadow-2xl">
             </div>
           </div>
         </div>
         
         <!-- SLIDE 2 :: Wealth & Abundance -->
-        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          <div class="flex-1 text-left">
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+        <div class="min-w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <!-- Left Side Text - shifted more to the right -->
+          <div class="flex-1 max-w-xl lg:pl-16 xl:pl-24 2xl:pl-32">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
               <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
               Wealth · Prosperity · Abundance
             </div>
-            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.2] tracking-tight mb-4">
               Unlock<br/>Financial Flow.<br/><span class="text-violet-light font-medium">Attract Abundance Naturally.</span>
             </h1>
-            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-6">
               Vedic remedies, wealth numerology and prosperity rituals to clear blocks and welcome limitless opportunities.
             </p>
             <div class="flex flex-wrap gap-3">
               <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20wealth%20guidance." target="_blank"
-                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light transition-all">
+                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light hover:-translate-y-0.5 transition-all">
                 <i class="fab fa-whatsapp text-sm"></i> Abundance Reading
               </a>
             </div>
+            <div class="flex items-center gap-4 mt-5">
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-chart-line text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">Proven Results</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-rupee-sign text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">Wealth Focus</span>
+              </div>
+            </div>
           </div>
-          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-coins text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Wealth Numerology</div><div class="text-white/40 text-xs">Money attracting numbers & business names.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-chart-line text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Career & Business</div><div class="text-white/40 text-xs">Align with cosmic timing and life number.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-fire text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Remedial Rituals</div><div class="text-white/40 text-xs">Simple vedic remedies to remove blocks.</div></div>
-            </div>
-            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
-              <i class="fas fa-chart-line text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">Proven Results</span>
-              <span class="text-white/20 text-xs">·</span>
-              <i class="fas fa-rupee-sign text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">Wealth Focus</span>
+          
+          <!-- Right Side IMAGE Banner -->
+          <div class="flex-1 flex justify-end pr-4 lg:pr-8">
+            <div class="w-80 md:w-96 lg:w-[420px] xl:w-[480px] floating">
+              <img src="/assets/images/BTT_1.webp" 
+                   alt="Wealth Abundance Banner" 
+                   class="w-full object-contain drop-shadow-2xl">
             </div>
           </div>
         </div>
         
         <!-- SLIDE 3 :: Love & Relationships -->
-        <div class="min-w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          <div class="flex-1 text-left">
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
+        <div class="min-w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+          <!-- Left Side Text - shifted more to the right -->
+          <div class="flex-1 max-w-xl lg:pl-16 xl:pl-24 2xl:pl-32">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1 text-xs font-medium text-violet-300 tracking-widest uppercase mb-4">
               <span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot inline-block"></span>
               Love · Harmony · Soul Connection
             </div>
-            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.15] tracking-tight mb-3">
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-light text-white leading-[1.2] tracking-tight mb-4">
               Navigate<br/>Relationships.<br/><span class="text-violet-light font-medium">Find & Keep True Love.</span>
             </h1>
-            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-5">
+            <p class="text-white/60 text-sm md:text-base leading-relaxed max-w-md mb-6">
               Understand compatibility, heal past patterns and attract a soul-aligned partnership through astrological wisdom.
             </p>
             <div class="flex flex-wrap gap-3">
               <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20need%20love%20guidance." target="_blank"
-                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light transition-all">
+                class="inline-flex items-center gap-2 bg-jade text-white px-5 py-2.5 rounded-lg font-medium text-sm shadow-md shadow-jade/30 hover:bg-jade-light hover:-translate-y-0.5 transition-all">
                 <i class="fab fa-whatsapp text-sm"></i> Love Compatibility
               </a>
             </div>
+            <div class="flex items-center gap-4 mt-5">
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-heart text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">100% Private</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/10 rounded-full px-3 py-1.5">
+                <i class="fas fa-hand-holding-heart text-amber text-xs"></i>
+                <span class="text-white/70 text-xs">Non-Judgmental</span>
+              </div>
+            </div>
           </div>
-          <div class="flex-1 hidden md:grid grid-cols-1 gap-3">
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-heart text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Compatibility Reading</div><div class="text-white/40 text-xs">Soulmate indicators & karmic bonds.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-clock text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Timing of Love</div><div class="text-white/40 text-xs">Planetary periods for meeting your partner.</div></div>
-            </div>
-            <div class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-xl p-3 hover:border-violet-light/40 transition-all">
-              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-violet-light shrink-0"><i class="fas fa-hand-sparkles text-sm"></i></div>
-              <div><div class="font-display text-white font-medium text-base">Healing Heartblocks</div><div class="text-white/40 text-xs">Release past trauma & open to love.</div></div>
-            </div>
-            <div class="flex items-center gap-2 bg-amber-pale/10 border border-amber/20 rounded-lg px-3 py-2 self-start">
-              <i class="fas fa-heart text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">100% Private</span>
-              <span class="text-white/20 text-xs">·</span>
-              <i class="fas fa-hand-holding-heart text-amber text-xs"></i>
-              <span class="text-amber text-xs font-medium">Non-Judgmental</span>
+          
+          <!-- Right Side IMAGE Banner -->
+          <div class="flex-1 flex justify-end pr-4 lg:pr-8">
+            <div class="w-80 md:w-96 lg:w-[420px] xl:w-[480px] floating">
+              <img src="/assets/images/BTT_2.jpg" 
+                   alt="Love & Relationship Banner" 
+                   class="w-full object-contain drop-shadow-2xl">
             </div>
           </div>
         </div>
@@ -309,7 +378,11 @@
     </div>
     
     <!-- Slider Dots -->
-    <div class="flex justify-center gap-2 mt-8" id="compactHeroDots"></div>
+    <div class="flex justify-center gap-3 mt-12" id="compactHeroDots">
+      <button class="hero-dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300" data-slide="0"></button>
+      <button class="hero-dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300" data-slide="1"></button>
+      <button class="hero-dot w-2 h-2 rounded-full bg-white/40 transition-all duration-300" data-slide="2"></button>
+    </div>
   </div>
   
   <!-- Scroll hint -->
@@ -318,7 +391,6 @@
     <div class="w-px h-5 bg-white/20"></div>
   </div>
 </section>
-
 
 <!-- ═══════════════════════════════════════════════ MARQUEE TRUST BANNER -->
 <div class="star-banner py-3 overflow-hidden border-y border-violet/20">
@@ -545,7 +617,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════ SERVICES CAROUSEL -->
+<!-- ═══════════════════════════════════════════════ SERVICES CAROUSEL (Light Border + Fixed 3-line description + Aligned Buttons) -->
 <section id="services" class="py-8 md:py-10 bg-slate-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -562,113 +634,107 @@
         <button id="svc-next" class="w-11 h-11 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet hover:bg-violet-pale transition-all">
           <i class="fas fa-arrow-right text-sm"></i>
         </button>
-        <a href="services.html" class="ml-2 text-sm font-medium text-violet border-b border-violet/40 hover:border-violet pb-px transition-colors">View all 9 →</a>
+        <a href="services.html" class="ml-2 text-sm font-medium text-violet border-b border-violet/40 hover:border-violet pb-px transition-colors">View all →</a>
       </div>
     </div>
     <!-- Carousel -->
     <div class="overflow-hidden">
       <div class="carousel-track gap-5" id="svcTrack" style="width:calc(100% + 20px)">
-        <!-- Service 1 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_1.avif" alt="Tarot Reading" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 1 - Tarot -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_1.jpeg" alt="Tarot Reading" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4">
+            <!-- <div class="absolute bottom-4 left-4">
               <span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Divination</span>
-            </div>
+            </div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-star-of-david text-sm"></i></div>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Tarot Reading</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">Gain insight into present energies and future possibilities through the sacred language of the cards.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20to%20book%20a%20Tarot%20Reading." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Tarot Card Reading</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Personalized intuitive card analysis for love, career, relationships, finance & life decisions. Remove confusion and attract clarity.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
-        <!-- Service 2 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_2.avif" alt="Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 2 - Numerology -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_2.jpeg" alt="Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Numbers</span></div>
+            <!-- <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Numbers</span></div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-infinity text-sm"></i></div>
           </div>
-          <div class="p-6">
+          <div class="p-6 flex flex-col flex-grow">
             <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Numerology Consultation</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">Life path, destiny and name vibrations decoded through the ancient science of numbers.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20a%20Numerology%20Consultation." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Deep dive into your life path, destiny number, strengths & future possibilities. Understand hidden energy vibrations of your birth date & name.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
-        <!-- Service 3 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_3.jpg" alt="Crystal Healing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 3 - Name Numerology -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_3.jpeg" alt="Name Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Energy</span></div>
+            <!-- <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Energy</span></div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-gem text-sm"></i></div>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Crystal Healing</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">Harmonise your energies with sacred stones and deep chakra balancing work.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20Crystal%20Healing%20guidance." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Name Numerology</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Balance your name vibrations to attract success, positivity, and opportunities. Energy-based correction for personal & business names.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
-        <!-- Service 4 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_4.webp" alt="Birth Chart" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 4 - Signature Numerology -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_4.jpeg" alt="Signature Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Cosmos</span></div>
+            <!-- <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Cosmos</span></div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-sun text-sm"></i></div>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Birth Chart Analysis</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">A complete astrological reading of your natal chart — your cosmic blueprint decoded.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20a%20Birth%20Chart%20Analysis." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Signature Numerology</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Your signature also holds energy. A balanced signature can boost your personal and professional success.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
-        <!-- Service 5 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_5.webp" alt="Vastu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 5 - Vehicle Numerology -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_5.jpeg" alt="Vehicle Numerology" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Space</span></div>
+            <!-- <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Space</span></div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-home text-sm"></i></div>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Vastu Consultation</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">Align the energy of your home or workspace with Vedic spatial principles for harmony.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20a%20Vastu%20Consultation." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Vehicle Numerology</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Vehicle numerology studies your number plate's energy to attract safer journeys, success, and positive travel vibrations.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
-        <!-- Service 6 -->
-        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group">
-          <div class="relative h-44 overflow-hidden">
-            <img src="/assets/images/carousel_6.avif" alt="Past Life" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+        <!-- Service 6 - Vastu -->
+        <div class="min-w-[300px] md:min-w-[340px] card-shine bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-violet/40 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all group flex flex-col h-full">
+          <div class="relative h-44 overflow-hidden shrink-0">
+            <img src="/assets/images/S_6.jpeg" alt="Vastu Consultation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
             <div class="absolute inset-0 bg-gradient-to-t from-midnight/80 to-transparent"></div>
-            <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Soul</span></div>
+            <!-- <div class="absolute bottom-4 left-4"><span class="bg-white/15 border border-white/20 text-white text-xs font-medium tracking-widest uppercase px-3 py-1 rounded-full">Soul</span></div> -->
             <div class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-amber"><i class="fas fa-yin-yang text-sm"></i></div>
           </div>
-          <div class="p-6">
-            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Past Life Reading</h3>
-            <p class="text-sm text-slate-500 leading-relaxed mb-5">Explore karmic patterns and soul contracts that shape your present circumstances.</p>
-            <a href="https://wa.me/919657313963?text=I%20want%20a%20Past%20Life%20Reading." target="_blank"
-              class="inline-flex items-center gap-2 bg-jade-pale text-jade font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-jade hover:text-white transition-all">
-              <i class="fab fa-whatsapp"></i> Consult on WhatsApp
+          <div class="p-6 flex flex-col flex-grow">
+            <h3 class="font-display text-2xl font-medium text-slate-900 mb-2">Vastu Consultation</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3 min-h-[4.5rem]">Create harmony, balance & positive energy in home, office or business space. Practical corrections & energy balancing for prosperity & peace.</p>
+            <a href="services.html" class="inline-flex items-center justify-center gap-2 bg-violet-pale text-violet font-medium text-sm px-4 py-2.5 rounded-lg hover:bg-violet hover:text-white transition-all w-full sm:w-auto text-center mt-auto">
+              Know More <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
         </div>
@@ -679,145 +745,17 @@
   </div>
 </section>
 
-<script>
-  (function() {
-    const track = document.getElementById('svcTrack');
-    if (!track) return;
-    const slides = track.children;
-    const totalSlides = slides.length;
-    let currentIndex = 0;
-    let autoInterval;
-    let resizeTimer;
-    
-    const dotsContainer = document.getElementById('svcDots');
-    const prevBtn = document.getElementById('svc-prev');
-    const nextBtn = document.getElementById('svc-next');
-    
-    function getVisibleCount() {
-      return window.innerWidth < 768 ? 1 : 3;
-    }
-    
-    function getMaxIndex() {
-      const visible = getVisibleCount();
-      return Math.max(0, totalSlides - visible);
-    }
-    
-    function getSlideWidth() {
-      const firstSlide = slides[0];
-      const gap = 20; // gap-5 = 20px
-      return firstSlide.offsetWidth + gap;
-    }
-    
-    function updateCarousel() {
-      const slideWidth = getSlideWidth();
-      track.style.transition = 'transform 0.5s ease';
-      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-    }
-    
-    function renderDots() {
-      if (!dotsContainer) return;
-      const visible = getVisibleCount();
-      const dotCount = Math.ceil(totalSlides / visible);
-      dotsContainer.innerHTML = '';
-      const currentGroup = Math.floor(currentIndex / visible);
-      
-      for (let i = 0; i < dotCount; i++) {
-        const dot = document.createElement('button');
-        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentGroup ? 'bg-violet w-6' : 'bg-slate-300 hover:bg-violet/50'}`;
-        dot.addEventListener('click', () => {
-          stopAutoSlide();
-          const visible = getVisibleCount();
-          currentIndex = i * visible;
-          if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
-          updateCarousel();
-          renderDots();
-          startAutoSlide();
-        });
-        dotsContainer.appendChild(dot);
-      }
-    }
-    
-    function goToNext() {
-      const visible = getVisibleCount();
-      let nextIndex = currentIndex + visible;
-      if (nextIndex > getMaxIndex()) {
-        nextIndex = 0;
-      }
-      currentIndex = nextIndex;
-      updateCarousel();
-      renderDots();
-    }
-    
-    function goToPrev() {
-      const visible = getVisibleCount();
-      let prevIndex = currentIndex - visible;
-      if (prevIndex < 0) {
-        prevIndex = getMaxIndex();
-      }
-      currentIndex = prevIndex;
-      updateCarousel();
-      renderDots();
-    }
-    
-    function startAutoSlide() {
-      if (autoInterval) clearInterval(autoInterval);
-      autoInterval = setInterval(goToNext, 4000); // Auto-slide every 4 seconds
-    }
-    
-    function stopAutoSlide() {
-      if (autoInterval) {
-        clearInterval(autoInterval);
-        autoInterval = null;
-      }
-    }
-    
-    function resetAutoTimer() {
-      stopAutoSlide();
-      startAutoSlide();
-    }
-    
-    // Event listeners
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        stopAutoSlide();
-        goToPrev();
-        startAutoSlide();
-      });
-    }
-    
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        stopAutoSlide();
-        goToNext();
-        startAutoSlide();
-      });
-    }
-    
-    // Pause on hover
-    const carouselContainer = document.querySelector('#services .overflow-hidden');
-    if (carouselContainer) {
-      carouselContainer.addEventListener('mouseenter', stopAutoSlide);
-      carouselContainer.addEventListener('mouseleave', startAutoSlide);
-    }
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      if (resizeTimer) clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (currentIndex > getMaxIndex()) {
-          currentIndex = getMaxIndex();
-        }
-        updateCarousel();
-        renderDots();
-      }, 100);
-    });
-    
-    // Initialize
-    renderDots();
-    updateCarousel();
-    startAutoSlide(); // Auto-slide starts automatically
-  })();
-</script>
+<style>
+  /* Ensures consistent 3-line truncation across browsers */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>
 
 <!-- The process -->
 <section 
@@ -1087,6 +1025,149 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════ AWARDS & CERTIFICATES CAROUSEL (With Certificate Name & Recipient) -->
+<section id="awards" class="py-16 md:py-20 bg-gradient-to-br from-violet-pale via-white to-amber-pale overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3">
+        <div class="w-6 h-px bg-violet"></div> 
+        Recognitions & Achievements
+        <div class="w-6 h-px bg-violet"></div>
+      </div>
+      <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900 mb-4">Honored &<span class="text-violet font-medium"> Certified</span></h2>
+      <p class="text-slate-500 max-w-2xl mx-auto">Recognized for excellence in Vedic astrology, numerological consultations, and spiritual healing practices.</p>
+    </div>
+
+    <!-- Awards Carousel -->
+    <div class="relative">
+      <div class="overflow-hidden">
+        <div class="flex gap-6 md:gap-8 overflow-x-auto pb-6 scroll-smooth hide-scrollbar" id="awardsTrack" style="scrollbar-width: none; -ms-overflow-style: none;">
+          
+          <!-- Certificate 1 -->
+          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-scroll text-violet text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate of Excellence in Astrology</h3>
+              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: International Astrology Council</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate 2 -->
+          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
+              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-chart-simple text-violet text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Master Numerologist Certification</h3>
+              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: Global Numerology Institute</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate 3 -->
+          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Vedic Astrology Proficiency Certificate" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-star-of-life text-violet text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Vedic Astrology Proficiency</h3>
+              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: Indian Council of Vedic Sciences</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate 4 -->
+          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
+              <img src="/assets/images/c_2.png" alt="Crystal Healing & Chakra Balancing Certificate" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-gem text-violet text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Crystal Healing &amp; Chakra Balancing</h3>
+              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: Alternative Healing Association</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate 5 -->
+          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Spiritual Counseling Certification" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-hand-sparkles text-violet text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Spiritual Counseling Certification</h3>
+              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: World Spiritual Federation</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button id="awards-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet transition-all z-10">
+        <i class="fas fa-chevron-left text-sm"></i>
+      </button>
+      <button id="awards-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet transition-all z-10">
+        <i class="fas fa-chevron-right text-sm"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Carousel JavaScript -->
+<script>
+  // Awards Carousel functionality
+  const awardsTrack = document.getElementById('awardsTrack');
+  const awardsPrev = document.getElementById('awards-prev');
+  const awardsNext = document.getElementById('awards-next');
+  
+  if (awardsPrev && awardsNext && awardsTrack) {
+    awardsPrev.addEventListener('click', () => {
+      awardsTrack.scrollBy({ left: -340, behavior: 'smooth' });
+    });
+    
+    awardsNext.addEventListener('click', () => {
+      awardsTrack.scrollBy({ left: 340, behavior: 'smooth' });
+    });
+  }
+</script>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
 <!-- ============================================ -->
 <!-- CLIENT TESTIMONIALS SECTION                  -->
 <!-- ============================================ -->
@@ -1190,141 +1271,6 @@
       <div class="flex items-center gap-2 text-slate-400 text-xs"><i class="fas fa-star text-amber-300"></i> 4.95 Avg Rating</div>
       <div class="w-px h-3 bg-slate-200"></div>
       <div class="flex items-center gap-2 text-slate-400 text-xs"><i class="fas fa-globe text-violet-300"></i> Global Clientele</div>
-    </div>
-    
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- ============================================ -->
-<!-- AWARDS & RECOGNITION SECTION - CERTIFICATE IMAGE STYLE -->
-<!-- ============================================ -->
-<section class="py-16 md:py-24 bg-midnight relative overflow-hidden">
-  
-  <!-- Cosmic texture -->
-  <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 24px 24px;"></div>
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-violet-500/5 blur-[100px] pointer-events-none"></div>
-  
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-    
-    <!-- Header -->
-    <div class="text-center mb-12 md:mb-16 reveal">
-      <div class="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-        <div class="w-6 h-px bg-amber-400/50"></div>
-        <span>Honours & Accolades</span>
-        <div class="w-6 h-px bg-amber-400/50"></div>
-      </div>
-      <h2 class="font-display text-3xl md:text-5xl font-light text-white">
-        Recognised for <span class="text-amber-300">excellence</span>
-      </h2>
-      <p class="text-white/50 text-sm mt-3 max-w-2xl mx-auto">
-        Trusted by spiritual platforms, industry bodies, and thousands of seekers for authentic guidance.
-      </p>
-    </div>
-    
-    <!-- Certificates Grid - Elegant framed certificate style -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-      
-      <!-- Certificate 1 -->
-      <div class="group relative bg-gradient-to-br from-amber-50/10 to-white/5 backdrop-blur-sm rounded-xl p-4 text-center border border-amber-400/30 hover:border-amber-400/60 transition-all duration-300 hover:-translate-y-2 shadow-lg hover:shadow-amber-400/10 reveal d1">
-        <!-- Certificate Frame Effect -->
-        <div class="absolute inset-2 rounded-lg border border-amber-400/20 pointer-events-none"></div>
-        <div class="w-28 h-28 mx-auto mb-4 relative">
-          <img src="/assets/images/BTT_2.jpg" 
-               alt="Best Spiritual Guide Certificate" 
-               class="w-full h-full object-cover rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
-          <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-400 flex items-center justify-center">
-            <i class="fas fa-award text-white text-[10px]"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-lg font-semibold text-white mb-1">Best Spiritual Guide</h3>
-        <p class="text-amber-400/70 text-[10px] tracking-wider uppercase mb-2">2023 · Spiritual Excellence Awards</p>
-        <p class="text-white/40 text-[11px] leading-relaxed">Authentic Vedic & Numerological insights</p>
-        <!-- Hover overlay with zoom effect -->
-        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-center justify-center backdrop-blur-sm">
-          <span class="text-white text-xs font-medium flex items-center gap-1"><i class="fas fa-search-plus"></i> View Certificate</span>
-        </div>
-      </div>
-      
-      <!-- Certificate 2 -->
-      <div class="group relative bg-gradient-to-br from-violet-50/10 to-white/5 backdrop-blur-sm rounded-xl p-4 text-center border border-violet-400/30 hover:border-violet-400/60 transition-all duration-300 hover:-translate-y-2 shadow-lg hover:shadow-violet-400/10 reveal d2">
-        <div class="absolute inset-2 rounded-lg border border-violet-400/20 pointer-events-none"></div>
-        <div class="w-28 h-28 mx-auto mb-4 relative">
-          <img src="/assets/images/BTT_1.webp" 
-               alt="Top Rated Service Certificate" 
-               class="w-full h-full object-cover rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
-          <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-violet-400 flex items-center justify-center">
-            <i class="fas fa-medal text-white text-[10px]"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-lg font-semibold text-white mb-1">Top Rated Service</h3>
-        <p class="text-violet-400/70 text-[10px] tracking-wider uppercase mb-2">2024 · Trusted Guidance Index</p>
-        <p class="text-white/40 text-[11px] leading-relaxed">4.95/5 from 2,000+ verified reviews</p>
-        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-center justify-center backdrop-blur-sm">
-          <span class="text-white text-xs font-medium flex items-center gap-1"><i class="fas fa-search-plus"></i> View Certificate</span>
-        </div>
-      </div>
-      
-      <!-- Certificate 3 -->
-      <div class="group relative bg-gradient-to-br from-emerald-50/10 to-white/5 backdrop-blur-sm rounded-xl p-4 text-center border border-emerald-400/30 hover:border-emerald-400/60 transition-all duration-300 hover:-translate-y-2 shadow-lg hover:shadow-emerald-400/10 reveal d3">
-        <div class="absolute inset-2 rounded-lg border border-emerald-400/20 pointer-events-none"></div>
-        <div class="w-28 h-28 mx-auto mb-4 relative">
-          <img src="https://placehold.co/400x400/ecfdf5/059669?text=CERTIFICATE&font=playfair" 
-               alt="Sacred Wisdom Award Certificate" 
-               class="w-full h-full object-cover rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
-          <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-emerald-400 flex items-center justify-center">
-            <i class="fas fa-gem text-white text-[10px]"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-lg font-semibold text-white mb-1">Sacred Wisdom Award</h3>
-        <p class="text-emerald-400/70 text-[10px] tracking-wider uppercase mb-2">2022 · International Astrology Congress</p>
-        <p class="text-white/40 text-[11px] leading-relaxed">Contribution to modern spiritual guidance</p>
-        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-center justify-center backdrop-blur-sm">
-          <span class="text-white text-xs font-medium flex items-center gap-1"><i class="fas fa-search-plus"></i> View Certificate</span>
-        </div>
-      </div>
-      
-      <!-- Certificate 4 -->
-      <div class="group relative bg-gradient-to-br from-rose-50/10 to-white/5 backdrop-blur-sm rounded-xl p-4 text-center border border-rose-400/30 hover:border-rose-400/60 transition-all duration-300 hover:-translate-y-2 shadow-lg hover:shadow-rose-400/10 reveal d4">
-        <div class="absolute inset-2 rounded-lg border border-rose-400/20 pointer-events-none"></div>
-        <div class="w-28 h-28 mx-auto mb-4 relative">
-          <img src="https://placehold.co/400x400/fef2f2/e11d48?text=CERTIFICATE&font=playfair" 
-               alt="Client's Choice Certificate" 
-               class="w-full h-full object-cover rounded-lg shadow-md group-hover:shadow-xl transition-all duration-300">
-          <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-rose-400 flex items-center justify-center">
-            <i class="fas fa-certificate text-white text-[10px]"></i>
-          </div>
-        </div>
-        <h3 class="font-display text-lg font-semibold text-white mb-1">Client's Choice</h3>
-        <p class="text-rose-400/70 text-[10px] tracking-wider uppercase mb-2">2024 · Spiritual Seekers Union</p>
-        <p class="text-white/40 text-[11px] leading-relaxed">Highest recommendation rate among peers</p>
-        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl flex items-center justify-center backdrop-blur-sm">
-          <span class="text-white text-xs font-medium flex items-center gap-1"><i class="fas fa-search-plus"></i> View Certificate</span>
-        </div>
-      </div>
-      
-    </div>
-    
-    <!-- Media recognition bar (simple) -->
-    <div class="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center items-center gap-8 opacity-70">
-      <span class="text-white/30 text-[11px] tracking-[0.2em] uppercase">Featured in</span>
-      <div class="flex flex-wrap justify-center gap-6 items-center">
-        <span class="text-white/40 text-xs font-light tracking-wider">Spiritual India Journal</span>
-        <span class="w-1 h-1 rounded-full bg-white/20"></span>
-        <span class="text-white/40 text-xs font-light tracking-wider">Vedic Today</span>
-        <span class="w-1 h-1 rounded-full bg-white/20"></span>
-        <span class="text-white/40 text-xs font-light tracking-wider">Mystic Echoes Podcast</span>
-        <span class="w-1 h-1 rounded-full bg-white/20"></span>
-        <span class="text-white/40 text-xs font-light tracking-wider">Wellness Conclave 2024</span>
-      </div>
-    </div>
-    
-    <!-- Small trust badge with certificate icon -->
-    <div class="flex justify-center mt-10">
-      <div class="inline-flex items-center gap-2 bg-white/5 rounded-full px-4 py-1.5 border border-white/10">
-        <i class="fas fa-certificate text-amber-400 text-sm"></i>
-        <span class="text-white/60 text-[11px] tracking-wide">ISO Certified Spiritual Practices · Member of IGA (International Guidance Association)</span>
-      </div>
     </div>
     
   </div>
@@ -1646,6 +1592,200 @@ window.addEventListener('scroll', () => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // hero
+
+    (function() {
+    const track = document.getElementById('compactHeroTrack');
+    const dots = document.querySelectorAll('.hero-dot');
+    let currentIndex = 0;
+    const totalSlides = 3;
+    let autoplayInterval;
+    
+    function updateSlider(index) {
+      if (!track) return;
+      currentIndex = (index + totalSlides) % totalSlides;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      dots.forEach((dot, i) => {
+        if (i === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+    
+    function nextSlide() {
+      updateSlider(currentIndex + 1);
+    }
+    
+    function startAutoplay() {
+      autoplayInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+      }
+    }
+    
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        stopAutoplay();
+        updateSlider(idx);
+        startAutoplay();
+      });
+    });
+    
+    const sliderContainer = document.querySelector('.relative.overflow-hidden');
+    if (sliderContainer) {
+      sliderContainer.addEventListener('mouseenter', stopAutoplay);
+      sliderContainer.addEventListener('mouseleave', startAutoplay);
+    }
+    
+    updateSlider(0);
+    startAutoplay();
+  })();
+
+
+    (function() {
+    const track = document.getElementById('svcTrack');
+    if (!track) return;
+    const slides = track.children;
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    let autoInterval;
+    let resizeTimer;
+    
+    const dotsContainer = document.getElementById('svcDots');
+    const prevBtn = document.getElementById('svc-prev');
+    const nextBtn = document.getElementById('svc-next');
+    
+    function getVisibleCount() {
+      return window.innerWidth < 768 ? 1 : 3;
+    }
+    
+    function getMaxIndex() {
+      const visible = getVisibleCount();
+      return Math.max(0, totalSlides - visible);
+    }
+    
+    function getSlideWidth() {
+      const firstSlide = slides[0];
+      const gap = 20; // gap-5 = 20px
+      return firstSlide.offsetWidth + gap;
+    }
+    
+    function updateCarousel() {
+      const slideWidth = getSlideWidth();
+      track.style.transition = 'transform 0.5s ease';
+      track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+    }
+    
+    function renderDots() {
+      if (!dotsContainer) return;
+      const visible = getVisibleCount();
+      const dotCount = Math.ceil(totalSlides / visible);
+      dotsContainer.innerHTML = '';
+      const currentGroup = Math.floor(currentIndex / visible);
+      
+      for (let i = 0; i < dotCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentGroup ? 'bg-violet w-6' : 'bg-slate-300 hover:bg-violet/50'}`;
+        dot.addEventListener('click', () => {
+          stopAutoSlide();
+          const visible = getVisibleCount();
+          currentIndex = i * visible;
+          if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
+          updateCarousel();
+          renderDots();
+          startAutoSlide();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+    
+    function goToNext() {
+      const visible = getVisibleCount();
+      let nextIndex = currentIndex + visible;
+      if (nextIndex > getMaxIndex()) {
+        nextIndex = 0;
+      }
+      currentIndex = nextIndex;
+      updateCarousel();
+      renderDots();
+    }
+    
+    function goToPrev() {
+      const visible = getVisibleCount();
+      let prevIndex = currentIndex - visible;
+      if (prevIndex < 0) {
+        prevIndex = getMaxIndex();
+      }
+      currentIndex = prevIndex;
+      updateCarousel();
+      renderDots();
+    }
+    
+    function startAutoSlide() {
+      if (autoInterval) clearInterval(autoInterval);
+      autoInterval = setInterval(goToNext, 4000); // Auto-slide every 4 seconds
+    }
+    
+    function stopAutoSlide() {
+      if (autoInterval) {
+        clearInterval(autoInterval);
+        autoInterval = null;
+      }
+    }
+    
+    function resetAutoTimer() {
+      stopAutoSlide();
+      startAutoSlide();
+    }
+    
+    // Event listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        goToPrev();
+        startAutoSlide();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        goToNext();
+        startAutoSlide();
+      });
+    }
+    
+    // Pause on hover
+    const carouselContainer = document.querySelector('#services .overflow-hidden');
+    if (carouselContainer) {
+      carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+      carouselContainer.addEventListener('mouseleave', startAutoSlide);
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (currentIndex > getMaxIndex()) {
+          currentIndex = getMaxIndex();
+        }
+        updateCarousel();
+        renderDots();
+      }, 100);
+    });
+    
+    // Initialize
+    renderDots();
+    updateCarousel();
+    startAutoSlide(); // Auto-slide starts automatically
+  })();
 
   // ── Mobile nav ──
   const hamb = document.getElementById('hambBtn');
