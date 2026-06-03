@@ -178,6 +178,34 @@
   .drop-shadow-2xl {
     filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.25));
   }
+
+  /* CLIENT TESTIMONIALS SECTION */
+
+   @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes cardFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .hover\:-translate-y-1:hover {
+    transform: translateY(-4px);
+  }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
@@ -458,17 +486,17 @@
       <!-- Stats -->
       <div class="flex items-end gap-4 pb-1 shrink-0">
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">12<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5<span style="font-size:1.3rem;">+</span></div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Years</div>
         </div>
         <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5K<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">3K<span style="font-size:1.3rem;">+</span></div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Seekers</div>
         </div>
         <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">9</div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">15</div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Services</div>
         </div>
       </div>
@@ -1026,17 +1054,52 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════ AWARDS & CERTIFICATES CAROUSEL (With Certificate Name & Recipient) -->
-<section id="awards" class="py-16 md:py-20 bg-gradient-to-br from-violet-pale via-white to-amber-pale overflow-hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <!-- Section Header -->
-    <div class="text-center mb-12">
+<section id="awards" class="pt-4 md:pt-6 pb-16 md:pb-20 bg-gradient-to-br from-violet-pale via-white to-amber-pale overflow-hidden">  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <!-- Section Header with Image at Far Right Corner -->
+    <div class="text-center mb-12 opacity-0 animate-[fadeUp_0.6s_ease-out_forwards] relative">
       <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3">
         <div class="w-6 h-px bg-violet"></div> 
         Recognitions & Achievements
         <div class="w-6 h-px bg-violet"></div>
       </div>
-      <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900 mb-4">Honored &<span class="text-violet font-medium"> Certified</span></h2>
-      <p class="text-slate-500 max-w-2xl mx-auto">Recognized for excellence in Vedic astrology, numerological consultations, and spiritual healing practices.</p>
+      
+   <!-- Heading container with images on both sides -->
+<div class="relative max-w-4xl mx-auto">
+
+  <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900 mb-0 text-center">
+    Honored & <span class="text-violet font-medium">Certified</span>
+  </h2>
+
+  <!-- Right Image -->
+  <div class="absolute -right-20 md:-right-28 lg:-right-40 top-[65%] -translate-y-1/2 hidden md:block">
+    <img
+      src="/assets/images/c2-removebg-preview.png"
+      alt="Medal Icon"
+      class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105"
+    />
+  </div>
+
+  <!-- Left Image (mirrored) -->
+  <div class="absolute -left-20 md:-left-28 lg:-left-40 top-[65%] -translate-y-1/2 hidden md:block">
+    <img
+      src="/assets/images/c2-removebg-preview.png"
+      alt="Medal Icon"
+      class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105"
+    />
+  </div>
+
+  <!-- Mobile Image -->
+  <div class="block md:hidden mt-3">
+    <img
+      src="/assets/images/c2-removebg-preview.png"
+      alt="Medal Icon"
+      class="w-36 h-36 object-contain transition-transform duration-300 hover:scale-105 mx-auto"
+    />
+  </div>
+
+</div>
+      
+      <p class="text-slate-500 max-w-2xl mx-auto mt-6">Recognized for excellence in Vedic astrology, numerological consultations, and spiritual healing practices.</p>
     </div>
 
     <!-- Awards Carousel -->
@@ -1044,121 +1107,266 @@
       <div class="overflow-hidden">
         <div class="flex gap-6 md:gap-8 overflow-x-auto pb-6 scroll-smooth hide-scrollbar" id="awardsTrack" style="scrollbar-width: none; -ms-overflow-style: none;">
           
-          <!-- Certificate 1 -->
-          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
-            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+          <!-- Certificate 1 - Soft Peach -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/60 shadow-sm" style="animation-delay: 0.1s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-rose-100/40 to-orange-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
             </div>
             <div class="p-5 text-center">
-              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-scroll text-violet text-xl"></i>
+              <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-scroll text-rose-500 text-xl"></i>
               </div>
               <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate of Excellence in Astrology</h3>
-              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
               <div class="flex items-center justify-center gap-2 mt-2">
                 <span class="text-xs text-slate-400">Issued by: International Astrology Council</span>
               </div>
             </div>
           </div>
 
-          <!-- Certificate 2 -->
-          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
-            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
-              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+          <!-- Certificate 2 - Soft Mint -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 shadow-sm" style="animation-delay: 0.2s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-emerald-100/40 to-teal-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
             </div>
             <div class="p-5 text-center">
-              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-chart-simple text-violet text-xl"></i>
+              <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-chart-simple text-emerald-500 text-xl"></i>
               </div>
               <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Master Numerologist Certification</h3>
-              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
               <div class="flex items-center justify-center gap-2 mt-2">
                 <span class="text-xs text-slate-400">Issued by: Global Numerology Institute</span>
               </div>
             </div>
           </div>
 
-          <!-- Certificate 3 -->
-          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
-            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Vedic Astrology Proficiency Certificate" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+          <!-- Certificate 3 - Soft Lavender -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/60 shadow-sm" style="animation-delay: 0.3s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-indigo-100/40 to-purple-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Vedic Astrology Proficiency Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
             </div>
             <div class="p-5 text-center">
-              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-star-of-life text-violet text-xl"></i>
+              <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-star-of-life text-indigo-500 text-xl"></i>
               </div>
               <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Vedic Astrology Proficiency</h3>
-              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <p class="text-xs text-indigo-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
               <div class="flex items-center justify-center gap-2 mt-2">
                 <span class="text-xs text-slate-400">Issued by: Indian Council of Vedic Sciences</span>
               </div>
             </div>
           </div>
 
-          <!-- Certificate 4 -->
-          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
-            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
-              <img src="/assets/images/c_2.png" alt="Crystal Healing & Chakra Balancing Certificate" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+          <!-- Certificate 4 - Soft Sky Blue -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200/60 shadow-sm" style="animation-delay: 0.4s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-sky-100/40 to-blue-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_2.png" alt="Crystal Healing & Chakra Balancing Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
             </div>
             <div class="p-5 text-center">
-              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-gem text-violet text-xl"></i>
+              <div class="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-gem text-sky-500 text-xl"></i>
               </div>
               <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Crystal Healing &amp; Chakra Balancing</h3>
-              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <p class="text-xs text-sky-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
               <div class="flex items-center justify-center gap-2 mt-2">
                 <span class="text-xs text-slate-400">Issued by: Alternative Healing Association</span>
               </div>
             </div>
           </div>
 
-          <!-- Certificate 5 -->
-          <div class="min-w-[280px] md:min-w-[320px] bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-violet/30 hover:shadow-2xl hover:shadow-violet/8 hover:-translate-y-2 transition-all duration-300 flex-shrink-0">
-            <div class="h-52 overflow-hidden bg-gradient-to-br from-violet/5 to-amber/5 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Spiritual Counseling Certification" class="h-40 w-auto object-contain group-hover:scale-105 transition-transform duration-500"/>
+          <!-- Certificate 5 - Soft Coral -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/60 shadow-sm" style="animation-delay: 0.5s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-amber-100/40 to-yellow-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Spiritual Counseling Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
             </div>
             <div class="p-5 text-center">
-              <div class="w-12 h-12 rounded-full bg-violet-pale flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-hand-sparkles text-violet text-xl"></i>
+              <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-hand-sparkles text-amber-500 text-xl"></i>
               </div>
               <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Spiritual Counseling Certification</h3>
-              <p class="text-xs text-violet font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <p class="text-xs text-amber-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
               <div class="flex items-center justify-center gap-2 mt-2">
                 <span class="text-xs text-slate-400">Issued by: World Spiritual Federation</span>
               </div>
             </div>
           </div>
 
+          <!-- Duplicate certificates for seamless infinite loop -->
+          <!-- Certificate 1 Clone -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/60 shadow-sm">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-rose-100/40 to-orange-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-scroll text-rose-500 text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate of Excellence in Astrology</h3>
+              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: International Astrology Council</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Certificate 2 Clone -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 shadow-sm">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-emerald-100/40 to-teal-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-chart-simple text-emerald-500 text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Master Numerologist Certification</h3>
+              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
+              <div class="flex items-center justify-center gap-2 mt-2">
+                <span class="text-xs text-slate-400">Issued by: Global Numerology Institute</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
       <!-- Navigation Arrows -->
-      <button id="awards-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet transition-all z-10">
+      <button id="awards-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-400 hover:border-violet hover:text-violet hover:bg-violet-50 transition-all z-10">
         <i class="fas fa-chevron-left text-sm"></i>
       </button>
-      <button id="awards-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-500 hover:border-violet hover:text-violet transition-all z-10">
+      <button id="awards-next" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-400 hover:border-violet hover:text-violet hover:bg-violet-50 transition-all z-10">
         <i class="fas fa-chevron-right text-sm"></i>
       </button>
+    </div>
+    
+    <!-- Auto-slider indicator dots -->
+    <div class="flex justify-center gap-2 mt-6">
+      <span class="w-2 h-2 rounded-full bg-violet-400 transition-all duration-300" id="dot1"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot2"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot3"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot4"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot5"></span>
     </div>
   </div>
 </section>
 
-<!-- Carousel JavaScript -->
+<!-- Carousel JavaScript with Auto-slider -->
 <script>
-  // Awards Carousel functionality
   const awardsTrack = document.getElementById('awardsTrack');
   const awardsPrev = document.getElementById('awards-prev');
   const awardsNext = document.getElementById('awards-next');
   
+  let autoSlideInterval;
+  let isHovering = false;
+  
+  // Card width including gap (320px + 32px gap = 352px)
+  const scrollAmount = 352;
+  
+  // Function to scroll next
+  function scrollNext() {
+    if (awardsTrack) {
+      const currentScroll = awardsTrack.scrollLeft;
+      const maxScroll = awardsTrack.scrollWidth - awardsTrack.clientWidth;
+      
+      if (currentScroll + scrollAmount >= maxScroll) {
+        // Reset to start for infinite loop effect
+        awardsTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        awardsTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+      updateActiveDot();
+    }
+  }
+  
+  // Function to scroll prev
+  function scrollPrev() {
+    if (awardsTrack) {
+      const currentScroll = awardsTrack.scrollLeft;
+      
+      if (currentScroll - scrollAmount <= 0) {
+        // Go to end for infinite loop effect
+        awardsTrack.scrollTo({ left: awardsTrack.scrollWidth - awardsTrack.clientWidth, behavior: 'smooth' });
+      } else {
+        awardsTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      }
+      updateActiveDot();
+    }
+  }
+  
+  // Update active dot based on scroll position
+  function updateActiveDot() {
+    if (!awardsTrack) return;
+    
+    const scrollPosition = awardsTrack.scrollLeft;
+    const cardWidth = 352; // 320px + 32px gap
+    const activeIndex = Math.round(scrollPosition / cardWidth) % 5;
+    
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById(`dot${i}`);
+      if (dot) {
+        if (i - 1 === activeIndex) {
+          dot.classList.remove('bg-slate-300');
+          dot.classList.add('bg-violet-400');
+          dot.style.width = '8px';
+        } else {
+          dot.classList.remove('bg-violet-400');
+          dot.classList.add('bg-slate-300');
+          dot.style.width = '8px';
+        }
+      }
+    }
+  }
+  
+  // Start auto-slide
+  function startAutoSlide() {
+    if (autoSlideInterval) clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(() => {
+      if (!isHovering) {
+        scrollNext();
+      }
+    }, 3000);
+  }
+  
+  // Stop auto-slide
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+  
+  // Event listeners
   if (awardsPrev && awardsNext && awardsTrack) {
     awardsPrev.addEventListener('click', () => {
-      awardsTrack.scrollBy({ left: -340, behavior: 'smooth' });
+      scrollPrev();
+      // Reset auto-slide timer on manual interaction
+      stopAutoSlide();
+      startAutoSlide();
     });
     
     awardsNext.addEventListener('click', () => {
-      awardsTrack.scrollBy({ left: 340, behavior: 'smooth' });
+      scrollNext();
+      // Reset auto-slide timer on manual interaction
+      stopAutoSlide();
+      startAutoSlide();
+    });
+    
+    // Pause auto-slide on hover
+    awardsTrack.addEventListener('mouseenter', () => {
+      isHovering = true;
+    });
+    
+    awardsTrack.addEventListener('mouseleave', () => {
+      isHovering = false;
+    });
+    
+    // Update dot on scroll
+    awardsTrack.addEventListener('scroll', () => {
+      updateActiveDot();
     });
   }
+  
+  // Start auto-slide when page loads
+  startAutoSlide();
 </script>
 
 <style>
@@ -1166,115 +1374,29 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes cardFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
-
-<!-- ============================================ -->
-<!-- CLIENT TESTIMONIALS SECTION                  -->
-<!-- ============================================ -->
-<section class="py-16 md:py-24 bg-gradient-to-br from-slate-50 via-white to-violet-pale/30 relative overflow-hidden">
-  
-  <!-- Decorative orbs -->
-  <div class="absolute top-20 -left-20 w-72 h-72 bg-violet-200/30 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-10 -right-20 w-80 h-80 bg-amber-100/30 rounded-full blur-3xl pointer-events-none"></div>
-  
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-    
-    <!-- Header -->
-    <div class="text-center mb-12 md:mb-16 reveal">
-      <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-[0.25em] uppercase mb-3">
-        <div class="w-6 h-px bg-violet"></div>
-        <span>Sacred Voices</span>
-        <div class="w-6 h-px bg-violet"></div>
-      </div>
-      <h2 class="font-display text-3xl md:text-5xl font-light text-slate-900">
-        What seekers say
-      </h2>
-      <p class="text-slate-500 text-sm mt-3 max-w-2xl mx-auto">
-        Real stories of transformation, clarity, and renewed purpose from those who found their way.
-      </p>
-    </div>
-    
-    <!-- Testimonials Grid - Organic mosaic layout -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
-      
-      <!-- Card 1 - Featured (spans slightly taller) -->
-      <div class="lg:row-span-1 bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 group reveal d1">
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed italic mb-5">
-          “I was at a complete crossroads in my career. The numerology consultation gave me shocking clarity — my business name change alone brought new opportunities within weeks. Grateful beyond words.”
-        </p>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-200 to-violet-300 flex items-center justify-center text-violet-700 font-display font-medium text-sm">AK</div>
-          <div>
-            <h4 class="font-semibold text-slate-800 text-sm">Anjali K.</h4>
-            <p class="text-slate-400 text-[11px] tracking-wide">Entrepreneur · Numerology Client</p>
-          </div>
-        </div>
-        <div class="mt-3 inline-flex items-center gap-1 text-[10px] text-violet-400"><i class="fas fa-check-circle"></i><span>Verified · Tarot + Numerology</span></div>
-      </div>
-      
-      <!-- Card 2 -->
-      <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 group reveal d2">
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed italic mb-5">
-          “The past life reading was profound. I finally understood why I kept repeating the same patterns in love. Healing has been real and gentle.”
-        </p>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-700 font-display font-medium text-sm">RS</div>
-          <div>
-            <h4 class="font-semibold text-slate-800 text-sm">Rohit S.</h4>
-            <p class="text-slate-400 text-[11px] tracking-wide">Relationship Healing</p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Card 3 - With tiny badge -->
-      <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 relative overflow-hidden group reveal d3">
-        <div class="absolute -top-2 -right-2 w-16 h-16 bg-violet-100/50 rounded-full blur-xl"></div>
-        <div class="flex items-center gap-1 mb-4">
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-          <i class="fas fa-star text-amber-400 text-xs"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed italic mb-5">
-          “Vastu consultation changed the energy of my home completely. My family feels lighter and more connected. Thank you for your wisdom.”
-        </p>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center text-emerald-700 font-display font-medium text-sm">MP</div>
-          <div>
-            <h4 class="font-semibold text-slate-800 text-sm">Meera P.</h4>
-            <p class="text-slate-400 text-[11px] tracking-wide">Homemaker · Vastu Client</p>
-          </div>
-        </div>
-        <div class="mt-2 flex items-center gap-1"><span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="text-[10px] text-slate-400">Home energy alignment</span></div>
-      </div>
-    </div>
-    
-    <!-- Trust signal - small -->
-    <div class="flex flex-wrap justify-center items-center gap-6 mt-12 pt-4 border-t border-slate-200/50">
-      <div class="flex items-center gap-2 text-slate-400 text-xs"><i class="fas fa-shield-alt text-violet-300"></i> 5000+ Seekers</div>
-      <div class="w-px h-3 bg-slate-200"></div>
-      <div class="flex items-center gap-2 text-slate-400 text-xs"><i class="fas fa-star text-amber-300"></i> 4.95 Avg Rating</div>
-      <div class="w-px h-3 bg-slate-200"></div>
-      <div class="flex items-center gap-2 text-slate-400 text-xs"><i class="fas fa-globe text-violet-300"></i> Global Clientele</div>
-    </div>
-    
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════════ CTA BANNER -->
 <section class="relative py-28 overflow-hidden">
@@ -1314,6 +1436,104 @@
       </a>
       
       <p class="text-white/50 text-sm mt-6">Reply usually within minutes • 100% Confidential</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CLIENT TESTIMONIALS SECTION - COMPACT        -->
+<!-- ============================================ -->
+<section class="py-10 md:py-14 bg-gradient-to-br from-slate-50 via-white to-violet-pale/30 relative overflow-hidden">
+  
+  <!-- Decorative orbs (smaller) -->
+  <div class="absolute top-10 -left-20 w-56 h-56 bg-violet-200/30 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-5 -right-20 w-64 h-64 bg-amber-100/30 rounded-full blur-3xl pointer-events-none"></div>
+  
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+    
+    <!-- Header - compact -->
+    <div class="text-center mb-8 md:mb-10 opacity-0 animate-[fadeUp_0.6s_ease-out_forwards]">
+      <div class="flex items-center justify-center gap-2 text-violet text-[11px] font-semibold tracking-[0.2em] uppercase mb-2">
+        <div class="w-5 h-px bg-violet"></div>
+        <span>Sacred Voices</span>
+        <div class="w-5 h-px bg-violet"></div>
+      </div>
+      <h2 class="font-display text-2xl md:text-3xl font-light text-slate-900">
+        What seekers say
+      </h2>
+      <p class="text-slate-400 text-xs mt-2 max-w-xl mx-auto">
+        Real stories of transformation, clarity, and renewed purpose.
+      </p>
+    </div>
+    
+    <!-- Testimonials Grid - tighter mosaic layout with colored cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-min">
+      
+      <!-- Card 1 - Warm Terracotta -->
+      <div class="lg:row-span-1 rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300 group bg-gradient-to-br from-amber-100 to-orange-100 border border-amber-300/60 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] hover:-translate-y-1 hover:shadow-xl transition-all duration-300" style="animation-delay: 0.1s">
+        <div class="flex items-center gap-0.5 mb-3">
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+        </div>
+        <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
+          “I was at a complete crossroads in my career. The numerology consultation gave me shocking clarity — my business name change alone brought new opportunities within weeks. Grateful beyond words.”
+        </p>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-display font-medium text-[11px]">AK</div>
+          <div>
+            <h4 class="font-semibold text-slate-800 text-xs">Anjali K.</h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Entrepreneur · Numerology</p>
+          </div>
+        </div>
+        <div class="mt-2 inline-flex items-center gap-1 text-[9px] text-amber-700"><i class="fas fa-check-circle text-[8px]"></i><span>Verified · Tarot + Numerology</span></div>
+      </div>
+      
+      <!-- Card 2 - Deep Mint/Sage -->
+      <div class="rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300 group bg-gradient-to-br from-emerald-100 to-teal-100 border border-emerald-300/60 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] hover:-translate-y-1 hover:shadow-xl transition-all duration-300" style="animation-delay: 0.2s">
+        <div class="flex items-center gap-0.5 mb-3">
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+        </div>
+        <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
+          “The past life reading was profound. I finally understood why I kept repeating the same patterns in love. Healing has been real and gentle.”
+        </p>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-display font-medium text-[11px]">RS</div>
+          <div>
+            <h4 class="font-semibold text-slate-800 text-xs">Rohit S.</h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Relationship Healing</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3 - Dusty Lavender/Mauve -->
+      <div class="rounded-xl p-5 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group bg-gradient-to-br from-violet-100 to-purple-100 border border-violet-300/60 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] hover:-translate-y-1 hover:shadow-xl transition-all duration-300" style="animation-delay: 0.3s">
+        <div class="absolute -top-2 -right-2 w-12 h-12 bg-violet-200/60 rounded-full blur-md"></div>
+        <div class="flex items-center gap-0.5 mb-3">
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+          <i class="fas fa-star text-amber-500 text-[11px]"></i>
+        </div>
+        <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
+          “Vastu consultation changed the energy of my home completely. My family feels lighter and more connected. Thank you for your wisdom.”
+        </p>
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white font-display font-medium text-[11px]">MP</div>
+          <div>
+            <h4 class="font-semibold text-slate-800 text-xs">Meera P.</h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Homemaker · Vastu</p>
+          </div>
+        </div>
+        <div class="mt-1.5 flex items-center gap-1"><span class="inline-block w-1 h-1 rounded-full bg-emerald-600"></span><span class="text-[9px] text-slate-500">Home energy alignment</span></div>
+      </div>
     </div>
   </div>
 </section>

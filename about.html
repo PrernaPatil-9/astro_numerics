@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script>
     tailwind.config = {
       theme: {
@@ -63,6 +64,81 @@
     .value-card:hover { transform: translateY(-4px); box-shadow: 0 20px 35px -12px rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
     .stat-card { transition: all 0.3s ease; }
     .stat-card:hover { transform: translateY(-4px); background: #ffffff; box-shadow: 0 12px 24px -10px rgba(0,0,0,0.05); }
+  
+    /* Cards */
+      /* Animation Classes */
+  .guide-header {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .animate-header {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  .guide-card-1 {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .animate-card-1 {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+  
+  .guide-card-2 {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .animate-card-2 {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+  
+  .guide-footer {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .animate-footer {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  /* Initial hidden states */
+  .guide-header {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .guide-card-1 {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  
+  .guide-card-2 {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  
+  .guide-footer {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* counter cards */
+   /* Card animations */
+  .stat-card {
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .animate-on-scroll {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  .animate-card {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  /* Counter number styling */
+  .counter {
+    display: inline-block;
+  }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -114,6 +190,15 @@
 
 <!-- ═══════════════════════════════════════════════ HERO ABOUT (light cosmic) -->
 <section class="relative min-h-[70vh] flex items-center overflow-hidden bg-gradient-to-br from-violet-50 via-white to-amber-50">
+  <!-- Background Image -->
+<div class="absolute inset-0 z-0">
+  <img
+    src="/assets/images/bg.jpg"
+    alt=""
+    class="w-full h-full object-cover"
+  >
+  <div class="absolute inset-0 bg-white/20"></div>
+</div>
   <div class="absolute inset-0 hero-grid opacity-40"></div>
   <div class="orb w-96 h-96 bg-violet-200/40 top-20 -left-20"></div>
   <div class="orb w-80 h-80 bg-amber-100/40 bottom-10 right-0"></div>
@@ -184,7 +269,6 @@
   </div>
 </div>
 
-
 <!-- ═══════════════════════════════════════════════ MISSION + STATS (light cream) -->
 <section id="mission" class="py-20 bg-amber-50/30">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -202,6 +286,11 @@
           <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Graphology</span>
           <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Crystal Healing</span>
           <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Nadi Astrology</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">vanspati shatra</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Reiki</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">Angel card reading</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">yog & meditation</span>
+          <span class="bg-white/80 rounded-full px-3 py-1 text-xs border border-violet-100 text-violet-700">scientific logo and visiting card design</span>
         </div>
       </div>
       <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm reveal">
@@ -223,222 +312,228 @@
   </div>
 </section>
 
-<section class="py-20 bg-white">
-  <div class="max-w-6xl mx-auto px-4">
+<!-- Your guides - Compact Horizontal Cards with Scroll-Triggered Animations -->
+<section id="guides-section" class="py-12 md:py-16 bg-white overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
     
-    <!-- Header -->
-    <div class="mb-12 text-center">
+    <!-- Header - Animated on Scroll -->
+    <div class="mb-10 text-center opacity-0 transition-all duration-700 guide-header">
       <div class="flex items-center justify-center gap-2 text-xs text-indigo-500 font-semibold uppercase tracking-wider mb-2">
         <span class="w-8 h-px bg-indigo-400"></span>
         <span>Your guides</span>
         <span class="w-8 h-px bg-indigo-400"></span>
       </div>
-      <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Meet the practitioners</h2>
-      <p class="text-slate-500 mt-2">Two souls, one purpose — ancient wisdom meets modern compassion</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-slate-800">Meet the practitioners</h2>
+      <p class="text-slate-400 text-sm mt-1">Two souls, one purpose — ancient wisdom meets modern compassion</p>
     </div>
 
-    <!-- Two Cards Grid -->
-    <div class="grid md:grid-cols-2 gap-8">
+    <!-- Two Cards - One below another with Scroll Animations -->
+    <div class="flex flex-col gap-6">
       
-   <!-- Card 1: Rajeshwari - Astro Numerics Founder -->
-<div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-  <!-- Profile Header -->
-  <div class="p-6 pb-4 border-b border-slate-100">
-    <div class="flex items-center gap-4">
-      <div class="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 overflow-hidden ring-4 ring-white shadow-md flex-shrink-0">
-        <img src="/assets/images/r_abt.jpeg" alt="Rajeshwari" class="w-full h-full object-cover">
-      </div>
-      <div class="flex-1">
-        <div class="flex items-center justify-between flex-wrap gap-2">
-          <h3 class="font-bold text-xl text-slate-800">Rajeshwari</h3>
-          <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Founder, Astro Numerics</span>
+      <!-- Card 1: Raajeshhwari - Animated on Scroll -->
+      <div class="guide-card-1 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 opacity-0 translate-x-[-50px] transition-all duration-700 hover:-translate-y-1">
+        <div class="flex flex-col sm:flex-row">
+          <!-- Left Side - Full Bleed Image with Hover Zoom -->
+          <div class="sm:w-72 lg:w-80 bg-gradient-to-br from-indigo-100 to-purple-100 overflow-hidden">
+            <img src="/assets/images/r_abt.jpeg" alt="Raajeshhwari Bhosale Suryavanshi" class="w-full h-full object-cover aspect-square sm:aspect-auto sm:h-full min-h-[200px] transition-transform duration-500 hover:scale-105">
+          </div>
+          
+          <!-- Divider Line -->
+          <div class="hidden sm:block w-px bg-indigo-200"></div>
+          
+          <!-- Right Side - Compact Content -->
+          <div class="flex-1 p-4 space-y-3">
+            <!-- Name & Badge Row -->
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="font-bold text-lg text-slate-800">Raajeshhwari Bhosale Suryavanshi</h3>
+                <p class="text-xs text-slate-500">Founder of Astro Numerics · Spiritual Guide & Mentor</p>
+              </div>
+              <span class="bg-amber-50 text-amber-700 text-[10px] font-semibold px-2 py-1 rounded-full border border-amber-200">Founder</span>
+            </div>
+            
+            <!-- Meta Info Row -->
+            <div class="flex flex-wrap gap-3 text-[11px] text-slate-500 pb-1 border-b border-indigo-200">
+              <span class="hover:text-indigo-600 transition-colors duration-200"><i class="fas fa-map-marker-alt text-indigo-400 text-[10px] mr-1"></i> Sinhgad Road, Pune</span>
+              <span class="hover:text-indigo-600 transition-colors duration-200"><i class="far fa-clock text-indigo-400 text-[10px] mr-1"></i> Mon–Sat · 10 AM – 7 PM</span>
+              <span class="hover:text-indigo-600 transition-colors duration-200"><i class="fas fa-language text-indigo-400 text-[10px] mr-1"></i> Marathi · Hindi · English</span>
+            </div>
+            
+            <!-- About - Expanded -->
+            <p class="text-slate-600 text-xs leading-relaxed">I am a passionate practitioner of Astrology, Numerology, Tarot Reading, and Spiritual Guidance, dedicated to helping individuals gain clarity and direction in their personal and professional lives. My journey into the metaphysical sciences began with a deep curiosity about the connection between numbers, planetary energies, and human destiny.</p>
+            
+            <!-- Services - Full List -->
+            <div>
+              <h4 class="text-[11px] font-semibold text-indigo-600 mb-1.5">What I Offer:</h4>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Numerology Analysis</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Name Correction</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Mobile Number Numerology</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Business & Brand Numerology</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Vehicle Numerology</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Astrology Consultations</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Tarot Card Readings</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Career & Financial Guidance</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Relationship Compatibility</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Crystal Recommendations</span>
+                <span class="text-[10px] bg-white/70 text-indigo-700 px-2 py-1 rounded-full border border-indigo-100 transition-all duration-200 hover:bg-indigo-100 hover:scale-105 cursor-default">Basic Vastu Consultation</span>
+              </div>
+            </div>
+            
+            <!-- Vision & Motto -->
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-white/60 p-2 rounded-lg border border-indigo-100 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+                <p class="text-[10px] text-indigo-700 font-semibold flex items-center gap-1"><i class="fas fa-eye text-[9px]"></i> My Vision</p>
+                <p class="text-[10px] text-slate-600 leading-tight">To help people discover their true potential through the wisdom of Astrology, Numerology, and Tarot</p>
+              </div>
+              <div class="bg-white/60 p-2 rounded-lg border border-amber-100 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+                <p class="text-[10px] text-amber-700 font-semibold flex items-center gap-1"><i class="fas fa-quote-left text-[9px]"></i> My Motto</p>
+                <p class="text-[10px] text-slate-600 leading-tight italic">"Every Problem Has a Solution — The Right Guidance Helps You Find It"</p>
+              </div>
+            </div>
+            
+            <!-- Extra Philosophy Line -->
+            <div class="bg-white/50 p-2 rounded-lg border-l-4 border-indigo-300 border border-indigo-100 transition-all duration-300 hover:bg-indigo-50">
+              <p class="text-[10px] text-slate-600 italic leading-tight">✨ 15+ years of experience · 5000+ lives transformed globally</p>
+            </div>
+            
+            <!-- CTA -->
+            <a href="https://wa.me/919657313963" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 rounded-lg transition-all duration-300 text-sm border border-emerald-600 hover:scale-[1.02] hover:shadow-lg active:scale-95">
+              <i class="fab fa-whatsapp"></i> Book on WhatsApp · +91 9657313963
+            </a>
+            
+            <!-- Contact Numbers -->
+            <div class="flex justify-center gap-2 text-[10px] text-slate-400">
+              <span class="hover:text-emerald-600 transition-colors duration-200"><i class="fab fa-whatsapp text-emerald-500"></i> +91 9657313963</span>
+              <span>|</span>
+              <span class="hover:text-emerald-600 transition-colors duration-200"><i class="fab fa-whatsapp text-emerald-500"></i> +91 9637193151</span>
+            </div>
+          </div>
         </div>
-        <p class="text-sm text-slate-500 mt-0.5">Founder of Astro Numerics · Spiritual Guide & Mentor</p>
-        <div class="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
-          <span><i class="fas fa-map-marker-alt text-indigo-400 mr-1"></i> Sinhgad Road, Pune</span>
-          <span><i class="far fa-clock text-indigo-400 mr-1"></i> Mon–Sat · 10 AM – 7 PM</span>
-          <span><i class="fas fa-language text-indigo-400 mr-1"></i> Marathi · Hindi · English</span>
-        </div>
       </div>
-    </div>
-  </div>
-  
-  <!-- Body -->
-  <div class="p-6 space-y-4">
-    <!-- Bio / About Me -->
-    <div>
-      <h4 class="font-semibold text-slate-700 text-sm mb-2 flex items-center gap-2">
-        <i class="fas fa-user-astronaut text-indigo-500 text-sm"></i> About Me
-      </h4>
-      <p class="text-slate-600 text-sm leading-relaxed">I am a passionate practitioner of Astrology, Numerology, Tarot Reading, and Spiritual Guidance, dedicated to helping individuals gain clarity, confidence, and direction in their personal and professional lives. My journey into the metaphysical sciences began with a deep curiosity about the connection between numbers, planetary energies, and human destiny. Over the years, I have studied and practiced various healing and predictive sciences, combining traditional wisdom with practical guidance to support people in making informed life decisions.</p>
-    </div>
-    
-    <!-- Services / What I Offer -->
-    <div>
-      <h4 class="font-semibold text-slate-700 text-sm mb-2 flex items-center gap-2">
-        <i class="fas fa-crystal-ball text-indigo-500 text-sm"></i> What I Offer
-      </h4>
-      <div class="flex flex-wrap gap-2">
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Numerology Analysis</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Name Correction</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Mobile Number Numerology</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Business & Brand Numerology</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Vehicle Numerology</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Astrology Consultations</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Tarot Card Readings</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Career & Financial Guidance</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Relationship Compatibility</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Crystal Recommendations</span>
-        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full">Basic Vastu Consultation</span>
-      </div>
-    </div>
-    
-    <!-- Vision & Motto -->
-    <div class="grid grid-cols-2 gap-3">
-      <div class="bg-indigo-50 p-3 rounded-xl">
-        <h4 class="font-semibold text-indigo-800 text-xs mb-1 flex items-center gap-1">
-          <i class="fas fa-eye"></i> My Vision
-        </h4>
-        <p class="text-slate-600 text-xs leading-relaxed">To help people discover their true potential through the wisdom of Astrology, Numerology, and Tarot, enabling them to live more balanced, successful, and fulfilling lives.</p>
-      </div>
-      <div class="bg-amber-50 p-3 rounded-xl">
-        <h4 class="font-semibold text-amber-800 text-xs mb-1 flex items-center gap-1">
-          <i class="fas fa-quote-left"></i> My Motto
-        </h4>
-        <p class="text-slate-600 text-xs leading-relaxed italic">"Every Problem Has a Solution — The Right Guidance Helps You Find It."</p>
-      </div>
-    </div>
-    
-    <!-- Philosophy / Belief -->
-    <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-indigo-300">
-      <p class="text-slate-600 text-sm italic leading-relaxed">"I believe that every challenge carries a hidden lesson and every individual possesses the potential to create a better future with the right guidance and awareness. My mission is to empower people with insights that help them make confident decisions and move forward with greater clarity and purpose."</p>
-    </div>
-    
-    <!-- Tagline & CTA -->
-    <div class="text-center text-xs text-slate-400 py-1">
-      <span class="font-medium text-indigo-600">Astro Numerics</span> — Guiding You Through Numbers, Stars & Intuition.
-    </div>
-    
-    <a href="https://wa.me/919657313963" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md">
-      <i class="fab fa-whatsapp text-lg"></i> Book Session on WhatsApp · +91 9657313963
-    </a>
-    
-    <div class="flex justify-center gap-3 text-xs text-slate-400 pt-1">
-      <span><i class="fab fa-whatsapp text-emerald-500"></i> +91 9657313963</span>
-      <span>|</span>
-      <span><i class="fab fa-whatsapp text-emerald-500"></i> +91 9637193151</span>
-    </div>
-  </div>
-</div>
       
-<!-- Card 2: Kshitija Suryavanshi - Tarot, Angel Cards & Graphology Specialist -->
-<div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-  <!-- Profile Header -->
-  <div class="p-6 pb-4 border-b border-slate-100">
-    <div class="flex items-center gap-4">
-      <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-100 to-amber-100 overflow-hidden ring-4 ring-white shadow-md flex-shrink-0">
-        <img src="/assets/images/k_abt.jpeg" alt="Kshitija" class="w-full h-full object-cover">
-      </div>
-      <div class="flex-1">
-        <div class="flex items-center justify-between flex-wrap gap-2">
-          <h3 class="font-bold text-xl text-slate-800">Kshitija Suryavanshi</h3>
-          <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Tarot · Angel Cards · Graphology</span>
+      <!-- Card 2: Kshhitijaa - Animated on Scroll -->
+      <div class="guide-card-2 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-rose-50 to-amber-50 border-2 border-rose-200 opacity-0 translate-x-[50px] transition-all duration-700 hover:-translate-y-1">
+        <div class="flex flex-col sm:flex-row">
+          <!-- Left Side - Full Bleed Image with Hover Zoom -->
+          <div class="sm:w-72 lg:w-80 bg-gradient-to-br from-rose-100 to-amber-100 overflow-hidden">
+            <img src="/assets/images/k_abt.jpeg" alt="Kshhitijaa Suryavanshi" class="w-full h-full object-cover aspect-square sm:aspect-auto sm:h-full min-h-[200px] transition-transform duration-500 hover:scale-105">
+          </div>
+          
+          <!-- Divider Line -->
+          <div class="hidden sm:block w-px bg-rose-200"></div>
+          
+          <!-- Right Side - Compact Content -->
+          <div class="flex-1 p-4 space-y-3">
+            <!-- Name & Badge Row -->
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="font-bold text-lg text-slate-800">Kshhitijaa Raajeshhwari Suryavanshi</h3>
+                <p class="text-xs text-slate-500">Kshhitijaa Raajeshhwari Suryavanshi</p>
+              </div>
+              <span class="bg-rose-100 text-rose-600 text-[10px] font-semibold px-2 py-1 rounded-full border border-rose-200">Specialist</span>
+            </div>
+            
+            <!-- Meta Info Row -->
+            <div class="flex flex-wrap gap-3 text-[11px] text-slate-500 pb-1 border-b border-rose-200">
+              <span class="hover:text-rose-600 transition-colors duration-200"><i class="fas fa-map-marker-alt text-rose-400 text-[10px] mr-1"></i> Sinhgad Road, Pune</span>
+              <span class="hover:text-rose-600 transition-colors duration-200"><i class="far fa-clock text-rose-400 text-[10px] mr-1"></i> Mon–Sat · 10 AM – 7 PM</span>
+              <span class="hover:text-rose-600 transition-colors duration-200"><i class="fas fa-language text-rose-400 text-[10px] mr-1"></i> Marathi · Hindi · English</span>
+            </div>
+            
+            <!-- About -->
+            <p class="text-slate-600 text-xs leading-relaxed">I'm a passionate practitioner of Tarot Reading, Angel Card Guidance, and Graphology. My purpose is to help people gain clarity, confidence, emotional healing, and spiritual guidance through intuitive insights and energy-based practices.</p>
+            
+            <!-- Services - Full List -->
+            <div>
+              <h4 class="text-[11px] font-semibold text-rose-600 mb-1.5">What I Offer:</h4>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Tarot Reading</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Angel Card Guidance</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Graphology</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Love & Relationship Guidance</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Career Guidance</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Personal Growth</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Emotional Healing</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Handwriting Analysis</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Personality Insights</span>
+                <span class="text-[10px] bg-white/70 text-rose-700 px-2 py-1 rounded-full border border-rose-100 transition-all duration-200 hover:bg-rose-100 hover:scale-105 cursor-default">Life Decision Guidance</span>
+              </div>
+            </div>
+            
+            <!-- Tarot & Graphology -->
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-white/60 p-2 rounded-lg border border-rose-100 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+                <p class="text-[10px] text-rose-700 font-semibold flex items-center gap-1"><i class="fas fa-tarot text-[9px]"></i> Tarot & Angel Cards</p>
+                <p class="text-[10px] text-slate-600 leading-tight">Guidance for love, career, relationships & life decisions</p>
+              </div>
+              <div class="bg-white/60 p-2 rounded-lg border border-amber-100 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
+                <p class="text-[10px] text-amber-700 font-semibold flex items-center gap-1"><i class="fas fa-pen-fancy text-[9px]"></i> Graphology</p>
+                <p class="text-[10px] text-slate-600 leading-tight">Uncover personality traits & hidden patterns via handwriting</p>
+              </div>
+            </div>
+            
+            <!-- Extra Philosophy Line -->
+            <div class="bg-white/50 p-2 rounded-lg border-l-4 border-rose-300 border border-rose-100 transition-all duration-300 hover:bg-rose-50">
+              <p class="text-[10px] text-slate-600 italic leading-tight">✨ Intuitive readings · Evidence-based observations · Energy healing practices</p>
+            </div>
+            
+            <!-- CTA -->
+            <a href="https://wa.me/919657313963" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2 rounded-lg transition-all duration-300 text-sm border border-emerald-600 hover:scale-[1.02] hover:shadow-lg active:scale-95">
+              <i class="fab fa-whatsapp"></i> Book on WhatsApp · +91 9657313963
+            </a>
+            
+            <!-- Contact Numbers -->
+            <div class="flex justify-center gap-2 text-[10px] text-slate-400">
+              <span class="hover:text-emerald-600 transition-colors duration-200"><i class="fab fa-whatsapp text-emerald-500"></i> +91 9657313963</span>
+              <span>|</span>
+              <span class="hover:text-emerald-600 transition-colors duration-200"><i class="fab fa-whatsapp text-emerald-500"></i> +91 9637193151</span>
+            </div>
+          </div>
         </div>
-        <p class="text-sm text-slate-500 mt-0.5">Kshitija Rajeshwari Suryavanshi</p>
-        <div class="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
-          <span><i class="fas fa-map-marker-alt text-rose-400 mr-1"></i> Sinhgad Road, Pune</span>
-          <span><i class="far fa-clock text-rose-400 mr-1"></i> Mon–Sat · 10 AM – 7 PM</span>
-          <span><i class="fas fa-language text-rose-400 mr-1"></i> Marathi · Hindi · English</span>
-        </div>
       </div>
-    </div>
-  </div>
-  
-  <!-- Body -->
-  <div class="p-6 space-y-4">
-    <!-- About Me -->
-    <div>
-      <h4 class="font-semibold text-slate-700 text-sm mb-2 flex items-center gap-2">
-        <i class="fas fa-user-astronaut text-rose-500 text-sm"></i> About Me
-      </h4>
-      <p class="text-slate-600 text-sm leading-relaxed">I'm Kshitija Suryavanshi, a passionate practitioner of Tarot Reading, Angel Card Guidance, and Graphology. My purpose is to help people gain clarity, confidence, emotional healing, and spiritual guidance through intuitive insights and energy-based practices.</p>
-    </div>
-    
-    <!-- What I Offer / Core Offerings -->
-    <div>
-      <h4 class="font-semibold text-slate-700 text-sm mb-2 flex items-center gap-2">
-        <i class="fas fa-hand-sparkles text-rose-500 text-sm"></i> What I Offer
-      </h4>
-      <div class="flex flex-wrap gap-2">
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Tarot Reading</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Angel Card Guidance</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Graphology</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Love & Relationship Guidance</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Career Guidance</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Personal Growth</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Emotional Healing</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Handwriting Analysis</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Personality Insights</span>
-        <span class="text-xs bg-rose-50 text-rose-700 px-3 py-1.5 rounded-full">Life Decision Guidance</span>
-      </div>
-    </div>
-    
-    <!-- How I Help -->
-    <div class="grid grid-cols-2 gap-3">
-      <div class="bg-rose-50 p-3 rounded-xl">
-        <h4 class="font-semibold text-rose-800 text-xs mb-1 flex items-center gap-1">
-          <i class="fas fa-tarot"></i> Tarot & Angel Cards
-        </h4>
-        <p class="text-slate-600 text-xs leading-relaxed">Guidance for love, career, relationships, personal growth, and life decisions through intuitive card readings.</p>
-      </div>
-      <div class="bg-amber-50 p-3 rounded-xl">
-        <h4 class="font-semibold text-amber-800 text-xs mb-1 flex items-center gap-1">
-          <i class="fas fa-pen-fancy"></i> Graphology
-        </h4>
-        <p class="text-slate-600 text-xs leading-relaxed">Uncover personality traits, strengths, emotions, and hidden patterns through handwriting analysis.</p>
-      </div>
-    </div>
-    
-    <!-- Approach / Philosophy -->
-    <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-rose-300">
-      <p class="text-slate-600 text-sm italic leading-relaxed">"Sessions combine intuitive reading with evidence-based observations from handwriting, birth data, and energy patterns — empowering clients with clarity for love, career, relationships, and personal growth. My purpose is to help people gain clarity, confidence, emotional healing, and spiritual guidance through intuitive insights and energy-based practices."</p>
-    </div>
-    
-    <!-- Tagline & CTA -->
-    <div class="text-center text-xs text-slate-400 py-1">
-      <span class="font-medium text-rose-600">Intuitive Insights · Energy-Based Practices · Handwriting Analysis</span>
-    </div>
-    
-    <a href="https://wa.me/919657313963" target="_blank" class="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md">
-      <i class="fab fa-whatsapp text-lg"></i> Book Session on WhatsApp · +91 9657313963
-    </a>
-    
-    <div class="flex justify-center gap-3 text-xs text-slate-400 pt-1">
-      <span><i class="fab fa-whatsapp text-emerald-500"></i> +91 9657313963</span>
-      <span>|</span>
-      <span><i class="fab fa-whatsapp text-emerald-500"></i> +91 9637193151</span>
-    </div>
-  </div>
-</div>
-    </div>
-    
-    <!-- Footer -->
-    <div class="text-center mt-8 text-sm text-slate-400">
-      <span><i class="fas fa-map-marker-alt text-indigo-400 mr-1"></i> Both practitioners available at Sinhgad Road, Pune 411041</span>
+      
     </div>
   </div>
 </section>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 <!-- ═══════════════════════════════════════════════ STATS SHOWCASE (light) -->
-<section class="py-16 bg-gradient-to-r from-violet-50/40 via-white to-amber-50/40">
+<section class="py-16 bg-gradient-to-r from-violet-50/40 via-white to-amber-50/40 overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">5<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Years of practice</div></div>
-      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">1200<span class="text-amber-500">+</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Seekers guided</div></div>
-      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">12</div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Spiritual modalities</div></div>
-      <div class="stat-card bg-white rounded-xl p-6 text-center border border-slate-100 shadow-sm"><div class="font-display text-4xl font-bold text-violet-600">100<span class="text-amber-500">%</span></div><div class="text-xs text-slate-400 uppercase tracking-wide mt-1">Confidential sessions</div></div>
+      
+      <!-- Stat 1: Years of practice -->
+      <div class="stat-card rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 opacity-0 translate-y-5 animate-on-scroll" id="stat-card-1">
+        <div class="font-display text-4xl font-bold text-indigo-600">
+          <span class="counter" data-target="5">0</span><span class="text-amber-500">+</span>
+        </div>
+        <div class="text-xs text-slate-500 uppercase tracking-wide mt-2 font-medium">Years of practice</div>
+      </div>
+      
+      <!-- Stat 2: Seekers guided -->
+      <div class="stat-card rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200 opacity-0 translate-y-5 animate-on-scroll" id="stat-card-2">
+        <div class="font-display text-4xl font-bold text-rose-600">
+          <span class="counter" data-target="1200">0</span><span class="text-amber-500">+</span>
+        </div>
+        <div class="text-xs text-slate-500 uppercase tracking-wide mt-2 font-medium">Seekers guided</div>
+      </div>
+      
+      <!-- Stat 3: Spiritual modalities -->
+      <div class="stat-card rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 opacity-0 translate-y-5 animate-on-scroll" id="stat-card-3">
+        <div class="font-display text-4xl font-bold text-emerald-600">
+          <span class="counter" data-target="12">0</span>
+        </div>
+        <div class="text-xs text-slate-500 uppercase tracking-wide mt-2 font-medium">Spiritual modalities</div>
+      </div>
+      
+      <!-- Stat 4: Confidential sessions -->
+      <div class="stat-card rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200 opacity-0 translate-y-5 animate-on-scroll" id="stat-card-4">
+        <div class="font-display text-4xl font-bold text-amber-600">
+          <span class="counter" data-target="100">0</span><span class="text-amber-500">%</span>
+        </div>
+        <div class="text-xs text-slate-500 uppercase tracking-wide mt-2 font-medium">Confidential sessions</div>
+      </div>
+      
     </div>
   </div>
 </section>
@@ -453,21 +548,6 @@
         <div class="absolute bottom-6 left-6 right-6"><blockquote class="font-display text-white text-xl italic">Guiding people toward better decisions and a more positive future.</blockquote></div>
       </div>
       <div class="reveal"><div class="flex items-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-4"><div class="w-8 h-px bg-violet"></div> Our philosophy</div><h2 class="font-display text-3xl md:text-4xl font-light text-slate-900 mb-4">Experienced, intuitive & compassionate</h2><p class="text-slate-600 text-sm leading-relaxed mb-4">We are a team of experienced spiritual consultants dedicated to providing accurate, insightful, and practical guidance through various ancient and intuitive sciences.</p><p class="text-slate-600 text-sm leading-relaxed mb-4">With deep knowledge in Tarot Reading, Numerology, Astrology, Vastu Shastra, Graphology, Crystal Healing, and Rudraksha Guidance, we focus on understanding each individual's unique energy and life path.</p><div class="flex flex-wrap gap-2 mt-4"><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">5+ Years of Experience</span><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">Trusted across India</span><span class="bg-slate-100 rounded-full px-3 py-1 text-xs text-slate-600">Marathi · Hindi · English</span></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════ CTA (warm gradient) -->
-<section class="py-20">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6">
-    <div class="bg-gradient-to-br from-white to-violet-50 rounded-3xl p-8 md:p-12 text-center border border-violet-100 shadow-md">
-      <div class="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 text-xs font-medium text-violet-600 shadow-sm mb-5"><span class="w-1.5 h-1.5 bg-jade rounded-full blink-dot"></span> Begin your journey</div>
-      <h2 class="font-display text-3xl md:text-5xl font-light text-slate-900 mb-3">Begin your transformation <span class="text-grad">today</span></h2>
-      <p class="text-slate-500 max-w-md mx-auto mb-8">Align. Manifest. Transform. One conversation can change everything.</p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <a href="https://wa.me/919657313963" target="_blank" class="inline-flex items-center gap-2 bg-jade text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-jade-light transition-all shadow-lg shadow-jade/20"><i class="fab fa-whatsapp"></i> Book on WhatsApp</a>
-        <a href="tel:+919657313963" class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-6 py-3 rounded-full text-sm font-medium hover:border-violet-300 hover:text-violet-600 transition-all"><i class="fas fa-phone"></i> +91 9657313963</a>
-      </div>
     </div>
   </div>
 </section>
@@ -542,6 +622,168 @@
   const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
   const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
   hamb.addEventListener('click', open); close.addEventListener('click', shut); overlay.addEventListener('click', shut);
+
+// Cards
+ // Intersection Observer for scroll-triggered animations
+  document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    // Observer for header
+    const headerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-header');
+          headerObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observer for card 1
+    const card1Observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-card-1');
+          card1Observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observer for card 2
+    const card2Observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-card-2');
+          card2Observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Observer for footer
+    const footerObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-footer');
+          footerObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    // Elements to observe
+    const header = document.querySelector('.guide-header');
+    const card1 = document.querySelector('.guide-card-1');
+    const card2 = document.querySelector('.guide-card-2');
+    const footer = document.querySelector('.guide-footer');
+    
+    if (header) headerObserver.observe(header);
+    if (card1) card1Observer.observe(card1);
+    if (card2) card2Observer.observe(card2);
+    if (footer) footerObserver.observe(footer);
+    
+    // Also trigger on page refresh / load
+    setTimeout(() => {
+      if (header && !header.classList.contains('animate-header')) {
+        const rect = header.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          header.classList.add('animate-header');
+        }
+      }
+      if (card1 && !card1.classList.contains('animate-card-1')) {
+        const rect = card1.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          card1.classList.add('animate-card-1');
+        }
+      }
+      if (card2 && !card2.classList.contains('animate-card-2')) {
+        const rect = card2.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          card2.classList.add('animate-card-2');
+        }
+      }
+      if (footer && !footer.classList.contains('animate-footer')) {
+        const rect = footer.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          footer.classList.add('animate-footer');
+        }
+      }
+    }, 100);
+  });
+
+  // card counter
+   // Live Counter with Scroll Trigger
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Counter animation function
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16); // 60fps approx
+      let current = start;
+      
+      const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+          element.textContent = Math.floor(current);
+          requestAnimationFrame(updateCounter);
+        } else {
+          element.textContent = target;
+        }
+      };
+      
+      updateCounter();
+    }
+    
+    // Intersection Observer for scroll-triggered counters
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const counterObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          const counters = card.querySelectorAll('.counter');
+          
+          counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            if (target && counter.textContent === '0') {
+              animateCounter(counter, target);
+            }
+          });
+          
+          // Also trigger card animation
+          card.classList.add('animate-card');
+          
+          counterObserver.unobserve(card);
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all stat cards
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+      counterObserver.observe(card);
+    });
+    
+    // Also trigger on page refresh if already visible
+    setTimeout(() => {
+      statCards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          const counters = card.querySelectorAll('.counter');
+          counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            if (target && counter.textContent === '0') {
+              animateCounter(counter, target);
+            }
+          });
+          card.classList.add('animate-card');
+        }
+      });
+    }, 200);
+  });
 </script>
 </body>
 </html>
