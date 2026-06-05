@@ -368,10 +368,10 @@
     <button class="category-btn active" data-cat="all">All Products</button>
     <button class="category-btn" data-cat="crystals">Crystals & Bracelets</button>
     <button class="category-btn" data-cat="zodiac">Zodiac Bracelets</button>
+    <button class="category-btn" data-cat="mulank">Mulank and Bhagyaank bracelets </button>
     <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
     <button class="category-btn" data-cat="yantras">Yantras</button>
     <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
-    <button class="category-btn" data-cat="mulank">Mulank and Bhagyaank bracelets </button>
   </div>
 
   <div class="products-grid" id="productsGrid"></div>
@@ -559,6 +559,8 @@
   if (overlay) overlay.addEventListener('click', shut);
 
 const products = [
+
+ // crystals & bracelets (descriptions unchanged)
   {
     name: "Amethyst",
     desc: "Enhances intuition, mental clarity, spiritual protection, and emotional balance.",
@@ -643,29 +645,56 @@ const products = [
     cat: "crystals",
     img: "/assets/images/P_15.jpeg"
   },
-  { name: "Sagittarius", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_28.jpeg" },
-  { name: "Scorpio", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_29.jpeg" },
-  { name: "Libra", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_30.jpeg" },
-  { name: "Virgo", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_31.jpeg" },
-  { name: "Leo", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_32.jpeg" },
-  { name: "Cancer", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_33.jpeg" },
-  { name: "Gemini", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_34.jpeg" },
-  { name: "Taurus", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_35.jpeg" },
-  { name: "Aries", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_36.jpeg" },
-  { name: "Aquarius", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_37.jpeg" },
-  { name: "Capricorn", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_38.jpeg" },
-  { name: "Pisces", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_39.jpeg" },
-  { name: "Mulank 1", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_46.jpeg" },
-  { name: "Mulank 2", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_45.jpeg" },
-  { name: "Mulank 3", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_44.jpeg" },
-  { name: "Mulank 4", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_43.jpeg" },
-  { name: "Mulank 5", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_42.jpeg" },
-  { name: "Mulank 6", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_41.jpeg" },
-  { name: "Mulank 7", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_40.jpeg" },
-  { name: "Mulank 8", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_48.jpeg" },
-  { name: "Mulank 9", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_47.jpeg" },
+  
+  // zodiac
+  { name: "Aries", desc: "Astrologically curated crystal set for Aries to enhance leadership, courage, and balance fiery energy.", cat: "zodiac", img: "/assets/images/P_36.jpeg" },
+  { name: "Taurus", desc: "Astrologically curated crystal set for Taurus to attract stability, abundance, and grounding energy.", cat: "zodiac", img: "/assets/images/P_35.jpeg" },
+  { name: "Gemini", desc: "Astrologically curated crystal set for Gemini to improve communication, clarity, and mental focus.", cat: "zodiac", img: "/assets/images/P_34.jpeg" },
+  { name: "Cancer", desc: "Astrologically curated crystal set for Cancer to nurture emotions, intuition, and inner peace.", cat: "zodiac", img: "/assets/images/P_33.jpeg" },
+  { name: "Leo", desc: "Astrologically curated crystal set for Leo to boost confidence, creativity, and personal power.", cat: "zodiac", img: "/assets/images/P_32.jpeg" },
+  { name: "Virgo", desc: "Astrologically curated crystal set for Virgo to enhance organization, healing, and analytical skills.", cat: "zodiac", img: "/assets/images/P_31.jpeg" },
+  { name: "Libra", desc: "Astrologically curated crystal set for Libra to bring harmony, balance, and relationship healing.", cat: "zodiac", img: "/assets/images/P_30.jpeg" },
+  { name: "Scorpio", desc: "Astrologically curated crystal set for Scorpio to aid transformation, protection, and emotional depth.", cat: "zodiac", img: "/assets/images/P_29.jpeg" },
+  { name: "Capricorn", desc: "Astrologically curated crystal set for Capricorn to support discipline, success, and career growth.", cat: "zodiac", img: "/assets/images/P_38.jpeg" },
+  { name: "Aquarius", desc: "Astrologically curated crystal set for Aquarius to boost innovation, intuition, and humanitarian energy.", cat: "zodiac", img: "/assets/images/P_37.jpeg" },
+  { name: "Pisces", desc: "Astrologically curated crystal set for Pisces to enhance spirituality, dreams, and emotional healing.", cat: "zodiac", img: "/assets/images/P_39.jpeg" },
+  
+  // mulank
+  { name: "Mulank 1", desc: "Astrology-based crystal combination for Mulank 1 (Surya) to enhance confidence, leadership, and vitality.", cat: "mulank", img: "/assets/images/P_40_1.jpeg" },
+  { name: "Mulank 2", desc: "Astrology-based crystal combination for Mulank 2 (Chandra) to promote emotional balance, intuition, and calmness.", cat: "mulank", img: "/assets/images/P_41_2.jpeg" },
+  { name: "Mulank 3", desc: "Astrology-based crystal combination for Mulank 3 (Guru) to boost wisdom, creativity, and self-expression.", cat: "mulank", img: "/assets/images/P_42_3.jpeg" },
+  { name: "Mulank 4", desc: "Astrology-based crystal combination for Mulank 4 (Rahu) to bring stability, protection, and grounding energy.", cat: "mulank", img: "/assets/images/P_43_4.jpeg" },
+  { name: "Mulank 5", desc: "Astrology-based crystal combination for Mulank 5 (Budh) to enhance communication, intelligence, and adaptability.", cat: "mulank", img: "/assets/images/P_44_5.jpeg" },
+  { name: "Mulank 6", desc: "Astrology-based crystal combination for Mulank 6 (Shukra) to attract love, luxury, and relationship harmony.", cat: "mulank", img: "/assets/images/P_45_6.jpeg" },
+  { name: "Mulank 7", desc: "Astrology-based crystal combination for Mulank 7 (Shani) to provide discipline, karma balance, and protection.", cat: "mulank", img: "/assets/images/P_46_7.jpeg" },
+  { name: "Mulank 8", desc: "Astrology-based crystal combination for Mulank 8 (Mangal) to boost courage, strength, and career success.", cat: "mulank", img: "/assets/images/P_47_8.jpeg" },
+  { name: "Mulank 9", desc: "Astrology-based crystal combination for Mulank 9 (Ketu) to enhance spirituality, detachment, and moksha energy.", cat: "mulank", img: "/assets/images/P_48_9.jpeg" },
 
+  // rudraksha
+  { name: "1 to 5 Mukhi Rudraksha", desc: "Sacred Rudraksha set (1-5 Mukhi) for peace, focus, health, knowledge, and confidence as per Vedic astrology.", cat: "rudraksha", img: "/assets/images/P_49.jpeg" },
+  { name: "6 to 10 Mukhi Rudraksha", desc: "Sacred Rudraksha set (6-10 Mukhi) for wisdom, wealth, love, obstacle removal, and protection from negativity.", cat: "rudraksha", img: "/assets/images/P_50.jpeg" },
+  { name: "11 to 15 Mukhi Rudraksha", desc: "Sacred Rudraksha set (11-15 Mukhi) for divine blessings, spiritual growth, victory, and supreme protection.", cat: "rudraksha", img: "/assets/images/P_51.jpeg" },
+  { name: "Ganesh Rudraksha & Gauri-Shankar Rudraksha", desc: "Sacred Ganesh and Gauri-Shankar Rudraksha for removing obstacles, marital harmony, and spiritual unity.", cat: "rudraksha", img: "/assets/images/P_52.jpeg" },
+  { name: "5 Mukhi Rudraksha Bracelet", desc: "Sacred 5 Mukhi Rudraksha bracelet for improving confidence, communication, and overall well-being.", cat: "rudraksha", img: "/assets/images/P_53.jpeg" },
+  
+  // yantras
+  { name: "Love Attraction", desc: "Vedic Yantra to attract love, strengthen relationships, and bring emotional harmony.", cat: "yantras", img: "/assets/images/P_54.jpeg" },
+  { name: "Money Attraction", desc: "Vedic Yantra to attract wealth, remove financial blocks, and bring prosperity.", cat: "yantras", img: "/assets/images/P_55.jpeg" },
+  { name: "Business Attraction", desc: "Vedic Yantra for business growth, success, profits, and customer attraction.", cat: "yantras", img: "/assets/images/P_56.jpeg" },
+  { name: "Education Yantra", desc: "Vedic Yantra to enhance focus, memory, knowledge, and academic success.", cat: "yantras", img: "/assets/images/P_57.jpeg" },
+  
+  // Accessories
+  { name: "Selenite Plates", desc: "Astrology-approved Selenite plate for crystal charging, aura cleansing, and spiritual purification.", cat: "accessories", img: "/assets/images/P_58.jpeg" },
+  { name: "Pyrite Horse Frame", desc: "Vastu-friendly Pyrite Horse frame for attracting wealth, success, and forward momentum.", cat: "accessories", img: "/assets/images/P_59.jpeg" },
+  { name: "Dhan Laxmi Pyramid", desc: "Vastu and astrology combined Dhan Laxmi Pyramid for unlimited wealth and abundance.", cat: "accessories", img: "/assets/images/P_60.jpeg" },
+  { name: "Dhan Labh Anklet", desc: "Astrology-based Dhan Labh anklet to attract financial gains and prosperity in daily life.", cat: "accessories", img: "/assets/images/P_61.jpeg" },
+  { name: "Pyrite Anklet", desc: "Astrology-based Pyrite anklet to attract wealth, success, and protective energy throughout the day.", cat: "accessories", img: "/assets/images/P_62.jpeg" },
+  { name: "7 Chakra Tree", desc: "Vastu and chakra healing tree to balance all 7 chakras and bring positive energy to home.", cat: "accessories", img: "/assets/images/P_63.jpeg" },
+  { name: "Pyrite Tree", desc: "Vastu-approved Pyrite tree for wealth, abundance, and financial stability in home or office.", cat: "accessories", img: "/assets/images/P_64.jpeg" },
+  { name: "Lavender Bath Salt", desc: "Aromatherapy and astrology-infused lavender bath salt for stress relief and emotional healing.", cat: "accessories", img: "/assets/images/P_65.jpeg" },
+  { name: "Rose Bath Salt", desc: "Aromatherapy and astrology-infused rose bath salt for love, self-care, and emotional balance.", cat: "accessories", img: "/assets/images/P_66.jpeg" }
 ];
+
   function renderProducts(category) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
