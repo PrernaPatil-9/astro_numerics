@@ -206,6 +206,20 @@
   .hover\:-translate-y-1:hover {
     transform: translateY(-4px);
   }
+
+   /* Gold divider */
+  .gold-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d97706, #b45309, #d97706, transparent);
+    opacity: .35; position: relative;
+  }
+  .gold-divider::after {
+    content: '✦';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #b45309; font-size: .75rem;
+    background: #f8fafc; padding: 0 .7rem;
+  }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
@@ -229,6 +243,7 @@
       <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
       <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
       <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="gallery.html" class="hover:text-violet transition-colors">Gallery</a></li>
       <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
     <div class="hidden md:flex items-center">
@@ -251,6 +266,7 @@
     <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
     <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
     <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="gallery.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Gallery</a> 
     <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
     <a href="https://wa.me/919657313963" target="_blank"
       class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
@@ -490,17 +506,17 @@
       <!-- Stats -->
       <div class="flex items-end gap-4 pb-1 shrink-0">
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">5<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Outfit', sans-serif; font-size:2rem; font-weight:600; line-height:1; color:#4338ca;">5<span style="font-size:1.3rem;">+</span></div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Years</div>
         </div>
         <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">3K<span style="font-size:1.3rem;">+</span></div>
+          <div style="font-family:'Outfit', sans-serif; font-size:2rem; font-weight:600; line-height:1; color:#4338ca;">3K<span style="font-size:1.3rem;">+</span></div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Seekers</div>
         </div>
         <div style="width:1px; height:30px; background:linear-gradient(to bottom, transparent, #e2e8f0, transparent);"></div>
         <div class="text-center">
-          <div style="font-family:'Cormorant Garamond',Georgia,serif; font-size:2rem; font-weight:700; line-height:1; background:linear-gradient(135deg,#4338ca,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">15</div>
+          <div style="font-family:'Outfit', sans-serif; font-size:2rem; font-weight:600; line-height:1; color:#4338ca;">15</div>
           <div style="font-family:'Outfit',sans-serif; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#94a3b8; margin-top:2px;">Services</div>
         </div>
       </div>
@@ -1057,56 +1073,45 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════ AWARDS & CERTIFICATES CAROUSEL (With Certificate Name & Recipient) -->
-<section id="awards" class="pt-4 md:pt-6 pb-16 md:pb-20 bg-gradient-to-br from-violet-pale via-white to-amber-pale overflow-hidden">  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+<div class="gold-divider"></div>
+
+<!-- ═══════════════════════════════════════════════ AWARDS & CERTIFICATES CAROUSEL (Fixed: Scrolls All The Way To End) ═══════════════════════════════════════════════ -->
+<section id="awards" class="pt-4 md:pt-6 pb-16 md:pb-20 bg-gradient-to-br from-violet-pale via-white to-amber-pale overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <!-- Section Header with Image at Far Right Corner -->
     <div class="text-center mb-12 opacity-0 animate-[fadeUp_0.6s_ease-out_forwards] relative">
       <div class="flex items-center justify-center gap-3 text-violet text-xs font-semibold tracking-widest uppercase mb-3">
-        <div class="w-6 h-px bg-violet"></div> 
+        <div class="w-6 h-px bg-violet"></div>
         Recognitions & Achievements
         <div class="w-6 h-px bg-violet"></div>
       </div>
-      
-   <!-- Heading container with images on both sides -->
-<div class="relative max-w-4xl mx-auto">
 
-  <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900 mb-0 text-center">
-    Honored & <span class="text-violet font-medium">Certified</span>
-  </h2>
+      <!-- Heading container with images on both sides -->
+      <div class="relative max-w-4xl mx-auto">
+        <h2 class="font-display text-4xl md:text-5xl font-light text-slate-900 mb-0 text-center">
+          Honored & <span class="text-violet font-medium">Certified</span>
+        </h2>
 
-  <!-- Right Image -->
-  <div class="absolute -right-20 md:-right-28 lg:-right-40 top-[65%] -translate-y-1/2 hidden md:block">
-    <img
-      src="/assets/images/c2-removebg-preview.png"
-      alt="Medal Icon"
-      class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105"
-    />
-  </div>
+        <!-- Right Image -->
+        <div class="absolute -right-20 md:-right-28 lg:-right-40 top-[65%] -translate-y-1/2 hidden md:block">
+          <img src="/assets/images/c2-removebg-preview.png" alt="Medal Icon" class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105" />
+        </div>
 
-  <!-- Left Image (mirrored) -->
-  <div class="absolute -left-20 md:-left-28 lg:-left-40 top-[65%] -translate-y-1/2 hidden md:block">
-    <img
-      src="/assets/images/c2-removebg-preview.png"
-      alt="Medal Icon"
-      class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105"
-    />
-  </div>
+        <!-- Left Image (mirrored) -->
+        <div class="absolute -left-20 md:-left-28 lg:-left-40 top-[65%] -translate-y-1/2 hidden md:block">
+          <img src="/assets/images/c2-removebg-preview.png" alt="Medal Icon" class="h-64 md:h-72 w-auto object-contain mt-4 transition-transform duration-300 hover:scale-105" />
+        </div>
 
-  <!-- Mobile Image -->
-  <div class="block md:hidden mt-3">
-    <img
-      src="/assets/images/c2-removebg-preview.png"
-      alt="Medal Icon"
-      class="w-36 h-36 object-contain transition-transform duration-300 hover:scale-105 mx-auto"
-    />
-  </div>
+        <!-- Mobile Image -->
+        <div class="block md:hidden mt-3">
+          <img src="/assets/images/c2-removebg-preview.png" alt="Medal Icon" class="w-36 h-36 object-contain transition-transform duration-300 hover:scale-105 mx-auto" />
+        </div>
+      </div>
 
-</div>
-      
       <p class="text-slate-500 max-w-2xl mx-auto mt-6">Recognized for excellence in Vedic astrology, numerological consultations, and spiritual healing practices.</p>
     </div>
 
-    <!-- Awards Carousel -->
+    <!-- Awards Carousel - FIXED: Scrolls completely to the end -->
     <div class="relative">
       <div class="overflow-hidden">
         <div class="flex gap-6 md:gap-8 overflow-x-auto pb-6 scroll-smooth hide-scrollbar" id="awardsTrack" style="scrollbar-width: none; -ms-overflow-style: none;">
@@ -1114,125 +1119,118 @@
           <!-- Certificate 1 - Soft Peach -->
           <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/60 shadow-sm" style="animation-delay: 0.1s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-rose-100/40 to-orange-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_1.jpeg" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-scroll text-rose-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate of Excellence in Astrology</h3>
-              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: International Astrology Council</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certified BNN Astrology</h3>
+              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
           <!-- Certificate 2 - Soft Mint -->
           <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 shadow-sm" style="animation-delay: 0.2s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-emerald-100/40 to-teal-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_2.jpeg" alt="Master Numerologist Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-chart-simple text-emerald-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Master Numerologist Certification</h3>
-              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: Global Numerology Institute</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate Of Completion</h3>
+              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
           <!-- Certificate 3 - Soft Lavender -->
           <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/60 shadow-sm" style="animation-delay: 0.3s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-indigo-100/40 to-purple-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Vedic Astrology Proficiency Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_3.jpeg" alt="Vedic Astrology Proficiency Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-star-of-life text-indigo-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Vedic Astrology Proficiency</h3>
-              <p class="text-xs text-indigo-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: Indian Council of Vedic Sciences</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">The Batraa Numerology</h3>
+              <p class="text-xs text-indigo-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
           <!-- Certificate 4 - Soft Sky Blue -->
           <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-sky-50 to-blue-50 border border-sky-200/60 shadow-sm" style="animation-delay: 0.4s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-sky-100/40 to-blue-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_2.png" alt="Crystal Healing & Chakra Balancing Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_4.jpeg" alt="Crystal Healing & Chakra Balancing Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-gem text-sky-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Crystal Healing &amp; Chakra Balancing</h3>
-              <p class="text-xs text-sky-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: Alternative Healing Association</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Reiki Grand Master</h3>
+              <p class="text-xs text-sky-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
           <!-- Certificate 5 - Soft Coral -->
           <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/60 shadow-sm" style="animation-delay: 0.5s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-amber-100/40 to-yellow-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Spiritual Counseling Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_5.jpeg" alt="Spiritual Counseling Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-3">
                 <i class="fas fa-hand-sparkles text-amber-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Spiritual Counseling Certification</h3>
-              <p class="text-xs text-amber-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: World Spiritual Federation</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate Of Achievements</h3>
+              <p class="text-xs text-amber-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
-          <!-- Duplicate certificates for seamless infinite loop -->
-          <!-- Certificate 1 Clone -->
-          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/60 shadow-sm">
+          <!-- Certificate 6 - Yoga Certificate -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-rose-50 to-orange-50 border border-rose-200/60 shadow-sm" style="animation-delay: 0.6s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-rose-100/40 to-orange-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_1.png" alt="Certificate of Excellence in Astrology" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_6.jpeg" alt="Yoga Teacher Training Certificate" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-scroll text-rose-500 text-xl"></i>
+                <i class="fas fa-om text-rose-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Certificate of Excellence in Astrology</h3>
-              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: International Astrology Council</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Yoga Teacher Training Course Certificate</h3>
+              <p class="text-xs text-rose-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
 
-          <!-- Certificate 2 Clone -->
-          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 shadow-sm">
+          <!-- Certificate 7 - Numerojyotish -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 shadow-sm" style="animation-delay: 0.7s">
             <div class="h-52 overflow-hidden bg-gradient-to-br from-emerald-100/40 to-teal-100/40 flex items-center justify-center p-4">
-              <img src="/assets/images/c_2.png" alt="Master Numerologist Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105"/>
+              <img src="/assets/images/c_7.jpeg" alt="Numerojyotish Certification" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
             </div>
             <div class="p-5 text-center">
               <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-                <i class="fas fa-chart-simple text-emerald-500 text-xl"></i>
+                <i class="fas fa-calculator text-emerald-500 text-xl"></i>
               </div>
-              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Master Numerologist Certification</h3>
-              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Astro Numerics</p>
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <span class="text-xs text-slate-400">Issued by: Global Numerology Institute</span>
-              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">Numerojyotish</h3>
+              <p class="text-xs text-emerald-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
             </div>
           </div>
+
+          <!-- Certificate 8 - Batraa Numerology Visiting Card -->
+          <div class="min-w-[280px] md:min-w-[320px] rounded-2xl overflow-hidden hover:-translate-y-2 transition-all duration-300 flex-shrink-0 opacity-0 animate-[cardFadeUp_0.5s_ease-out_forwards] bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200/60 shadow-sm" style="animation-delay: 0.8s">
+            <div class="h-52 overflow-hidden bg-gradient-to-br from-indigo-100/40 to-purple-100/40 flex items-center justify-center p-4">
+              <img src="/assets/images/c_3.jpeg" alt="Batraa Numerology Visiting Card" class="h-40 w-auto object-contain transition-transform duration-500 hover:scale-105" />
+            </div>
+            <div class="p-5 text-center">
+              <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-id-card text-indigo-500 text-xl"></i>
+              </div>
+              <h3 class="font-display text-lg font-semibold text-slate-800 mb-1">The Batraa Numerology Visiting Card</h3>
+              <p class="text-xs text-indigo-500 font-medium uppercase tracking-wide mb-2">Awarded To: Raajeshhwari Bhosale Suryavanshi</p>
+            </div>
+          </div>
+
         </div>
       </div>
-      
+
       <!-- Navigation Arrows -->
       <button id="awards-prev" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white border border-slate-200 shadow-lg flex items-center justify-center text-slate-400 hover:border-violet hover:text-violet hover:bg-violet-50 transition-all z-10">
         <i class="fas fa-chevron-left text-sm"></i>
@@ -1241,7 +1239,7 @@
         <i class="fas fa-chevron-right text-sm"></i>
       </button>
     </div>
-    
+
     <!-- Auto-slider indicator dots -->
     <div class="flex justify-center gap-2 mt-6">
       <span class="w-2 h-2 rounded-full bg-violet-400 transition-all duration-300" id="dot1"></span>
@@ -1249,68 +1247,88 @@
       <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot3"></span>
       <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot4"></span>
       <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot5"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot6"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot7"></span>
+      <span class="w-2 h-2 rounded-full bg-slate-300 transition-all duration-300" id="dot8"></span>
     </div>
   </div>
 </section>
 
-<!-- Carousel JavaScript with Auto-slider -->
+<!-- Carousel JavaScript with Auto-slider - FIXED: Scrolls all the way to the end -->
 <script>
   const awardsTrack = document.getElementById('awardsTrack');
   const awardsPrev = document.getElementById('awards-prev');
   const awardsNext = document.getElementById('awards-next');
-  
+
   let autoSlideInterval;
   let isHovering = false;
-  
-  // Card width including gap (320px + 32px gap = 352px)
-  const scrollAmount = 352;
-  
-  // Function to scroll next
+
+  // Function to get dynamic scroll amount based on card width + gap
+  function getScrollAmount() {
+    if (!awardsTrack) return 352;
+    const firstCard = awardsTrack.querySelector('.flex-shrink-0');
+    if (!firstCard) return 352;
+    const cardWidth = firstCard.offsetWidth;
+    const gap = 24; // gap-6 = 24px, on md gap-8 = 32px but we use consistent 24 for reliable scroll
+    const computedGap = window.innerWidth >= 768 ? 32 : 24;
+    return cardWidth + computedGap;
+  }
+
+  // Function to scroll next - GOES ALL THE WAY TO THE END
   function scrollNext() {
     if (awardsTrack) {
       const currentScroll = awardsTrack.scrollLeft;
       const maxScroll = awardsTrack.scrollWidth - awardsTrack.clientWidth;
-      
-      if (currentScroll + scrollAmount >= maxScroll) {
-        // Reset to start for infinite loop effect
-        awardsTrack.scrollTo({ left: 0, behavior: 'smooth' });
+      const scrollAmount = getScrollAmount();
+
+      if (currentScroll + scrollAmount >= maxScroll - 5) {
+        // Scroll exactly to the end
+        awardsTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
       } else {
         awardsTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
       updateActiveDot();
     }
   }
-  
+
   // Function to scroll prev
   function scrollPrev() {
     if (awardsTrack) {
       const currentScroll = awardsTrack.scrollLeft;
-      
+      const scrollAmount = getScrollAmount();
+
       if (currentScroll - scrollAmount <= 0) {
-        // Go to end for infinite loop effect
-        awardsTrack.scrollTo({ left: awardsTrack.scrollWidth - awardsTrack.clientWidth, behavior: 'smooth' });
+        awardsTrack.scrollTo({ left: 0, behavior: 'smooth' });
       } else {
         awardsTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       }
       updateActiveDot();
     }
   }
-  
-  // Update active dot based on scroll position
+
+  // Update active dot based on scroll position (8 certificates = 8 dots)
   function updateActiveDot() {
     if (!awardsTrack) return;
-    
+
     const scrollPosition = awardsTrack.scrollLeft;
-    const cardWidth = 352; // 320px + 32px gap
-    const activeIndex = Math.round(scrollPosition / cardWidth) % 5;
+    const scrollAmount = getScrollAmount();
+    const maxScroll = awardsTrack.scrollWidth - awardsTrack.clientWidth;
     
-    for (let i = 1; i <= 5; i++) {
+    // Calculate which certificate is most visible (0-7)
+    let activeIndex = 0;
+    if (maxScroll > 0) {
+      activeIndex = Math.round((scrollPosition / maxScroll) * 7);
+      activeIndex = Math.min(7, Math.max(0, activeIndex));
+    }
+
+    // Update all 8 dots
+    for (let i = 1; i <= 8; i++) {
       const dot = document.getElementById(`dot${i}`);
       if (dot) {
         if (i - 1 === activeIndex) {
           dot.classList.remove('bg-slate-300');
           dot.classList.add('bg-violet-400');
-          dot.style.width = '8px';
+          dot.style.width = '10px';
         } else {
           dot.classList.remove('bg-violet-400');
           dot.classList.add('bg-slate-300');
@@ -1319,17 +1337,26 @@
       }
     }
   }
-  
+
   // Start auto-slide
   function startAutoSlide() {
     if (autoSlideInterval) clearInterval(autoSlideInterval);
     autoSlideInterval = setInterval(() => {
-      if (!isHovering) {
-        scrollNext();
+      if (!isHovering && awardsTrack) {
+        const currentScroll = awardsTrack.scrollLeft;
+        const maxScroll = awardsTrack.scrollWidth - awardsTrack.clientWidth;
+        
+        if (currentScroll + 5 >= maxScroll) {
+          // At the end, reset to beginning for infinite loop
+          awardsTrack.scrollTo({ left: 0, behavior: 'smooth' });
+          setTimeout(() => updateActiveDot(), 400);
+        } else {
+          scrollNext();
+        }
       }
     }, 3000);
   }
-  
+
   // Stop auto-slide
   function stopAutoSlide() {
     if (autoSlideInterval) {
@@ -1337,40 +1364,44 @@
       autoSlideInterval = null;
     }
   }
-  
+
   // Event listeners
   if (awardsPrev && awardsNext && awardsTrack) {
     awardsPrev.addEventListener('click', () => {
       scrollPrev();
-      // Reset auto-slide timer on manual interaction
       stopAutoSlide();
       startAutoSlide();
     });
-    
+
     awardsNext.addEventListener('click', () => {
       scrollNext();
-      // Reset auto-slide timer on manual interaction
       stopAutoSlide();
       startAutoSlide();
     });
-    
-    // Pause auto-slide on hover
+
     awardsTrack.addEventListener('mouseenter', () => {
       isHovering = true;
     });
-    
+
     awardsTrack.addEventListener('mouseleave', () => {
       isHovering = false;
     });
-    
-    // Update dot on scroll
+
     awardsTrack.addEventListener('scroll', () => {
       updateActiveDot();
     });
   }
-  
+
+  // Handle window resize to recalculate
+  window.addEventListener('resize', () => {
+    setTimeout(updateActiveDot, 100);
+  });
+
   // Start auto-slide when page loads
   startAutoSlide();
+  
+  // Initial dot update after images load
+  setTimeout(updateActiveDot, 200);
 </script>
 
 <style>
@@ -1378,7 +1409,7 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  
+
   @keyframes fadeUp {
     from {
       opacity: 0;
@@ -1389,7 +1420,7 @@
       transform: translateY(0);
     }
   }
-  
+
   @keyframes cardFadeUp {
     from {
       opacity: 0;
@@ -1483,16 +1514,18 @@
           <i class="fas fa-star text-amber-500 text-[11px]"></i>
         </div>
         <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
-          “I was at a complete crossroads in my career. The numerology consultation gave me shocking clarity — my business name change alone brought new opportunities within weeks. Grateful beyond words.”
+          “Very good numerology experience with Rajeshwari. The predictions and explanations were easy to understand and felt very true to my life. I felt motivated and positive after the session. Definitely worth trying.
+I had a very insightful numerology session Rajeshwar. The reading was accurate, detailed, and surprisingly relatable to my life situation just right now. I especially liked the way everything was explained clearly and positively. It gave me confidence and clarity about my future decisions. Highly recommended for anyone curious about numerology.
+My experience with numerology was amazing. I was surprised by how accurately my personality and life patterns were described just through numbers. The guidance helped me understand myself better and gave me positivity about my career and relationships. Thank you for such a genuine and motivating session.
+Very good numerology experience. The predictions and explanations were easy to understand and felt very true to my life. ”
         </p>
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-display font-medium text-[11px]">AK</div>
           <div>
-            <h4 class="font-semibold text-slate-800 text-xs">Anjali K.</h4>
-            <p class="text-slate-500 text-[10px] tracking-wide">Entrepreneur · Numerology</p>
+            <h4 class="font-semibold text-slate-800 text-xs">Sunil Pimplkhare</h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Pune</p>
           </div>
         </div>
-        <div class="mt-2 inline-flex items-center gap-1 text-[9px] text-amber-700"><i class="fas fa-check-circle text-[8px]"></i><span>Verified · Tarot + Numerology</span></div>
       </div>
       
       <!-- Card 2 - Deep Mint/Sage -->
@@ -1505,13 +1538,13 @@
           <i class="fas fa-star text-amber-500 text-[11px]"></i>
         </div>
         <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
-          “The past life reading was profound. I finally understood why I kept repeating the same patterns in love. Healing has been real and gentle.”
+          “राजेश्वरी मॅडम कडून दोन वर्षांपूर्वी मी माझ्या जॉब साठी रेमडी घेतल्या होत्या.. आणि क्रिस्टल सुद्धा घेतले होते. काही स्विचवर्ड सुद्धा घेतले होते. त्याचा मला खूप फायदा झाला. मी माझ्या आयुष्यामध्ये खूप हारून गेलो होतो. मॅडम मुळे मला खूप फायदा झाला. माझा  घटस्फोट चा प्रॉब्लेम चालू होता. कोर्टात केस चालू होती. त्यामुळे मी पूर्णपणे खचून गेलो होतो. मॅडम मुळे माझ्या जीवनात पूर्ण नवीन उभारी आली. Tarrot  रीडिंग चा खूप फायदा झाला. मी मॅडमची खूप आभारी आहे”
         </p>
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-display font-medium text-[11px]">RS</div>
           <div>
-            <h4 class="font-semibold text-slate-800 text-xs">Rohit S.</h4>
-            <p class="text-slate-500 text-[10px] tracking-wide">Relationship Healing</p>
+            <h4 class="font-semibold text-slate-800 text-xs">Mangesh</h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Nagar</p>
           </div>
         </div>
       </div>
@@ -1527,16 +1560,17 @@
           <i class="fas fa-star text-amber-500 text-[11px]"></i>
         </div>
         <p class="text-slate-700 text-xs leading-relaxed italic mb-3">
-          “Vastu consultation changed the energy of my home completely. My family feels lighter and more connected. Thank you for your wisdom.”
+          “Working with Mrs.Rajeshwari Bhosale Mam is an great experience,she  provided me with clear direction, practical remedies, and valuable insights that helped me take the right business decisions with more confidence. Within just a few months of following her guidance and remedies, I started experiencing positive results and noticeable growth in my business.
+What I appreciate the most is her genuine support, deep knowledge, and the way she patiently understands every situation before suggesting solutions. Her predictions and guidance have been very accurate and helpful for me.
+I highly recommend Mrs. Rajeshwari Bhosale Mam to anyone seeking trusted guidance in numerology and astrology for personal or professional growth. Thank you, Mam, for your continuous support and positive guidance.🙏🏻🙏🏻”
         </p>
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white font-display font-medium text-[11px]">MP</div>
           <div>
-            <h4 class="font-semibold text-slate-800 text-xs">Meera P.</h4>
-            <p class="text-slate-500 text-[10px] tracking-wide">Homemaker · Vastu</p>
+            <h4 class="font-semibold text-slate-800 text-xs">Preetamraj Jadhav </h4>
+            <p class="text-slate-500 text-[10px] tracking-wide">Pune</p>
           </div>
         </div>
-        <div class="mt-1.5 flex items-center gap-1"><span class="inline-block w-1 h-1 rounded-full bg-emerald-600"></span><span class="text-[9px] text-slate-500">Home energy alignment</span></div>
       </div>
     </div>
   </div>

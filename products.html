@@ -275,6 +275,7 @@
       <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
       <li><a href="products.html" class="hover:text-violet transition-colors text-violet-600 border-b border-violet-300">Products</a></li>
       <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="gallery.html" class="hover:text-violet transition-colors">Gallery</a></li> 
       <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
     <div class="hidden md:flex items-center">
@@ -297,6 +298,7 @@
     <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
     <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
     <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="gallery.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Gallery</a> 
     <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
     <a href="https://wa.me/919657313963" target="_blank"
       class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
@@ -369,6 +371,7 @@
     <button class="category-btn" data-cat="rudraksha">Rudraksha</button>
     <button class="category-btn" data-cat="yantras">Yantras</button>
     <button class="category-btn" data-cat="accessories">Spiritual Accessories</button>
+    <button class="category-btn" data-cat="mulank">Mulank and Bhagyaank bracelets </button>
   </div>
 
   <div class="products-grid" id="productsGrid"></div>
@@ -556,36 +559,112 @@
   if (overlay) overlay.addEventListener('click', shut);
 
 const products = [
-  { name: "Angelite & Celestite", desc: "Promotes angelic communication, inner peace, spiritual awareness, and higher guidance.", cat: "crystals", img: "/assets/images/P_1.jpeg" },
-  { name: "Amethyst", desc: "Enhances intuition, mental clarity, spiritual protection, and emotional balance.", cat: "crystals", img: "/assets/images/P_2.jpeg" },
-  { name: "Amber", desc: "Brings warmth, positivity, healing energy, and emotional cleansing.", cat: "crystals", img: "/assets/images/P_3.jpeg" },
-  { name: "Amazonite", desc: "Encourages confidence, truth, communication, and manifestation of abundance.", cat: "crystals", img: "/assets/images/P_4.jpeg" },
-  { name: "Blood Stone", desc: "Boosts courage, vitality, protection, and strengthens inner resilience.", cat: "crystals", img: "/assets/images/P_5.jpeg" },
-  { name: "Black Tourmaline", desc: "Powerful protection stone that shields against negativity and unwanted energies.", cat: "crystals", img: "/assets/images/P_6.jpeg" },
-  { name: "Black Obsidian", desc: "Grounds energy, removes negativity, and supports emotional healing.", cat: "crystals", img: "/assets/images/P_7.jpeg" },
-  { name: "Howlite", desc: "Promotes calmness, patience, emotional healing, and stress relief.", cat: "crystals", img: "/assets/images/P_8.jpeg" },
-  { name: "Hematite", desc: "Provides grounding, stability, confidence, and mental focus.", cat: "crystals", img: "/assets/images/P_9.jpeg" },
-  { name: "Green Aventurine", desc: "Known as the stone of luck, prosperity, opportunity, and growth.", cat: "crystals", img: "/assets/images/P_10.jpeg" },
-  { name: "Garnet", desc: "Inspires passion, energy, commitment, and personal transformation.", cat: "crystals", img: "/assets/images/P_11.jpeg" },
-  { name: "Dhan Labh", desc: "Traditionally associated with attracting wealth, prosperity, and financial growth.", cat: "crystals", img: "/assets/images/P_12.jpeg" },
-  { name: "Dessert Rose", desc: "Encourages clarity, grounding, confidence, and manifestation of goals.", cat: "crystals", img: "/assets/images/P_13.jpeg" },
-  { name: "Clear Quartz", desc: "Master healing crystal that amplifies energy, intentions, and spiritual growth.", cat: "crystals", img: "/assets/images/P_14.jpeg" },
-  { name: "Citrine", desc: "Attracts abundance, success, confidence, joy, and positive energy.", cat: "crystals", img: "/assets/images/P_15.jpeg" },
-  { name: "Triple Protection", desc: "A powerful blend for protection, grounding, and energy cleansing.", cat: "crystals", img: "/assets/images/P_16.jpeg" },
-  { name: "Tiger Eye", desc: "Enhances confidence, courage, focus, and protection during challenges.", cat: "crystals", img: "/assets/images/P_17.jpeg" },
-  { name: "Sunstone", desc: "Radiates joy, optimism, leadership, motivation, and personal power.", cat: "crystals", img: "/assets/images/P_18.jpeg" },
-  { name: "Rose Quartz", desc: "The stone of unconditional love, compassion, harmony, and emotional healing.", cat: "crystals", img: "/assets/images/P_19.jpeg" },
-  { name: "Red Jasper", desc: "Provides strength, stability, endurance, and grounding energy.", cat: "crystals", img: "/assets/images/P_20.jpeg" },
-  { name: "Pyrite", desc: "Attracts wealth, success, protection, and boosts confidence.", cat: "crystals", img: "/assets/images/P_21.jpeg" },
-  { name: "MoonStone", desc: "Supports intuition, emotional balance, feminine energy, and new beginnings.", cat: "crystals", img: "/assets/images/P_22.jpeg" },
-  { name: "Malachite", desc: "A stone of transformation, protection, healing, and positive change.", cat: "crystals", img: "/assets/images/P_23.jpeg" },
-  { name: "Lapis Lazuli", desc: "Enhances wisdom, truth, communication, intuition, and self-awareness.", cat: "crystals", img: "/assets/images/P_24.jpeg" },
-  { name: "Jade", desc: "Symbolizes prosperity, harmony, good fortune, and emotional balance.", cat: "crystals", img: "/assets/images/P_25.jpeg" },
-  { name: "Jasper", desc: "Provides nurturing energy, protection, grounding, and stability.", cat: "crystals", img: "/assets/images/P_26.jpeg" },
-  { name: "7 Chakra Bracelet", desc: "Balances the seven chakras, promoting harmony, healing, and positive energy flow.", cat: "crystals", img: "/assets/images/P_27.jpeg" },
+  {
+    name: "Amethyst",
+    desc: "Enhances intuition, mental clarity, spiritual protection, and emotional balance.",
+    cat: "crystals",
+    img: "/assets/images/P_2.jpeg"
+  },
+  {
+    name: "Clear Quartz",
+    desc: "Master healing crystal that amplifies energy, intentions, and spiritual growth.",
+    cat: "crystals",
+    img: "/assets/images/P_14.jpeg"
+  },
+  {
+    name: "Tiger Eye",
+    desc: "Enhances confidence, courage, focus, and protection during challenges.",
+    cat: "crystals",
+    img: "/assets/images/P_17.jpeg"
+  },
+  {
+    name: "Rose Quartz",
+    desc: "The stone of unconditional love, compassion, harmony, and emotional healing.",
+    cat: "crystals",
+    img: "/assets/images/P_19.jpeg"
+  },
+  {
+    name: "Lapis Lazuli",
+    desc: "Enhances wisdom, truth, communication, intuition, and self-awareness.",
+    cat: "crystals",
+    img: "/assets/images/P_24.jpeg"
+  },
+  {
+    name: "Turquoise",
+    desc: "Promotes protection, communication, emotional balance, and positive energy.",
+    cat: "crystals",
+    img: "/assets/images/P_28.jpeg"
+  },
+  {
+    name: "Triple Protection",
+    desc: "A powerful blend for protection, grounding, and energy cleansing.",
+    cat: "crystals",
+    img: "/assets/images/P_16.jpeg"
+  },
+  {
+    name: "Dhan Labh",
+    desc: "Traditionally associated with attracting wealth, prosperity, and financial growth.",
+    cat: "crystals",
+    img: "/assets/images/P_12.jpeg"
+  },
+  {
+    name: "7 Chakra Bracelet",
+    desc: "Balances the seven chakras, promoting harmony, healing, and positive energy flow.",
+    cat: "crystals",
+    img: "/assets/images/P_27.jpeg"
+  },
+  {
+    name: "Howlite",
+    desc: "Promotes calmness, patience, emotional healing, and stress relief.",
+    cat: "crystals",
+    img: "/assets/images/P_8.jpeg"
+  },
+  {
+    name: "Green Aventurine",
+    desc: "Known as the stone of luck, prosperity, opportunity, and growth.",
+    cat: "crystals",
+    img: "/assets/images/P_10.jpeg"
+  },
+  {
+    name: "Red Jasper",
+    desc: "Provides strength, stability, endurance, and grounding energy.",
+    cat: "crystals",
+    img: "/assets/images/P_20.jpeg"
+  },
+  {
+    name: "Pyrite",
+    desc: "Attracts wealth, success, protection, and boosts confidence.",
+    cat: "crystals",
+    img: "/assets/images/P_21.jpeg"
+  },
+  {
+    name: "Citrine",
+    desc: "Attracts abundance, success, confidence, joy, and positive energy.",
+    cat: "crystals",
+    img: "/assets/images/P_15.jpeg"
+  },
   { name: "Sagittarius", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_28.jpeg" },
   { name: "Scorpio", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_29.jpeg" },
-  { name: "Libra", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_30.jpeg" }
+  { name: "Libra", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_30.jpeg" },
+  { name: "Virgo", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_31.jpeg" },
+  { name: "Leo", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_32.jpeg" },
+  { name: "Cancer", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_33.jpeg" },
+  { name: "Gemini", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_34.jpeg" },
+  { name: "Taurus", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_35.jpeg" },
+  { name: "Aries", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_36.jpeg" },
+  { name: "Aquarius", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "zodiac", img: "/assets/images/P_37.jpeg" },
+  { name: "Capricorn", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "zodiac", img: "/assets/images/P_38.jpeg" },
+  { name: "Pisces", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "zodiac", img: "/assets/images/P_39.jpeg" },
+  { name: "Mulank 1", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_46.jpeg" },
+  { name: "Mulank 2", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_45.jpeg" },
+  { name: "Mulank 3", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_44.jpeg" },
+  { name: "Mulank 4", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_43.jpeg" },
+  { name: "Mulank 5", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_42.jpeg" },
+  { name: "Mulank 6", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_41.jpeg" },
+  { name: "Mulank 7", desc: "Curated crystal combination to support optimism, adventure, wisdom, and growth.", cat: "mulank", img: "/assets/images/P_40.jpeg" },
+  { name: "Mulank 8", desc: "Curated crystal combination for transformation, intuition, strength, and protection.", cat: "mulank", img: "/assets/images/P_48.jpeg" },
+  { name: "Mulank 9", desc: "Curated crystal combination for balance, harmony, relationships, and inner peace.", cat: "mulank", img: "/assets/images/P_47.jpeg" },
+
 ];
   function renderProducts(category) {
     const grid = document.getElementById('productsGrid');
@@ -601,6 +680,7 @@ const products = [
       else if (product.cat === "yantras") categoryLabel = "Yantra";
       else if (product.cat === "rudraksha") categoryLabel = "Rudraksha";
       else if (product.cat === "zodiac") categoryLabel = "Zodiac Bracelets";
+      else if (product.cat === "mulank") categoryLabel = "Mulank and Bhagyaank bracelets ";
       else categoryLabel = "Accessories";
 
       return `

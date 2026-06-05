@@ -193,6 +193,79 @@
   .reveal:nth-child(4) { animation-delay: 0.4s; }
   .reveal:nth-child(5) { animation-delay: 0.5s; }
   .reveal:nth-child(6) { animation-delay: 0.6s; }
+
+  /* Force normal styling for ALL numbers on the page */
+.font-display:has(span:contains("+")),
+.font-display:has(+ span),
+div[class*="font-display"] {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+  color: #4338ca !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Target all counter numbers specifically */
+.counter,
+.stat-card .font-display,
+.stat-card [class*="text-4xl"] {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+  color: inherit !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Target the stats in the mission section (5+, 1.2K+, 12, 3) */
+.bg-slate-50\/80 .font-display,
+[class*="text-violet-600"] {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #4338ca !important;
+  color: #4338ca !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Fix for the plus signs */
+[class*="text-amber-500"] {
+  color: #b45309 !important;
+  background: none !important;
+}
+
+/* Fix for all gradient backgrounds on numbers */
+[style*="background:linear-gradient"]:not(img):not(div[class*="bg-"]) {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Specific fix for stat cards */
+.stat-card .font-display,
+.stat-card .counter {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+  color: inherit !important;
+}
+
+/* Override any remaining gradient text */
+.text-indigo-600,
+.text-rose-600,
+.text-emerald-600,
+.text-amber-600,
+.text-violet-600 {
+  background: none !important;
+  -webkit-text-fill-color: inherit !important;
+  color: inherit !important;
+}
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -216,6 +289,7 @@
       <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
       <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
       <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+       <li><a href="gallery.html" class="hover:text-violet transition-colors">Gallery</a></li>
       <li><a href="contact.html" class="hover:text-violet transition-colors">Contact</a></li>
     </ul>
     <div class="hidden md:flex items-center">
@@ -238,6 +312,7 @@
     <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
     <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
     <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+     <a href="gallery.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Gallery</a>
     <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
     <a href="https://wa.me/919657313963" target="_blank"
       class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">

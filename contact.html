@@ -42,266 +42,468 @@
   <style>
     body { font-family: 'Outfit', sans-serif; }
     .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
-    .hero-grid { background-image: radial-gradient(rgba(99,102,241,0.12) 1px, transparent 1px); background-size: 30px 30px; }
-    .text-grad { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .gold-grad { background: linear-gradient(135deg, #b45309 0%, #d97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .card-shine { position: relative; overflow: hidden; }
-    .card-shine::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%); transition: transform 0.6s; transform: translateX(-100%) rotate(45deg); }
-    .card-shine:hover::before { transform: translateX(100%) rotate(45deg); }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.92); }
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-    .reveal.d1 { transition-delay: 0.1s; } .reveal.d2 { transition-delay: 0.2s; } .reveal.d3 { transition-delay: 0.3s; } .reveal.d4 { transition-delay: 0.4s; }
-    .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.92); }
-    .dark-glass { backdrop-filter: blur(20px); background: rgba(15,12,41,0.85); }
+    .reveal.d1 { transition-delay: 0.1s; } .reveal.d2 { transition-delay: 0.2s; } .reveal.d3 { transition-delay: 0.3s; }
     .blink-dot { animation: blink 2.2s ease-in-out infinite; }
-    .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
-    .marquee-inner { display: flex; width: max-content; animation: marquee 30s linear infinite; }
-    .hero-img-overlay { background: linear-gradient(to right, #0f0c29 40%, rgba(15,12,41,0.3) 100%); }
-    @media (max-width: 768px) { .hero-img-overlay { background: linear-gradient(to bottom, rgba(15,12,41,0.7) 0%, #0f0c29 70%); } }
-    .star-banner { background: linear-gradient(90deg, #0f0c29 0%, #1e1b5e 50%, #0f0c29 100%); }
-    .service-tag { writing-mode: horizontal-tb; }
-    .testi-carousel { transition: transform 0.5s ease; }
-    .fade-in-1 { animation: fadeUp 0.8s ease 0.1s both; }
-    .fade-in-2 { animation: fadeUp 0.8s ease 0.3s both; }
-    .fade-in-3 { animation: fadeUp 0.8s ease 0.5s both; }
-    .fade-in-4 { animation: fadeUp 0.8s ease 0.7s both; }
-    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
-  
-    .star-banner {
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    .hero-wrap {
       position: relative;
-      width: 100%;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
     }
-    .marquee-inner {
-      display: flex;
-      width: max-content;
-      animation: marqueeMove 28s linear infinite;
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1800&q=80');
+      background-size: cover;
+      background-position: center 40%;
     }
-    @keyframes marqueeMove {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+    /* deep luxe overlay — dark purple-to-gold diagonal */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        125deg,
+        rgba(10,7,35,0.92) 0%,
+        rgba(30,20,80,0.85) 40%,
+        rgba(60,30,10,0.70) 100%
+      );
     }
-    @keyframes orbit-cw { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes orbit-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-    @keyframes pulse-glow {
-      0%,100% { box-shadow: 0 0 30px rgba(99,102,241,0.2), 0 0 0 8px rgba(99,102,241,0.04); }
-      50% { box-shadow: 0 0 50px rgba(99,102,241,0.35), 0 0 0 12px rgba(99,102,241,0.07); }
+    /* top-edge grain texture */
+    .hero-overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
     }
-    @keyframes slowSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+
+    /* gold shimmer lines */
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
     }
-    .animate-spin-slow { animation: slowSpin 30s linear infinite; }
-    
-    /* Contact page specific styles */
-    .hero-contact {
-      background: linear-gradient(115deg, #f5f3ff 0%, #ffffff 100%);
-      padding: 120px 2rem 60px;
-      text-align: center;
+    .hero-lines::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,172,80,0.18);
+      animation: pulseRing 5s ease-in-out infinite;
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -80px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,172,80,0.12);
+      animation: pulseRing 6s ease-in-out infinite 1.5s;
+    }
+    @keyframes pulseRing {
+      0%,100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.06); opacity: 1; }
+    }
+
+    /* floating glyphs */
+    .glyph {
+      position: absolute;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: rgba(212,172,80,0.13);
+      pointer-events: none;
+      user-select: none;
+      animation: floatG 9s ease-in-out infinite;
+    }
+    @keyframes floatG {
+      0%,100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-18px) rotate(4deg); }
+    }
+
+    /* gold divider bar */
+    .gold-rule {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      margin-bottom: 1.4rem;
+    }
+    .gold-rule span { display: block; height: 1px; width: 48px; background: linear-gradient(to right, transparent, #d4ac50); }
+    .gold-rule span:last-child { background: linear-gradient(to left, transparent, #d4ac50); }
+    .gold-rule .diamond { width: 6px; height: 6px; border: 1px solid #d4ac50; transform: rotate(45deg); flex-shrink: 0; }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #d4ac50;
+      margin-bottom: 1rem;
     }
     .hero-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 1.3rem;
+      letter-spacing: -0.01em;
+    }
+    .hero-title em { color: #d4ac50; font-style: italic; }
+    .hero-desc { color: rgba(255,255,255,0.58); font-size: 0.95rem; line-height: 1.75; max-width: 480px; margin: 0 auto 2rem; }
+
+    /* pill tags below desc */
+    .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid rgba(212,172,80,0.35);
+      color: rgba(212,172,80,0.85);
+      padding: 5px 14px;
+      border-radius: 40px;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      background: rgba(212,172,80,0.06);
+    }
+
+    /* bottom wave */
+    .hero-wave { position: absolute; bottom: -1px; left: 0; right: 0; pointer-events: none; }
+
+    /* ══════════════════════════════════
+       CONTACT BODY
+    ══════════════════════════════════ */
+    .contact-body {
+      background: #f9f7ff;
+      padding: 72px 0 88px;
+    }
+
+    /* section eyebrow */
+    .eyebrow-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase; color: #4338ca;
+      margin-bottom: 0.8rem;
+    }
+    .eyebrow-row::before { content: ''; display: block; width: 22px; height: 1.5px; background: #6366f1; }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
       font-weight: 600;
       color: #0f0c29;
-      margin-bottom: 1rem;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
     }
-    .hero-title span { color: #4338ca; font-style: italic; }
-    .hero-desc { max-width: 600px; margin: 0 auto; color: #6b7280; }
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #4338ca;
-      margin-bottom: 1rem;
-    }
-    .section-eyebrow::before { content: ''; display: block; width: 20px; height: 1.5px; background: #4338ca; }
-    
-    .contact-grid {
+    .section-title em { color: #4338ca; font-style: italic; }
+
+    /* ── GRID ── */
+    .c-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-top: 2rem;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 28px;
+      align-items: start;
     }
-    @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 2rem; } }
-    
-    .contact-info {
-      background: white;
+    @media(max-width:860px){ .c-grid { grid-template-columns: 1fr; } }
+
+    /* ── INFO PANEL ── */
+    .info-panel {
       border-radius: 28px;
-      padding: 2rem;
-      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      border: 1px solid #e8e4f8;
+      box-shadow: 0 4px 40px rgba(67,56,202,0.07);
     }
+    .info-head {
+      background: linear-gradient(135deg, #0f0c29 0%, #231d5e 60%, #1e1560 100%);
+      padding: 32px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* gold corner ornament */
+    .info-head::before {
+      content: '✦';
+      position: absolute; top: 16px; right: 22px;
+      font-size: 3.5rem; color: rgba(212,172,80,0.15);
+      pointer-events: none;
+    }
+    .info-head::after {
+      content: '';
+      position: absolute; bottom: -30px; left: -30px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,172,80,0.12);
+    }
+    .info-head-tag {
+      font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: #d4ac50; margin-bottom: 8px;
+    }
+    .info-head h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.7rem; font-weight: 600; color: #fff; margin-bottom: 4px;
+    }
+    .info-head p { font-size: 0.8rem; color: rgba(255,255,255,0.45); }
+
+    .info-body { background: #fff; padding: 24px 28px 28px; }
+
     .info-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.8rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .info-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .info-icon {
-      width: 48px;
-      height: 48px;
-      background: #eef2ff;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: #4338ca;
-      flex-shrink: 0;
-    }
-    .info-content h4 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #0f0c29;
-      margin-bottom: 0.25rem;
-    }
-    .info-content p, .info-content a {
-      color: #6b7280;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .info-content a:hover { color: #4338ca; }
-    .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
-    .social-link {
-      width: 40px;
-      height: 40px;
-      background: #eef2ff;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #4338ca;
-      font-size: 1.2rem;
-      transition: all 0.2s;
-    }
-    .social-link:hover { background: #4338ca; color: white; transform: translateY(-2px); }
-    .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
-    .btn-call {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: #1d4ed8;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid #f0ecfc;
       transition: background 0.2s;
     }
-    .btn-call:hover { background: #1e40af; }
-    .btn-wa {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: #059669;
-      color: white;
-      padding: 0.7rem 1.5rem;
-      border-radius: 40px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
+    .info-item:last-of-type { border-bottom: none; }
+    .i-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: #f0eeff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: #4338ca; flex-shrink: 0;
+      transition: background 0.25s, color 0.25s;
+    }
+    .info-item:hover .i-icon { background: #4338ca; color: #fff; }
+    .i-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #9ca3af; margin-bottom: 3px;
+    }
+    .i-val { font-size: 0.9rem; color: #1a1548; }
+    .i-val a { color: #1a1548; text-decoration: none; transition: color 0.2s; }
+    .i-val a:hover { color: #4338ca; }
+
+    /* social */
+    .soc-row { display: flex; gap: 9px; padding-top: 18px; border-top: 1px solid #f0ecfc; margin-top: 4px; }
+    .soc-a {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: #f0eeff; border: 1px solid #e0dcf8;
+      display: flex; align-items: center; justify-content: center;
+      color: #4338ca; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .soc-a:hover { background: #4338ca; color: #fff; transform: translateY(-2px); }
+
+    /* action btns */
+    .act-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .btn-ph {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #0f0c29; color: #fff;
+      padding: 0.65rem 1.3rem; border-radius: 40px;
+      font-size: 0.8rem; font-weight: 500; text-decoration: none;
       transition: background 0.2s;
     }
-    .btn-wa:hover { background: #047857; }
-    
-    .contact-form {
-      background: white;
+    .btn-ph:hover { background: #4338ca; }
+    .btn-wap {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #059669; color: #fff;
+      padding: 0.65rem 1.3rem; border-radius: 40px;
+      font-size: 0.8rem; font-weight: 500; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-wap:hover { background: #10b981; }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: #fff;
       border-radius: 28px;
-      padding: 2rem;
-      border: 1px solid #e5e7eb;
+      border: 1px solid #e8e4f8;
+      box-shadow: 0 4px 40px rgba(67,56,202,0.07);
+      overflow: hidden;
     }
-    .contact-form h3 {
+   .form-head {
+  background: linear-gradient(135deg, #231d5e 0%, #4338ca 60%, #6366f1 100%);
+  padding: 26px 32px;
+  position: relative; overflow: hidden;
+}
+    .form-head::after {
+      content: '☽';
+      position: absolute; right: 20px; top: 10px;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #0f0c29;
-      margin-bottom: 0.5rem;
+      font-size: 4rem; color: rgba(255,255,255,0.1);
     }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-head-tag {
+      font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); margin-bottom: 6px;
+    }
+    .form-head h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.65rem; font-weight: 600; color: #fff; margin-bottom: 2px;
+    }
+    .form-head p { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+
+    .form-body { padding: 28px 32px 32px; }
+
+    .fg { margin-bottom: 14px; }
+    .fg label {
+      display: block; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #6b7280; margin-bottom: 6px;
+    }
+    .fg input, .fg select, .fg textarea {
       width: 100%;
-      padding: 0.9rem 1rem;
-      border: 1px solid #e5e7eb;
+      padding: 0.82rem 1rem;
+      border: 1.5px solid #e5e7eb;
       border-radius: 14px;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.85rem;
-      transition: border-color 0.2s;
-      background: #fafafa;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      font-size: 0.87rem;
+      color: #1a1548;
+      background: #faf9ff;
+      transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
+      appearance: none;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
       border-color: #4338ca;
+      box-shadow: 0 0 0 3px rgba(67,56,202,0.08);
+      background: #fff;
     }
-    .form-group textarea { resize: vertical; min-height: 100px; }
-    .submit-btn {
-      background: #4338ca;
-      color: white;
-      border: none;
-      padding: 0.9rem 1.8rem;
-      border-radius: 40px;
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
+    .fg textarea { resize: vertical; min-height: 110px; }
+
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width:520px){ .f-row { grid-template-columns: 1fr; } }
+
+    .btn-submit {
       width: 100%;
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+      color: #fff; border: none;
+      padding: 0.95rem 1.8rem; border-radius: 40px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: opacity 0.2s, transform 0.2s;
+      letter-spacing: 0.02em;
     }
-    .submit-btn:hover { background: #3730a3; }
-    .form-note { font-size: 0.7rem; color: #6b7280; text-align: center; margin-top: 1rem; }
-    
-    .hours-banner {
-      background: linear-gradient(135deg, #fef3c7 0%, #eef2ff 100%);
+    .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .form-note { font-size: 0.68rem; color: #9ca3af; text-align: center; margin-top: 10px; }
+
+    /* ── HOURS ── */
+    .hours-wrap {
+      margin-top: 44px;
+      background: linear-gradient(135deg, #0f0c29 0%, #231d5e 100%);
       border-radius: 28px;
-      padding: 2rem;
-      margin-top: 3rem;
-      text-align: center;
-      border: 1px solid rgba(79, 70, 229, 0.15);
+      padding: 36px 40px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative; overflow: hidden;
     }
-    .hours-banner h3 {
+    @media(max-width:680px){ .hours-wrap { grid-template-columns: 1fr; gap: 24px; padding: 28px 24px; } }
+    .hours-wrap::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 260px; height: 260px; border-radius: 50%;
+      border: 1px solid rgba(212,172,80,0.15);
+    }
+    .hours-wrap::after {
+      content: '✦';
+      position: absolute; bottom: 14px; right: 28px;
+      font-size: 5rem; color: rgba(212,172,80,0.07);
+      pointer-events: none;
+    }
+    .hours-left { flex-shrink: 0; }
+    .hours-left .ic { font-size: 2.4rem; margin-bottom: 8px; }
+    .hours-left h3 {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      color: #0f0c29;
-      margin-bottom: 0.5rem;
+      font-size: 1.5rem; font-weight: 600; color: #fff; margin-bottom: 4px;
     }
-    .hours-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1rem; }
-    .hours-item { text-align: center; }
-    .hours-item .day { font-weight: 600; color: #4338ca; }
-    .hours-item .time { font-size: 0.85rem; color: #6b7280; }
+    .hours-left p { font-size: 0.78rem; color: rgba(255,255,255,0.38); max-width: 200px; line-height: 1.6; }
+    .hours-items { display: flex; flex-wrap: wrap; gap: 14px; }
+    .h-item {
+      flex: 1; min-width: 150px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,172,80,0.2);
+      border-radius: 16px; padding: 18px 16px; text-align: center;
+    }
+    .h-item .day {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #d4ac50; margin-bottom: 6px;
+    }
+    .h-item .time { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+
+    /* ── TRUST STRIP ── */
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 18px;
+      margin-top: 44px;
+    }
+    @media(max-width:640px){ .trust-grid { grid-template-columns: 1fr; } }
+    .t-card {
+      background: #fff;
+      border: 1px solid #e8e4f8;
+      border-radius: 20px; padding: 24px 20px; text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .t-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(67,56,202,0.1); }
+    .t-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      background: linear-gradient(135deg, #f0eeff 0%, #e0dcf8 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: #4338ca; margin: 0 auto 14px;
+    }
+    .t-card h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem; font-weight: 600; color: #0f0c29; margin-bottom: 5px;
+    }
+    .t-card p { font-size: 0.78rem; color: #6b7280; line-height: 1.65; }
+
+    /* ══════════════════════════════════
+       FLOATING BUTTONS
+    ══════════════════════════════════ */
+    .fab-wa { position: fixed; bottom: 24px; left: 24px; z-index: 300; }
+    .fab-wa a {
+      position: relative; width: 58px; height: 58px; border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; font-size: 1.55rem;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(34,197,94,0.4);
+      transition: transform 0.2s;
+    }
+    .fab-wa a:hover { transform: scale(1.1); }
+    .fab-ping {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: #22c55e;
+      animation: waping 2s ease-out infinite;
+      z-index: -1;
+    }
+    @keyframes waping { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(1.85);opacity:0} }
+
+    #bttBtn {
+      position: fixed; bottom: 26px; right: 26px; z-index: 300;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #0f0c29; color: #d4ac50;
+      border: 1px solid rgba(212,172,80,0.4);
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(15,12,41,0.3);
+    }
+    #bttBtn.show { opacity:1; pointer-events:auto; }
+    #bttBtn:hover { transform: translateY(-2px); }
+    /* Force dropdown to open downward */
+select {
+  transform: translateY(0) !important;
+}
+select:focus option:first-of-type {
+  margin-top: 0;
+}
+    
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
 
-<!-- ===== NAVIGATION (EXACTLY AS INDEX PAGE) ===== -->
+<!-- ═══════════ NAVIGATION — ORIGINAL ═══════════ -->
 <nav class="sticky top-0 z-50 glass border-b border-slate-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-   <a href="index.html" class="flex items-center gap-3 shrink-0">
-  <img
-    src="/assets/images/logo.png"
-    alt="Astro Numerics Logo"
-    class="h-12 w-auto object-contain"
-  >
-  <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">
-    Astro Numerics
-  </span>
-</a>
+    <a href="index.html" class="flex items-center gap-3 shrink-0">
+      <img src="/assets/images/logo.png" alt="Astro Numerics Logo" class="h-12 w-auto object-contain">
+      <span class="font-display text-xl font-semibold text-violet-900 tracking-wide">Astro Numerics</span>
+    </a>
     <ul class="hidden md:flex items-center gap-6 text-sm font-body font-medium text-slate-600">
       <li><a href="index.html" class="hover:text-violet transition-colors">Home</a></li>
       <li><a href="about.html" class="hover:text-violet transition-colors">About</a></li>
       <li><a href="services.html" class="hover:text-violet transition-colors">Services</a></li>
       <li><a href="products.html" class="hover:text-violet transition-colors">Products</a></li>
       <li><a href="courses.html" class="hover:text-violet transition-colors">Courses</a></li>
+      <li><a href="gallery.html" class="hover:text-violet transition-colors">Gallery</a></li>
       <li><a href="contact.html" class="hover:text-violet transition-colors text-violet-600 border-b border-violet-300">Contact</a></li>
     </ul>
     <div class="hidden md:flex items-center">
@@ -324,6 +526,7 @@
     <a href="services.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Services</a>
     <a href="products.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Products</a>
     <a href="courses.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Courses</a>
+    <a href="gallery.html" class="py-3 border-b border-slate-100 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Gallery</a>
     <a href="contact.html" class="py-3 text-sm text-slate-700 hover:text-violet font-medium transition-colors">Contact</a>
     <a href="https://wa.me/919657313963" target="_blank"
       class="mt-5 flex items-center justify-center gap-2 bg-jade text-white py-3 rounded-xl text-sm font-medium">
@@ -333,202 +536,313 @@
 </div>
 
 <main>
-  <!-- Hero Section -->
-  <div class="hero-contact">
-    <div class="section-eyebrow" style="justify-content: center;">Reach out for guidance</div>
-    <h1 class="hero-title">Let's <span>Connect</span></h1>
-    <p class="hero-desc">Have questions about our services or ready to begin your spiritual journey? We're here to help with clarity, compassion, and confidentiality.</p>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero-wrap" style="background-image: url('/assets/images/bg_c.jpg'); background-size: cover; background-position: center 40%; background-repeat: no-repeat;">
+  <div class="hero-overlay"></div>
+  <div class="hero-lines"></div>
+
+  <!-- floating glyphs -->
+  <span class="glyph" style="font-size:7rem;top:8%;left:3%;animation-delay:0s;">☽</span>
+  <span class="glyph" style="font-size:5rem;top:60%;right:5%;animation-delay:-3s;">✦</span>
+  <span class="glyph" style="font-size:4rem;bottom:10%;left:22%;animation-delay:-5.5s;">♃</span>
+  <span class="glyph" style="font-size:3rem;top:18%;right:18%;animation-delay:-2s;">⊛</span>
+
+  <div class="relative z-10 text-center px-6 py-20 max-w-2xl mx-auto">
+    <div class="gold-rule">
+      <span></span><div class="diamond"></div><span></span>
+    </div>
+    <p class="hero-eyebrow">Reach Out · Begin Your Journey</p>
+    <h1 class="hero-title">Let's <em>Connect</em></h1>
+    <p class="hero-desc">Have questions or ready to begin your spiritual journey? We're here with clarity, compassion, and full confidentiality.</p>
+    <div class="hero-tags">
+      <span class="hero-tag"><i class="fas fa-map-marker-alt" style="font-size:0.7rem"></i> Pune, India</span>
+      <span class="hero-tag"><i class="fab fa-whatsapp" style="font-size:0.7rem"></i> Instant WhatsApp Response</span>
+      <span class="hero-tag"><i class="fas fa-video" style="font-size:0.7rem"></i> Online & In-person</span>
+    </div>
   </div>
 
-  <!-- Contact Section -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-    <div class="contact-grid">
-      <!-- Left Column: Contact Info -->
-      <div class="contact-info" id="contactInfo">
-        <div class="info-item">
-          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-          <div class="info-content">
-            <h4>Visit Our Space</h4>
-            <p>Sunnandan App, Jadhav Nagar, Vadgaon BK, Sinhgad Road, Pune 411041</p>
+  <!-- wave bottom -->
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;">
+      <path d="M0,40 C480,80 960,0 1440,40 L1440,60 L0,60 Z" fill="#f9f7ff"/>
+    </svg>
+  </div>
+</section>
+
+  <!-- ═══════════ CONTACT BODY ═══════════ -->
+  <div class="contact-body">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <!-- Section heading -->
+      <div class="text-center mb-12 reveal">
+        <div class="eyebrow-row" style="justify-content:center;">Sacred Connection</div>
+        <h2 class="section-title">We're <em>Here for You</em></h2>
+        <p class="text-slate-400 text-sm mt-1 max-w-md mx-auto">Choose how you'd like to reach us — we respond to every soul promptly.</p>
+      </div>
+
+      <!-- Grid -->
+      <div class="c-grid">
+
+        <!-- INFO PANEL -->
+        <div class="info-panel reveal d1">
+          <div class="info-head">
+            <div class="info-head-tag">Sacred Space</div>
+            <h3>Contact Details</h3>
+            <p>We look forward to hearing from you</p>
+          </div>
+          <div class="info-body">
+            <div class="info-item">
+              <div class="i-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="i-label">Visit Our Space</div>
+                <div class="i-val">Sunnandan App, Jadhav Nagar, Vadgaon BK,<br>Sinhgad Road, Pune 411041</div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="i-icon"><i class="fas fa-phone-alt"></i></div>
+              <div>
+                <div class="i-label">Call Us</div>
+                <div class="i-val"><a href="tel:+919657313963">+91 96573 13963</a></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="i-icon"><i class="fab fa-whatsapp"></i></div>
+              <div>
+                <div class="i-label">WhatsApp</div>
+                <div class="i-val"><a href="https://wa.me/919657313963" target="_blank">+91 96573 13963</a></div>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="i-icon"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="i-label">Email</div>
+                <div class="i-val"><a href="mailto:connect@astronumerics.com">connect@astronumerics.com</a></div>
+              </div>
+            </div>
+
+            <div class="soc-row">
+              <a href="#" class="soc-a" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="soc-a" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="soc-a" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="https://wa.me/919657313963" class="soc-a" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="act-row">
+              <a href="tel:+919657313963" class="btn-ph"><i class="fas fa-phone"></i> Call Now</a>
+              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." target="_blank" class="btn-wap"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
+            </div>
           </div>
         </div>
-        <div class="info-item">
-          <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-          <div class="info-content">
-            <h4>Call Us</h4>
-            <a href="tel:+919657313963">+91 96573 13963</a>
+
+        <!-- FORM CARD -->
+        <div class="form-card reveal d2">
+          <div class="form-head">
+  <div class="form-head-tag">Your Inquiry</div>
+  <h3>Send a Message</h3>
+  <p>We'll respond within 24 hours via WhatsApp</p>
+</div>
+          <div class="form-body">
+            <form id="inquiryForm">
+              <div class="f-row">
+                <div class="fg">
+                  <label>Full Name</label>
+                  <input type="text" id="fullName" placeholder="Your name" required>
+                </div>
+                <div class="fg">
+                  <label>Phone Number</label>
+                  <input type="tel" id="phoneNumber" placeholder="+91 00000 00000" required>
+                </div>
+              </div>
+              <div class="fg">
+                <label>Service of Interest</label>
+                <div class="custom-dropdown" style="position: relative;">
+  <div class="dropdown-trigger" style="
+    width: 100%;
+    padding: 0.82rem 1rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 14px;
+    background: #faf9ff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  ">
+    <span id="selectedService">Select a service (optional)</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div class="dropdown-list" style="
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    margin-top: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  ">
+    <div class="dropdown-option" data-value="" style="padding: 10px 15px; cursor: pointer; hover:background:#f5f3ff;">Select a service (optional)</div>
+    <div class="dropdown-option" data-value="Tarot Reading" style="padding: 10px 15px; cursor: pointer;">🔮 Tarot Reading</div>
+    <div class="dropdown-option" data-value="Numerology Consultation" style="padding: 10px 15px; cursor: pointer;">🔢 Numerology Consultation</div>
+    <div class="dropdown-option" data-value="Name Numerology" style="padding: 10px 15px; cursor: pointer;">📝 Name Numerology</div>
+    <div class="dropdown-option" data-value="Mobile Number Numerology" style="padding: 10px 15px; cursor: pointer;">📱 Mobile Number Numerology</div>
+    <div class="dropdown-option" data-value="Graphology Analysis" style="padding: 10px 15px; cursor: pointer;">✍️ Graphology Analysis</div>
+    <div class="dropdown-option" data-value="Vastu Consultation" style="padding: 10px 15px; cursor: pointer;">🏠 Vastu Consultation</div>
+    <div class="dropdown-option" data-value="Astrology Consultation" style="padding: 10px 15px; cursor: pointer;">⭐ Astrology Consultation</div>
+    <div class="dropdown-option" data-value="Crystal Healing" style="padding: 10px 15px; cursor: pointer;">💎 Crystal Healing</div>
+    <div class="dropdown-option" data-value="Rudraksha Guidance" style="padding: 10px 15px; cursor: pointer;">🕉️ Rudraksha Guidance</div>
+    <div class="dropdown-option" data-value="Personal Spiritual Guidance" style="padding: 10px 15px; cursor: pointer;">🧘 Personal Spiritual Guidance</div>
+    <div class="dropdown-option" data-value="Product Enquiry" style="padding: 10px 15px; cursor: pointer;">🛍️ Product Enquiry</div>
+    <div class="dropdown-option" data-value="Course Enquiry" style="padding: 10px 15px; cursor: pointer;">📚 Course Enquiry</div>
+  </div>
+  <input type="hidden" id="serviceInterest" value="">
+</div>
+
+<script>
+  // Custom dropdown functionality
+  const trigger = document.querySelector('.dropdown-trigger');
+  const list = document.querySelector('.dropdown-list');
+  const options = document.querySelectorAll('.dropdown-option');
+  const hiddenInput = document.getElementById('serviceInterest');
+  const selectedSpan = document.getElementById('selectedService');
+  
+  trigger.addEventListener('click', () => {
+    list.style.display = list.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const value = opt.getAttribute('data-value');
+      const text = opt.innerText;
+      hiddenInput.value = value;
+      selectedSpan.innerText = text;
+      list.style.display = 'none';
+    });
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!trigger.contains(e.target) && !list.contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+</script>
+              </div>
+              <div class="fg">
+                <label>Your Message</label>
+                <textarea id="message" placeholder="Tell us what guidance you're seeking..." required></textarea>
+              </div>
+              <button type="submit" class="btn-submit">
+                <i class="fab fa-whatsapp"></i> Send via WhatsApp
+              </button>
+              <p class="form-note">Your message goes directly to our WhatsApp. We respect your privacy.</p>
+            </form>
           </div>
         </div>
-        <div class="info-item">
-          <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
-          <div class="info-content">
-            <h4>WhatsApp</h4>
-            <a href="https://wa.me/919657313963" target="_blank">+91 96573 13963</a>
+      </div><!-- /grid -->
+
+      <!-- HOURS -->
+      <div class="hours-wrap reveal" style="margin-top:44px;">
+        <div class="hours-left">
+          <div class="ic">🕐</div>
+          <h3>Consultation Hours</h3>
+          <p>Available for in-person, call, chat & video sessions</p>
+        </div>
+        <div class="hours-items">
+          <div class="h-item">
+            <div class="day">Mon – Sat</div>
+            <div class="time">10:00 AM – 7:00 PM IST</div>
           </div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon"><i class="fas fa-envelope"></i></div>
-          <div class="info-content">
-            <h4>Email</h4>
-            <a href="mailto:connect@astronumerics.com">connect@astronumerics.com</a>
+          <div class="h-item">
+            <div class="day">Sunday</div>
+            <div class="time">Flexible<br>Prior bookings only</div>
           </div>
-        </div>
-        
-        <div class="social-links">
-          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-        </div>
-        
-        <div class="action-buttons">
-          <a href="tel:+919657313963" class="btn-call"><i class="fas fa-phone"></i> Call Now</a>
-          <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
+          <div class="h-item">
+            <div class="day">Mode</div>
+            <div class="time">Call · Chat · Video<br>In-person at Pune</div>
+          </div>
         </div>
       </div>
 
-      <!-- Right Column: Contact Form -->
-      <div class="contact-form" id="contactForm">
-        <h3>Send a Message</h3>
-        <p style="color: #6b7280; font-size: 0.85rem; margin-bottom: 1.5rem;">We'll respond within 24 hours via WhatsApp.</p>
-        
-        <form id="inquiryForm">
-          <div class="form-group">
-            <input type="text" id="fullName" placeholder="Full Name" required>
-          </div>
-          <div class="form-group">
-            <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
-          </div>
-          <div class="form-group">
-            <select id="serviceInterest">
-              <option value="">Select Service of Interest (Optional)</option>
-              <option value="Tarot Reading">Tarot Reading</option>
-              <option value="Numerology Consultation">Numerology Consultation</option>
-              <option value="Name Numerology">Name Numerology</option>
-              <option value="Mobile Number Numerology">Mobile Number Numerology</option>
-              <option value="Graphology Analysis">Graphology Analysis</option>
-              <option value="Vastu Consultation">Vastu Consultation</option>
-              <option value="Astrology Consultation">Astrology Consultation</option>
-              <option value="Crystal Healing">Crystal Healing</option>
-              <option value="Rudraksha Guidance">Rudraksha Guidance</option>
-              <option value="Personal Spiritual Guidance">Personal Spiritual Guidance</option>
-              <option value="Product Enquiry">Product Enquiry</option>
-              <option value="Course Enquiry">Course Enquiry</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <textarea id="message" placeholder="Your message or question..." required></textarea>
-          </div>
-          <button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
-          <p class="form-note">Your message will be sent directly to our WhatsApp. We respect your privacy.</p>
-        </form>
+      <!-- TRUST STRIP -->
+      <div class="trust-grid">
+        <div class="t-card reveal d1">
+          <div class="t-icon"><i class="fas fa-lock"></i></div>
+          <h4>Confidential</h4>
+          <p>Your readings and personal details are always kept strictly private.</p>
+        </div>
+        <div class="t-card reveal d2">
+          <div class="t-icon"><i class="fas fa-star"></i></div>
+          <h4>Expert Guidance</h4>
+          <p>Years of experience in Vedic astrology, numerology and spiritual sciences.</p>
+        </div>
+        <div class="t-card reveal d3">
+          <div class="t-icon"><i class="fas fa-heart"></i></div>
+          <h4>Compassionate Care</h4>
+          <p>Every consultation approached with empathy, clarity and genuine care.</p>
+        </div>
       </div>
-    </div>
 
-    <!-- Working Hours Banner -->
-    <div class="hours-banner" id="hoursBanner">
-      <i class="fas fa-clock" style="font-size: 2rem; color: #d97706; margin-bottom: 0.5rem;"></i>
-      <h3>Consultation Hours</h3>
-      <div class="hours-grid">
-        <div class="hours-item">
-          <div class="day">Monday - Saturday</div>
-          <div class="time">10:00 AM – 7:00 PM (IST)</div>
-        </div>
-        <div class="hours-item">
-          <div class="day">Sunday</div>
-          <div class="time">Flexible / Prior bookings only</div>
-        </div>
-        <div class="hours-item">
-          <div class="day">Online & Offline</div>
-          <div class="time">Call, Chat, Video or In-person at Pune</div>
-        </div>
-      </div>
     </div>
   </div>
 </main>
 
-<!-- ═══════════════════════════════════════════════ FOOTER -->
+<!-- ═══════════ FOOTER — ORIGINAL ═══════════ -->
 <footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
-  <!-- Decorative Elements -->
   <div class="absolute inset-0 opacity-20 pointer-events-none">
     <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
     <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
   </div>
-  
   <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
-    <!-- Main Footer Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
-      
-      <!-- Brand Column -->
       <div class="space-y-5">
         <div class="flex items-center gap-3">
-  <img
-    src="/assets/images/logo.png"
-    alt="Astro Numerics Logo"
-    class="h-14 w-auto object-contain"
-  >
-  <div>
-    <h3 class="font-display text-xl font-semibold tracking-tight text-white">
-      Astro Numerics
-    </h3>
-    <p class="text-xs text-white/40 tracking-widest uppercase">
-      Spiritual Guidance
-    </p>
-  </div>
-</div>
+          <img src="/assets/images/logo.png" alt="Astro Numerics Logo" class="h-14 w-auto object-contain">
+          <div>
+            <h3 class="font-display text-xl font-semibold tracking-tight text-white">Astro Numerics</h3>
+            <p class="text-xs text-white/40 tracking-widest uppercase">Spiritual Guidance</p>
+          </div>
+        </div>
         <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
         <div class="flex gap-3 pt-2">
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-instagram text-sm"></i>
-          </a>
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-facebook-f text-sm"></i>
-          </a>
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-youtube text-sm"></i>
-          </a>
-          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-whatsapp text-sm"></i>
-          </a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-instagram text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-sm"></i></a>
+          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300"><i class="fab fa-youtube text-sm"></i></a>
+          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300"><i class="fab fa-whatsapp text-sm"></i></a>
         </div>
       </div>
-      
-      <!-- Navigate Column with Icons -->
       <div>
         <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-violet-400">explore</span>
-          <span>Navigate</span>
+          <span class="material-symbols-outlined text-base text-violet-400">explore</span><span>Navigate</span>
         </h4>
         <ul class="space-y-3">
-          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Home</span></a></li>
-          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">About</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Services</span></a></li>
-          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Products</span></a></li>
-          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Courses</span></a></li>
-          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Contact</span></a></li>
+          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">Home</span></a></li>
+          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">About</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">Services</span></a></li>
+          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">Products</span></a></li>
+          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">Courses</span></a></li>
+          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">chevron_right</span><span class="text-sm">Contact</span></a></li>
         </ul>
       </div>
-      
-      <!-- Offerings Column with Icons -->
       <div>
         <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-amber-400">spa</span>
-          <span>Offerings</span>
+          <span class="material-symbols-outlined text-base text-amber-400">spa</span><span>Offerings</span>
         </h4>
         <ul class="space-y-3">
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">123</span><span class="text-sm">Numerology</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">stars</span><span class="text-sm">Birth Chart</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">home</span><span class="text-sm">Vastu</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">history</span><span class="text-sm">Past Life</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">123</span><span class="text-sm">Numerology</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">stars</span><span class="text-sm">Birth Chart</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">home</span><span class="text-sm">Vastu</span></a></li>
+          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100">history</span><span class="text-sm">Past Life</span></a></li>
         </ul>
       </div>
-      
-      <!-- Contact Column with Enhanced Icons -->
       <div>
         <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-emerald-400">call</span>
-          <span>Get in Touch</span>
+          <span class="material-symbols-outlined text-base text-emerald-400">call</span><span>Get in Touch</span>
         </h4>
         <div class="space-y-4">
           <a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
@@ -550,8 +864,6 @@
         </div>
       </div>
     </div>
-    
-    <!-- Bottom Bar -->
     <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8">
       <div class="flex items-center gap-2 text-white/30 text-xs">
         <span class="material-symbols-outlined text-sm">copyright</span>
@@ -570,52 +882,20 @@
   </div>
 </footer>
 
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank" class="fixed bottom-6 left-6 z-50 group">
-  <div class="relative">
-    <div class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-75"></div>
-    <div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-500/30 hover:scale-110 transition-transform duration-300">
-      <i class="fab fa-whatsapp text-white text-2xl md:text-3xl"></i>
-    </div>
-    <div class="absolute left-full ml-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Chat with us 💬</div>
-    </div>
-  </div>
-</a>
+<!-- Floating WhatsApp -->
+<div class="fab-wa">
+  <div class="fab-ping"></div>
+  <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
 
-<!-- Back to Top Button -->
-<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
-  <div class="relative">
-    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
-    <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
-    </div>
-  </div>
+<!-- Back to Top -->
+<button id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fas fa-arrow-up"></i>
 </button>
 
 <script>
-  // Back to Top Functionality
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  const backToTopBtn = document.getElementById('backToTopBtn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.style.opacity = '1';
-      backToTopBtn.style.visibility = 'visible';
-    } else {
-      backToTopBtn.style.opacity = '0';
-      backToTopBtn.style.visibility = 'hidden';
-    }
-  });
-
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
   // Mobile nav
   const hamb = document.getElementById('hambBtn');
   const drawer = document.getElementById('mob-drawer');
@@ -627,25 +907,46 @@
   close.addEventListener('click', shut);
   overlay.addEventListener('click', shut);
 
-  // Form submission - sends to WhatsApp
+  // Back to top
+  const btt = document.getElementById('bttBtn');
+  window.addEventListener('scroll', () => btt.classList.toggle('show', window.scrollY > 300));
+
+  // Scroll reveal
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 }).observe.bind(null);
+
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+  // Form → WhatsApp
   document.getElementById('inquiryForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
     const name = document.getElementById('fullName').value;
     const phone = document.getElementById('phoneNumber').value;
     const service = document.getElementById('serviceInterest').value;
     const message = document.getElementById('message').value;
-    
-    let whatsappMsg = `Hello Astro Numerics,%0A%0A*New Inquiry from Website*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A`;
-    
-    if (service) {
-      whatsappMsg += `*Service Interest:* ${encodeURIComponent(service)}%0A`;
-    }
-    
-    whatsappMsg += `*Message:* ${encodeURIComponent(message)}%0A%0APlease guide me further.`;
-    
-    window.open(`https://wa.me/919657313963?text=${whatsappMsg}`, '_blank');
+    let msg = `Hello Astro Numerics,%0A%0A*New Inquiry from Website*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A`;
+    if (service) msg += `*Service Interest:* ${encodeURIComponent(service)}%0A`;
+    msg += `*Message:* ${encodeURIComponent(message)}%0A%0APlease guide me further.`;
+    window.open(`https://wa.me/919657313963?text=${msg}`, '_blank');
   });
+  // Force select dropdown to open downward
+document.querySelectorAll('select').forEach(select => {
+  select.addEventListener('mousedown', function(e) {
+    const rect = this.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    
+    if (spaceBelow < 150 && spaceAbove > spaceBelow) {
+      // Temporarily add margin to push dropdown down
+      this.style.transform = 'translateY(10px)';
+      setTimeout(() => { this.style.transform = ''; }, 200);
+    }
+  });
+});
 </script>
 </body>
 </html>
