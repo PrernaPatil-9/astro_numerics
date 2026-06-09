@@ -307,11 +307,11 @@
       box-shadow: 0 4px 40px rgba(67,56,202,0.07);
       overflow: hidden;
     }
-   .form-head {
-  background: linear-gradient(135deg, #231d5e 0%, #4338ca 60%, #6366f1 100%);
-  padding: 26px 32px;
-  position: relative; overflow: hidden;
-}
+    .form-head {
+      background: linear-gradient(135deg, #231d5e 0%, #4338ca 60%, #6366f1 100%);
+      padding: 26px 32px;
+      position: relative; overflow: hidden;
+    }
     .form-head::after {
       content: '☽';
       position: absolute; right: 20px; top: 10px;
@@ -347,7 +347,6 @@
       background: #faf9ff;
       transition: border-color 0.2s, box-shadow 0.2s;
       outline: none;
-      appearance: none;
     }
     .fg input:focus, .fg select:focus, .fg textarea:focus {
       border-color: #4338ca;
@@ -372,7 +371,32 @@
       letter-spacing: 0.02em;
     }
     .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
     .form-note { font-size: 0.68rem; color: #9ca3af; text-align: center; margin-top: 10px; }
+
+    /* Toast notification */
+    .toast-notify {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #059669;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      animation: slideInRight 0.3s ease;
+    }
+    .toast-notify.error { background: #dc2626; }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
 
     /* ── HOURS ── */
     .hours-wrap {
@@ -444,9 +468,6 @@
     }
     .t-card p { font-size: 0.78rem; color: #6b7280; line-height: 1.65; }
 
-    /* ══════════════════════════════════
-       FLOATING BUTTONS
-    ══════════════════════════════════ */
     .fab-wa { position: fixed; bottom: 24px; left: 24px; z-index: 300; }
     .fab-wa a {
       position: relative; width: 58px; height: 58px; border-radius: 50%;
@@ -465,33 +486,11 @@
       z-index: -1;
     }
     @keyframes waping { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(1.85);opacity:0} }
-
-    #bttBtn {
-      position: fixed; bottom: 26px; right: 26px; z-index: 300;
-      width: 46px; height: 46px; border-radius: 50%;
-      background: #0f0c29; color: #d4ac50;
-      border: 1px solid rgba(212,172,80,0.4);
-      font-size: 1rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s, transform 0.2s;
-      box-shadow: 0 4px 20px rgba(15,12,41,0.3);
-    }
-    #bttBtn.show { opacity:1; pointer-events:auto; }
-    #bttBtn:hover { transform: translateY(-2px); }
-    /* Force dropdown to open downward */
-select {
-  transform: translateY(0) !important;
-}
-select:focus option:first-of-type {
-  margin-top: 0;
-}
-    
   </style>
 </head>
 <body class="bg-slate-50 text-slate-700 overflow-x-hidden">
 
-<!-- ═══════════ NAVIGATION — ORIGINAL ═══════════ -->
+<!-- ===== NAVIGATION (original style preserved) ===== -->
 <nav class="sticky top-0 z-50 glass border-b border-slate-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3 shrink-0">
@@ -517,7 +516,6 @@ select:focus option:first-of-type {
   </div>
 </nav>
 
-<!-- Mobile drawer -->
 <div id="mob-overlay" class="hidden fixed inset-0 bg-midnight/40 z-40 backdrop-blur-sm"></div>
 <div id="mob-drawer" class="hidden fixed top-0 right-0 w-72 h-screen bg-white z-50 flex-col p-8 pt-16 border-l border-slate-200 shadow-2xl">
   <button id="mob-close" class="absolute top-4 right-4 text-slate-400 text-xl p-2"><i class="fas fa-times"></i></button>
@@ -537,475 +535,137 @@ select:focus option:first-of-type {
 </div>
 
 <main>
-
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero-wrap" style="background-image: url('/assets/images/bg_c.jpg'); background-size: cover; background-position: center 40%; background-repeat: no-repeat;">
-  <div class="hero-overlay"></div>
-  <div class="hero-lines"></div>
-
-  <!-- floating glyphs -->
-  <span class="glyph" style="font-size:7rem;top:8%;left:3%;animation-delay:0s;">☽</span>
-  <span class="glyph" style="font-size:5rem;top:60%;right:5%;animation-delay:-3s;">✦</span>
-  <span class="glyph" style="font-size:4rem;bottom:10%;left:22%;animation-delay:-5.5s;">♃</span>
-  <span class="glyph" style="font-size:3rem;top:18%;right:18%;animation-delay:-2s;">⊛</span>
-
-  <div class="relative z-10 text-center px-6 py-20 max-w-2xl mx-auto">
-    <div class="gold-rule">
-      <span></span><div class="diamond"></div><span></span>
+  <!-- Hero Section (luxury style from original) -->
+  <section class="hero-wrap" style="background-image: url('/assets/images/bg_c.jpg'); background-size: cover; background-position: center 40%; background-repeat: no-repeat;">
+    <div class="hero-overlay"></div>
+    <div class="hero-lines"></div>
+    <span class="glyph" style="font-size:7rem;top:8%;left:3%;">☽</span>
+    <span class="glyph" style="font-size:5rem;top:60%;right:5%;">✦</span>
+    <div class="relative z-10 text-center px-6 py-20 max-w-2xl mx-auto">
+      <div class="gold-rule"><span></span><div class="diamond"></div><span></span></div>
+      <p class="hero-eyebrow">Reach Out · Begin Your Journey</p>
+      <h1 class="hero-title">Let's <em>Connect</em></h1>
+      <p class="hero-desc">Have questions or ready to begin your spiritual journey? We're here with clarity, compassion, and full confidentiality.</p>
+      <div class="hero-tags">
+        <span class="hero-tag"><i class="fas fa-map-marker-alt"></i> Pune, India</span>
+        <span class="hero-tag"><i class="fab fa-whatsapp"></i> Instant WhatsApp Response</span>
+        <span class="hero-tag"><i class="fas fa-video"></i> Online & In-person</span>
+      </div>
     </div>
-    <p class="hero-eyebrow">Reach Out · Begin Your Journey</p>
-    <h1 class="hero-title">Let's <em>Connect</em></h1>
-    <p class="hero-desc">Have questions or ready to begin your spiritual journey? We're here with clarity, compassion, and full confidentiality.</p>
-    <div class="hero-tags">
-      <span class="hero-tag"><i class="fas fa-map-marker-alt" style="font-size:0.7rem"></i> Pune, India</span>
-      <span class="hero-tag"><i class="fab fa-whatsapp" style="font-size:0.7rem"></i> Instant WhatsApp Response</span>
-      <span class="hero-tag"><i class="fas fa-video" style="font-size:0.7rem"></i> Online & In-person</span>
-    </div>
-  </div>
+    <div class="hero-wave"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;"><path d="M0,40 C480,80 960,0 1440,40 L1440,60 L0,60 Z" fill="#f9f7ff"/></svg></div>
+  </section>
 
-  <!-- wave bottom -->
-  <div class="hero-wave">
-    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;">
-      <path d="M0,40 C480,80 960,0 1440,40 L1440,60 L0,60 Z" fill="#f9f7ff"/>
-    </svg>
-  </div>
-</section>
-
-  <!-- ═══════════ CONTACT BODY ═══════════ -->
+  <!-- Contact Body (original layout with backend integration) -->
   <div class="contact-body">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-
-      <!-- Section heading -->
       <div class="text-center mb-12 reveal">
         <div class="eyebrow-row" style="justify-content:center;">Sacred Connection</div>
         <h2 class="section-title">We're <em>Here for You</em></h2>
         <p class="text-slate-400 text-sm mt-1 max-w-md mx-auto">Choose how you'd like to reach us — we respond to every soul promptly.</p>
       </div>
 
-      <!-- Grid -->
       <div class="c-grid">
-
-        <!-- INFO PANEL -->
+        <!-- INFO PANEL (original rich design) -->
         <div class="info-panel reveal d1">
-          <div class="info-head">
-            <div class="info-head-tag">Sacred Space</div>
-            <h3>Contact Details</h3>
-            <p>We look forward to hearing from you</p>
-          </div>
+          <div class="info-head"><div class="info-head-tag">Sacred Space</div><h3>Contact Details</h3><p>We look forward to hearing from you</p></div>
           <div class="info-body">
-            <div class="info-item">
-              <div class="i-icon"><i class="fas fa-map-marker-alt"></i></div>
-              <div>
-                <div class="i-label">Visit Our Space</div>
-                <div class="i-val">Sunnandan App, Jadhav Nagar, Vadgaon BK,<br>Sinhgad Road, Pune 411041</div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="i-icon"><i class="fas fa-phone-alt"></i></div>
-              <div>
-                <div class="i-label">Call Us</div>
-                <div class="i-val"><a href="tel:+919657313963">+91 96573 13963</a></div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="i-icon"><i class="fab fa-whatsapp"></i></div>
-              <div>
-                <div class="i-label">WhatsApp</div>
-                <div class="i-val"><a href="https://wa.me/919657313963" target="_blank">+91 96573 13963</a></div>
-              </div>
-            </div>
-            <div class="info-item">
-              <div class="i-icon"><i class="fas fa-envelope"></i></div>
-              <div>
-                <div class="i-label">Email</div>
-                <div class="i-val"><a href="mailto:connect@astronumerics.com">connect@astronumerics.com</a></div>
-              </div>
-            </div>
-
-            <div class="soc-row">
-              <a href="#" class="soc-a" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="#" class="soc-a" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-              <a href="#" class="soc-a" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-              <a href="https://wa.me/919657313963" class="soc-a" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <div class="act-row">
-              <a href="tel:+919657313963" class="btn-ph"><i class="fas fa-phone"></i> Call Now</a>
-              <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." target="_blank" class="btn-wap"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a>
-            </div>
+            <div class="info-item"><div class="i-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="i-label">Visit Our Space</div><div class="i-val">Sunnandan App, Jadhav Nagar, Vadgaon BK,<br>Sinhgad Road, Pune 411041</div></div></div>
+            <div class="info-item"><div class="i-icon"><i class="fas fa-phone-alt"></i></div><div><div class="i-label">Call Us</div><div class="i-val"><a href="tel:+919657313963">+91 96573 13963</a></div></div></div>
+            <div class="info-item"><div class="i-icon"><i class="fab fa-whatsapp"></i></div><div><div class="i-label">WhatsApp</div><div class="i-val"><a href="https://wa.me/919657313963" target="_blank">+91 96573 13963</a></div></div></div>
+            <div class="info-item"><div class="i-icon"><i class="fas fa-envelope"></i></div><div><div class="i-label">Email</div><div class="i-val"><a href="mailto:connect@astronumerics.com">connect@astronumerics.com</a></div></div></div>
+            <div class="soc-row"><a href="#" class="soc-a"><i class="fab fa-instagram"></i></a><a href="#" class="soc-a"><i class="fab fa-facebook-f"></i></a><a href="#" class="soc-a"><i class="fab fa-youtube"></i></a><a href="https://wa.me/919657313963" class="soc-a"><i class="fab fa-whatsapp"></i></a></div>
+            <div class="act-row"><a href="tel:+919657313963" class="btn-ph"><i class="fas fa-phone"></i> Call Now</a><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20regarding%20your%20spiritual%20consultation%20services." target="_blank" class="btn-wap"><i class="fab fa-whatsapp"></i> WhatsApp Chat</a></div>
           </div>
         </div>
 
-        <!-- FORM CARD -->
+        <!-- FORM CARD (original design, backend integration preserved) -->
         <div class="form-card reveal d2">
-          <div class="form-head">
-  <div class="form-head-tag">Your Inquiry</div>
-  <h3>Send a Message</h3>
-  <p>We'll respond within 24 hours via WhatsApp</p>
-</div>
+          <div class="form-head"><div class="form-head-tag">Your Inquiry</div><h3>Send a Message</h3><p>We'll respond within 24 hours</p></div>
           <div class="form-body">
             <form id="inquiryForm">
-              <div class="f-row">
-                <div class="fg">
-                  <label>Full Name</label>
-                  <input type="text" id="fullName" placeholder="Your name" required>
-                </div>
-                <div class="fg">
-                  <label>Phone Number</label>
-                  <input type="tel" id="phoneNumber" placeholder="+91 00000 00000" required>
-                </div>
-              </div>
-              <div class="fg">
-                <label>Service of Interest</label>
-                <div class="custom-dropdown" style="position: relative;">
-  <div class="dropdown-trigger" style="
-    width: 100%;
-    padding: 0.82rem 1rem;
-    border: 1.5px solid #e5e7eb;
-    border-radius: 14px;
-    background: #faf9ff;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  ">
-    <span id="selectedService">Select a service (optional)</span>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-  <div class="dropdown-list" style="
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    margin-top: 5px;
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 1000;
-    display: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  ">
-    <div class="dropdown-option" data-value="" style="padding: 10px 15px; cursor: pointer; hover:background:#f5f3ff;">Select a service (optional)</div>
-    <div class="dropdown-option" data-value="Tarot Reading" style="padding: 10px 15px; cursor: pointer;">🔮 Tarot Reading</div>
-    <div class="dropdown-option" data-value="Numerology Consultation" style="padding: 10px 15px; cursor: pointer;">🔢 Numerology Consultation</div>
-    <div class="dropdown-option" data-value="Name Numerology" style="padding: 10px 15px; cursor: pointer;">📝 Name Numerology</div>
-    <div class="dropdown-option" data-value="Mobile Number Numerology" style="padding: 10px 15px; cursor: pointer;">📱 Mobile Number Numerology</div>
-    <div class="dropdown-option" data-value="Graphology Analysis" style="padding: 10px 15px; cursor: pointer;">✍️ Graphology Analysis</div>
-    <div class="dropdown-option" data-value="Vastu Consultation" style="padding: 10px 15px; cursor: pointer;">🏠 Vastu Consultation</div>
-    <div class="dropdown-option" data-value="Astrology Consultation" style="padding: 10px 15px; cursor: pointer;">⭐ Astrology Consultation</div>
-    <div class="dropdown-option" data-value="Crystal Healing" style="padding: 10px 15px; cursor: pointer;">💎 Crystal Healing</div>
-    <div class="dropdown-option" data-value="Rudraksha Guidance" style="padding: 10px 15px; cursor: pointer;">🕉️ Rudraksha Guidance</div>
-    <div class="dropdown-option" data-value="Personal Spiritual Guidance" style="padding: 10px 15px; cursor: pointer;">🧘 Personal Spiritual Guidance</div>
-    <div class="dropdown-option" data-value="Product Enquiry" style="padding: 10px 15px; cursor: pointer;">🛍️ Product Enquiry</div>
-    <div class="dropdown-option" data-value="Course Enquiry" style="padding: 10px 15px; cursor: pointer;">📚 Course Enquiry</div>
-  </div>
-  <input type="hidden" id="serviceInterest" value="">
-</div>
-
-<script>
-  // Custom dropdown functionality
-  const trigger = document.querySelector('.dropdown-trigger');
-  const list = document.querySelector('.dropdown-list');
-  const options = document.querySelectorAll('.dropdown-option');
-  const hiddenInput = document.getElementById('serviceInterest');
-  const selectedSpan = document.getElementById('selectedService');
-  
-  trigger.addEventListener('click', () => {
-    list.style.display = list.style.display === 'block' ? 'none' : 'block';
-  });
-  
-  options.forEach(opt => {
-    opt.addEventListener('click', () => {
-      const value = opt.getAttribute('data-value');
-      const text = opt.innerText;
-      hiddenInput.value = value;
-      selectedSpan.innerText = text;
-      list.style.display = 'none';
-    });
-  });
-  
-  document.addEventListener('click', (e) => {
-    if (!trigger.contains(e.target) && !list.contains(e.target)) {
-      list.style.display = 'none';
-    }
-  });
-</script>
-              </div>
-              <div class="fg">
-                <label>Your Message</label>
-                <textarea id="message" placeholder="Tell us what guidance you're seeking..." required></textarea>
-              </div>
-              <button type="submit" class="btn-submit">
-                <i class="fab fa-whatsapp"></i> Send via WhatsApp
-              </button>
+              <div class="f-row"><div class="fg"><label>Full Name</label><input type="text" id="fullName" placeholder="Your name" required></div><div class="fg"><label>Phone Number</label><input type="tel" id="phoneNumber" placeholder="+91 00000 00000" required></div></div>
+              <div class="fg"><label>Service of Interest</label><select id="serviceInterest"><option value="">Select a service (optional)</option><option value="Tarot Reading">🔮 Tarot Reading</option><option value="Numerology Consultation">🔢 Numerology Consultation</option><option value="Name Numerology">📝 Name Numerology</option><option value="Mobile Number Numerology">📱 Mobile Number Numerology</option><option value="Graphology Analysis">✍️ Graphology Analysis</option><option value="Vastu Consultation">🏠 Vastu Consultation</option><option value="Astrology Consultation">⭐ Astrology Consultation</option><option value="Crystal Healing">💎 Crystal Healing</option><option value="Rudraksha Guidance">🕉️ Rudraksha Guidance</option><option value="Personal Spiritual Guidance">🧘 Personal Spiritual Guidance</option><option value="Product Enquiry">🛍️ Product Enquiry</option><option value="Course Enquiry">📚 Course Enquiry</option></select></div>
+              <div class="fg"><label>Your Message</label><textarea id="message" placeholder="Tell us what guidance you're seeking..." required></textarea></div>
+              <button type="submit" id="submitBtn" class="btn-submit"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
               <p class="form-note">Your message goes directly to our WhatsApp. We respect your privacy.</p>
             </form>
           </div>
         </div>
-      </div><!-- /grid -->
-
-      <!-- HOURS -->
-      <div class="hours-wrap reveal" style="margin-top:44px;">
-        <div class="hours-left">
-          <div class="ic">🕐</div>
-          <h3>Consultation Hours</h3>
-          <p>Available for in-person, call, chat & video sessions</p>
-        </div>
-        <div class="hours-items">
-          <div class="h-item">
-            <div class="day">Mon – Sat</div>
-            <div class="time">10:00 AM – 7:00 PM IST</div>
-          </div>
-          <div class="h-item">
-            <div class="day">Sunday</div>
-            <div class="time">Flexible<br>Prior bookings only</div>
-          </div>
-          <div class="h-item">
-            <div class="day">Mode</div>
-            <div class="time">Call · Chat · Video<br>In-person at Pune</div>
-          </div>
-        </div>
       </div>
+
+      <!-- HOURS (luxury style) -->
+      <div class="hours-wrap reveal"><div class="hours-left"><div class="ic">🕐</div><h3>Consultation Hours</h3><p>Available for in-person, call, chat & video sessions</p></div><div class="hours-items"><div class="h-item"><div class="day">Mon – Sat</div><div class="time">10:00 AM – 7:00 PM IST</div></div><div class="h-item"><div class="day">Sunday</div><div class="time">Flexible<br>Prior bookings only</div></div><div class="h-item"><div class="day">Mode</div><div class="time">Call · Chat · Video<br>In-person at Pune</div></div></div></div>
 
       <!-- TRUST STRIP -->
-      <div class="trust-grid">
-        <div class="t-card reveal d1">
-          <div class="t-icon"><i class="fas fa-lock"></i></div>
-          <h4>Confidential</h4>
-          <p>Your readings and personal details are always kept strictly private.</p>
-        </div>
-        <div class="t-card reveal d2">
-          <div class="t-icon"><i class="fas fa-star"></i></div>
-          <h4>Expert Guidance</h4>
-          <p>Years of experience in Vedic astrology, numerology and spiritual sciences.</p>
-        </div>
-        <div class="t-card reveal d3">
-          <div class="t-icon"><i class="fas fa-heart"></i></div>
-          <h4>Compassionate Care</h4>
-          <p>Every consultation approached with empathy, clarity and genuine care.</p>
-        </div>
-      </div>
-
+      <div class="trust-grid"><div class="t-card reveal d1"><div class="t-icon"><i class="fas fa-lock"></i></div><h4>Confidential</h4><p>Your readings and personal details are always kept strictly private.</p></div><div class="t-card reveal d2"><div class="t-icon"><i class="fas fa-star"></i></div><h4>Expert Guidance</h4><p>Years of experience in Vedic astrology, numerology and spiritual sciences.</p></div><div class="t-card reveal d3"><div class="t-icon"><i class="fas fa-heart"></i></div><h4>Compassionate Care</h4><p>Every consultation approached with empathy, clarity and genuine care.</p></div></div>
     </div>
   </div>
 </main>
 
-<!-- ═══════════════════════════════════════════════ FOOTER -->
+<!-- FOOTER (original design) -->
 <footer class="bg-gradient-to-br from-[#0B0F1C] via-[#0F1322] to-[#0B0F1C] border-t border-white/10 relative overflow-hidden">
-  <!-- Decorative Elements -->
-  <div class="absolute inset-0 opacity-20 pointer-events-none">
-    <div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div>
-    <div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
-  </div>
-  
+  <div class="absolute inset-0 opacity-20 pointer-events-none"><div class="absolute top-0 -left-20 w-72 h-72 bg-violet-500/20 rounded-full blur-[80px]"></div><div class="absolute bottom-0 -right-20 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div></div>
   <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
-    <!-- Main Footer Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-12 border-b border-white/10">
-      
-      <!-- Brand Column -->
-      <div class="space-y-5">
-        <div class="flex items-center gap-3">
-  <img
-    src="/assets/images/logo.png"
-    alt="Astro Numerics Logo"
-    class="h-14 w-auto object-contain"
-  >
-  <div>
-    <h3 class="font-display text-xl font-semibold tracking-tight text-white">
-      Astro Numerics
-    </h3>
-    <p class="text-xs text-white/40 tracking-widest uppercase">
-      Spiritual Guidance
-    </p>
-  </div>
-</div>
-        <p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p>
-        <div class="flex gap-3 pt-2">
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-instagram text-sm"></i>
-          </a>
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-facebook-f text-sm"></i>
-          </a>
-          <a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:border-violet-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-youtube text-sm"></i>
-          </a>
-          <a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:border-emerald-500 hover:text-white transition-all duration-300">
-            <i class="fab fa-whatsapp text-sm"></i>
-          </a>
-        </div>
-      </div>
-      
-      <!-- Navigate Column with Icons -->
-      <div>
-        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-violet-400">explore</span>
-          <span>Navigate</span>
-        </h4>
-        <ul class="space-y-3">
-          <li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Home</span></a></li>
-          <li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">About</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Services</span></a></li>
-          <li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Products</span></a></li>
-          <li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Courses</span></a></li>
-          <li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">chevron_right</span><span class="text-sm">Contact</span></a></li>
-        </ul>
-      </div>
-      
-      <!-- Offerings Column with Icons -->
-      <div>
-        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-amber-400">spa</span>
-          <span>Offerings</span>
-        </h4>
-        <ul class="space-y-3">
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">123</span><span class="text-sm">Numerology</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">diamond</span><span class="text-sm">Crystal Healing</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">stars</span><span class="text-sm">Birth Chart</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">home</span><span class="text-sm">Vastu</span></a></li>
-          <li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200"><span class="material-symbols-outlined text-sm opacity-50 group-hover:opacity-100 transition-opacity">history</span><span class="text-sm">Past Life</span></a></li>
-        </ul>
-      </div>
-      
-      <!-- Contact Column with Enhanced Icons -->
-      <div>
-        <h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2">
-          <span class="material-symbols-outlined text-base text-emerald-400">call</span>
-          <span>Get in Touch</span>
-        </h4>
-        <div class="space-y-4">
-          <a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
-            <span class="material-symbols-outlined text-xl text-violet-400 group-hover:scale-110 transition-transform">phone_in_talk</span>
-            <span class="text-sm">+91 96573 13963</span>
-          </a>
-          <a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
-            <span class="material-symbols-outlined text-xl text-emerald-400 group-hover:scale-110 transition-transform">chat</span>
-            <span class="text-sm">+91 96573 13963</span>
-          </a>
-          <a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white transition-colors duration-200">
-            <span class="material-symbols-outlined text-xl text-amber-400 group-hover:scale-110 transition-transform">mail</span>
-            <span class="text-sm">connect@astronumerics.com</span>
-          </a>
-          <div class="pt-3 flex items-start gap-3 text-white/40 text-xs">
-            <span class="material-symbols-outlined text-base">schedule</span>
-            <span>Mon - Sat: 10:00 AM - 7:00 PM IST</span>
-          </div>
-        </div>
-      </div>
+      <div class="space-y-5"><div class="flex items-center gap-3"><img src="/assets/images/logo.png" alt="Logo" class="h-14 w-auto object-contain"><div><h3 class="font-display text-xl font-semibold text-white">Astro Numerics</h3><p class="text-xs text-white/40 tracking-widest uppercase">Spiritual Guidance</p></div></div><p class="text-white/50 text-sm leading-relaxed">Sacred guidance for modern souls — rooted in Vedic wisdom, delivered with clarity and care.</p><div class="flex gap-3"><a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:text-white transition"><i class="fab fa-instagram text-sm"></i></a><a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:text-white transition"><i class="fab fa-facebook-f text-sm"></i></a><a href="#" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-violet-500 hover:text-white transition"><i class="fab fa-youtube text-sm"></i></a><a href="https://wa.me/919657313963" class="group w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:bg-emerald-500 hover:text-white transition"><i class="fab fa-whatsapp text-sm"></i></a></div></div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-violet-400">explore</span><span>Navigate</span></h4><ul class="space-y-3"><li><a href="index.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">Home</span></a></li><li><a href="about.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">About</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">Services</span></a></li><li><a href="products.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">Products</span></a></li><li><a href="courses.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">Courses</span></a></li><li><a href="contact.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">chevron_right</span><span class="text-sm">Contact</span></a></li></ul></div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-amber-400">spa</span><span>Offerings</span></h4><ul class="space-y-3"><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">auto_awesome</span><span class="text-sm">Tarot Reading</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">123</span><span class="text-sm">Numerology</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">diamond</span><span class="text-sm">Crystal Healing</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">stars</span><span class="text-sm">Birth Chart</span></a></li><li><a href="services.html" class="group flex items-center gap-2 text-white/50 hover:text-white"><span class="material-symbols-outlined text-sm">home</span><span class="text-sm">Vastu</span></a></li></ul></div>
+      <div><h4 class="text-white/40 text-xs font-semibold tracking-[0.2em] uppercase mb-6 flex items-center gap-2"><span class="material-symbols-outlined text-base text-emerald-400">call</span><span>Get in Touch</span></h4><div class="space-y-4"><a href="tel:+919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white"><span class="material-symbols-outlined text-xl text-violet-400">phone_in_talk</span><span class="text-sm">+91 96573 13963</span></a><a href="https://wa.me/919657313963" class="group flex items-center gap-3 text-white/60 hover:text-white"><span class="material-symbols-outlined text-xl text-emerald-400">chat</span><span class="text-sm">+91 96573 13963</span></a><a href="mailto:connect@astronumerics.com" class="group flex items-center gap-3 text-white/60 hover:text-white"><span class="material-symbols-outlined text-xl text-amber-400">mail</span><span class="text-sm">connect@astronumerics.com</span></a><div class="pt-3 flex items-start gap-3 text-white/40 text-xs"><span class="material-symbols-outlined text-base">schedule</span><span>Mon - Sat: 10:00 AM - 7:00 PM IST</span></div></div></div>
     </div>
-    
-    <!-- Bottom Bar -->
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8">
-      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-white/30 text-xs">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-sm">copyright</span>
-          <span>2026 Astro Numerics. All rights reserved.</span>
-        </div>
-        <span class="hidden sm:inline text-white/20">|</span>
-        <div class="flex items-center gap-1">
-          <span>Developed by</span>
-          <a href="https://kunashmedia.com/" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-300 transition-colors duration-200 font-medium hover:underline underline-offset-2">
-            Kunash Media
-          </a>
-        </div>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-1.5 text-amber-400/60 text-xs">
-          <span class="material-symbols-outlined text-sm">stars</span>
-          <span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span>
-        </div>
-        <a href="#" class="text-white/30 hover:text-white/60 transition-colors">
-          <span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
-        </a>
-      </div>
-    </div>
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8"><div class="flex items-center gap-2 text-white/30 text-xs"><span class="material-symbols-outlined text-sm">copyright</span><span>2025 Astro Numerics. All rights reserved.</span></div><div class="flex items-center gap-4"><div class="flex items-center gap-1.5 text-amber-400/60 text-xs"><span class="material-symbols-outlined text-sm">stars</span><span class="font-display italic">Spiritual Wisdom · Sacred Guidance</span></div><a href="#" class="text-white/30 hover:text-white/60"><span class="material-symbols-outlined text-sm">keyboard_arrow_up</span></a></div></div>
   </div>
 </footer>
 
-
-<!-- Floating WhatsApp -->
-<div class="fab-wa">
-  <div class="fab-ping"></div>
-  <a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank" aria-label="Chat on WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-</div>
-
-<!-- Back to Top Button -->
-<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible">
-  <div class="relative">
-    <img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 hover:-translate-y-1 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" />
-    <div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-      <div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div>
-    </div>
-  </div>
-</button>
+<div class="fab-wa"><div class="fab-ping"></div><a href="https://wa.me/919657313963?text=Hello%20Astro%20Numerics%2C%20I%20want%20to%20connect%20for%20spiritual%20guidance." target="_blank" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a></div>
+<button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-50 group transition-all duration-300 opacity-0 invisible"><div class="relative"><img src="/assets/images/BTT_2.jpg" alt="Back to Top" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover shadow-xl shadow-violet-500/30 hover:scale-110 transition-all duration-300 cursor-pointer border-2 border-white/20 animate-[spin_20s_linear_infinite]" /><div class="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"><div class="bg-slate-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg border border-white/10">Back to Top ↑</div></div></div></button>
 
 <script>
-  // Mobile nav
-  const hamb = document.getElementById('hambBtn');
-  const drawer = document.getElementById('mob-drawer');
-  const overlay = document.getElementById('mob-overlay');
-  const close = document.getElementById('mob-close');
-  const open = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
-  const shut = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
-  hamb.addEventListener('click', open);
-  close.addEventListener('click', shut);
-  overlay.addEventListener('click', shut);
-
-     // Back to Top Functionality
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
+  const API_BASE = 'http://localhost:8088/api';
+  
+  function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
   const backToTopBtn = document.getElementById('backToTopBtn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.style.opacity = '1';
-      backToTopBtn.style.visibility = 'visible';
-    } else {
-      backToTopBtn.style.opacity = '0';
-      backToTopBtn.style.visibility = 'hidden';
-    }
-  });
+  window.addEventListener('scroll', () => { if (window.scrollY > 300) { backToTopBtn.style.opacity = '1'; backToTopBtn.style.visibility = 'visible'; } else { backToTopBtn.style.opacity = '0'; backToTopBtn.style.visibility = 'hidden'; } });
+  
   // Scroll reveal
-  new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 }).observe.bind(null);
-
-  const revObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
-
-  // Form → WhatsApp
-  document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  
+  // Mobile nav
+  const hamb = document.getElementById('hambBtn'), drawer = document.getElementById('mob-drawer'), overlay = document.getElementById('mob-overlay'), close = document.getElementById('mob-close');
+  const openDrawer = () => { drawer.classList.remove('hidden'); drawer.classList.add('flex'); overlay.classList.remove('hidden'); };
+  const closeDrawer = () => { drawer.classList.add('hidden'); drawer.classList.remove('flex'); overlay.classList.add('hidden'); };
+  hamb.addEventListener('click', openDrawer); close.addEventListener('click', closeDrawer); overlay.addEventListener('click', closeDrawer);
+  
+  function showToast(message, isError = false) {
+    const existing = document.querySelector('.toast-notify'); if (existing) existing.remove();
+    const toast = document.createElement('div'); toast.className = `toast-notify ${isError ? 'error' : ''}`; toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i> ${message}`;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
+  }
+  
+  // FORM SUBMIT WITH BACKEND INTEGRATION (preserved)
+  document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const name = document.getElementById('fullName').value;
-    const phone = document.getElementById('phoneNumber').value;
+    const name = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phoneNumber').value.trim();
     const service = document.getElementById('serviceInterest').value;
-    const message = document.getElementById('message').value;
-    let msg = `Hello Astro Numerics,%0A%0A*New Inquiry from Website*%0A%0A*Name:* ${encodeURIComponent(name)}%0A*Phone:* ${encodeURIComponent(phone)}%0A`;
-    if (service) msg += `*Service Interest:* ${encodeURIComponent(service)}%0A`;
-    msg += `*Message:* ${encodeURIComponent(message)}%0A%0APlease guide me further.`;
-    window.open(`https://wa.me/919657313963?text=${msg}`, '_blank');
-  });
-  // Force select dropdown to open downward
-document.querySelectorAll('select').forEach(select => {
-  select.addEventListener('mousedown', function(e) {
-    const rect = this.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - rect.bottom;
-    const spaceAbove = rect.top;
+    const message = document.getElementById('message').value.trim();
+    if (!name) return showToast('Please enter your name', true);
+    if (!phone) return showToast('Please enter your phone number', true);
+    if (!message) return showToast('Please enter your message', true);
     
-    if (spaceBelow < 150 && spaceAbove > spaceBelow) {
-      // Temporarily add margin to push dropdown down
-      this.style.transform = 'translateY(10px)';
-      setTimeout(() => { this.style.transform = ''; }, 200);
-    }
+    const inquiryData = { name, mobile: phone, service: service || 'General Inquiry', status: 'New', date: new Date().toISOString().split('T')[0], notes: `Service Interest: ${service || 'Not specified'}\n\nMessage: ${message}` };
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    submitBtn.disabled = true;
+    try {
+      const response = await fetch(`${API_BASE}/inquiries`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(inquiryData) });
+      if (response.ok) { const result = await response.json(); if (result.success === true) { showToast('Thank you! Your inquiry has been submitted successfully. We will contact you soon.'); document.getElementById('inquiryForm').reset(); } else { showToast(result.message || 'Something went wrong. Please try again.', true); } }
+      else { showToast(`Server error: ${response.status}. Please try again later.`, true); }
+    } catch (error) { console.error(error); showToast('Network error. Please check your connection and try again.', true); }
+    finally { submitBtn.innerHTML = originalText; submitBtn.disabled = false; }
   });
-});
 </script>
 </body>
 </html>
